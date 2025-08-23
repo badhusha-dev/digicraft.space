@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://digicraft.space/sitemap.xml
+
+# Block crawlers from admin paths if they exist
+Disallow: /admin/
+Disallow: /api/
+
+# Allow crawling of all public pages
+Allow: /
+Allow: /services
+Allow: /solutions
+Allow: /work
+Allow: /pricing
+Allow: /about
+Allow: /blog
+Allow: /careers
+Allow: /contact
+
+# Crawl-delay for politeness (optional)
+Crawl-delay: 1
