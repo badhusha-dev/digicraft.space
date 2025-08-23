@@ -1,7 +1,7 @@
 # PowerShell script to download images for DigiCraft.space
 # Run this script from the project root directory
 
-Write-Host "🖼️  Downloading images for DigiCraft.space..." -ForegroundColor Green
+Write-Host "Downloading images for DigiCraft.space..." -ForegroundColor Green
 
 # Create directories if they don't exist
 $directories = @(
@@ -14,8 +14,8 @@ $directories = @(
 
 foreach ($dir in $directories) {
     if (!(Test-Path $dir)) {
-        New-Item -ItemType Directory -Path $dir -Force
-        Write-Host "✅ Created directory: $dir" -ForegroundColor Yellow
+        New-Item -ItemType Directory -Path $dir -Force | Out-Null
+        Write-Host "Created directory: $dir" -ForegroundColor Yellow
     }
 }
 
@@ -33,7 +33,7 @@ foreach ($url in $images.Keys) {
     $localPath = $images[$url]
     $fileName = Split-Path $localPath -Leaf
     
-    Write-Host "📥 Downloading: $fileName" -ForegroundColor Cyan
+    Write-Host "Downloading: $fileName" -ForegroundColor Cyan
     
     try {
         # Download the image
@@ -43,14 +43,15 @@ foreach ($url in $images.Keys) {
         $fileSize = (Get-Item $localPath).Length
         $fileSizeKB = [math]::Round($fileSize / 1KB, 2)
         
-        Write-Host "✅ Downloaded: $fileName ($fileSizeKB KB)" -ForegroundColor Green
+        Write-Host ("Downloaded: {0} ({1} KB)" -f $fileName, $fileSizeKB) -ForegroundColor Green
     }
     catch {
-        Write-Host "❌ Failed to download: $fileName" -ForegroundColor Red
+        Write-Host "Failed to download: $fileName" -ForegroundColor Red
         Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Red
     }
 }
 
-Write-Host "`n🎉 Image download completed!" -ForegroundColor Green
-Write-Host "📁 Images saved to: client/public/images/" -ForegroundColor Yellow
-Write-Host "🔗 You can now update your components to use local images" -ForegroundColor Yellow
+Write-Host ""
+Write-Host "Image download completed!" -ForegroundColor Green
+Write-Host "Images saved to: client/public/images/" -ForegroundColor Yellow
+Write-Host "You can now update your components to use local images" -ForegroundColor Yellow
