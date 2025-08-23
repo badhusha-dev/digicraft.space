@@ -1,8 +1,9 @@
 import { Link } from "wouter";
-import { ArrowRight, Check, Star } from "lucide-react";
+import { ArrowRight, Check, Star, Lightbulb, Globe, Smartphone, Server, Activity, Cloud, Bot, Settings, Search, Palette, Code, Rocket, TrendingUp } from "lucide-react";
 import SEO from "../components/SEO";
 import { services } from "../data/services";
 import { testimonials } from "../data/testimonials";
+import { getImageById } from "../data/images";
 import { useEffect } from "react";
 import { logPageView } from "../utils/analytics";
 
@@ -19,31 +20,55 @@ export default function Home() {
     { icon: "trending-up", title: "Grow", description: "Scaling and optimizing for success" },
   ];
 
+  // Icon mapping for services
+  const serviceIconMap = {
+    lightbulb: Lightbulb,
+    globe: Globe,
+    smartphone: Smartphone,
+    server: Server,
+    activity: Activity,
+    cloud: Cloud,
+    bot: Bot,
+    settings: Settings,
+  };
+
+  // Icon mapping for process steps
+  const processIconMap = {
+    search: Search,
+    palette: Palette,
+    code: Code,
+    rocket: Rocket,
+    "trending-up": TrendingUp,
+  };
+
+  // Get local images
+  const heroImage = getImageById('hero-team-collaboration');
+
   return (
     <>
       <SEO
         title="Home"
         description="Product-minded engineers building reliable, beautiful software—fast. Get your MVP from $8k or hire our development squad from $12k/mo."
-        keywords="software development, react development, mobile apps, web applications, mvp development"
+        keywords="software development, react development, mobile apps, web applications, mvp development, digicraft"
       />
 
       {/* Hero Section */}
-      <section className="min-h-[80vh] bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-indigo-900/20 flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+      <section className="py-5 bg-light d-flex align-items-center" style={{ minHeight: '80vh' }}>
+        <div className="container">
+          <div className="row align-items-center g-5">
+            <div className="col-lg-6">
+              <h1 className="display-4 fw-bold lh-base">
                 We craft software that{" "}
-                <span className="text-indigo-600 dark:text-indigo-400">ships</span> and{" "}
-                <span className="text-cyan-500">scales</span>.
+                <span className="text-primary">ships</span> and{" "}
+                <span className="text-info">scales</span>.
               </h1>
-              <p className="text-xl text-gray-600 dark:text-gray-300 mt-6 leading-relaxed">
+              <p className="lead text-muted mt-4">
                 Product-minded engineers building reliable, beautiful software—fast.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <div className="d-flex flex-column flex-sm-row gap-3 mt-4">
                 <Link href="/contact">
                   <button 
-                    className="bg-gradient-to-r from-indigo-600 to-cyan-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+                    className="btn btn-primary btn-lg px-4 py-3"
                     data-testid="button-get-quote-hero"
                   >
                     Get a Free Quote
@@ -51,7 +76,7 @@ export default function Home() {
                 </Link>
                 <Link href="/work">
                   <button 
-                    className="border-2 border-indigo-600 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-400 dark:hover:text-gray-900 transition-all duration-200"
+                    className="btn btn-outline-primary btn-lg px-4 py-3"
                     data-testid="button-see-work-hero"
                   >
                     See Our Work
@@ -59,12 +84,15 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <div className="relative">
+            <div className="col-lg-6">
               <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600"
-                alt="Modern office workspace with team collaboration"
-                className="rounded-2xl shadow-2xl w-full transform hover:scale-105 transition-transform duration-300"
+                src={heroImage?.src || "/images/ui/placeholder-hero.jpg"}
+                alt={heroImage?.alt || "Modern office workspace with team collaboration"}
+                className="img-fluid rounded-3 shadow"
+                width={heroImage?.width || 800}
+                height={heroImage?.height || 600}
                 data-testid="img-hero"
+                loading="eager"
               />
             </div>
           </div>
@@ -72,105 +100,130 @@ export default function Home() {
       </section>
 
       {/* Services Preview */}
-      <section className="py-20 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">Our Expertise</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mt-4">
+      <section className="py-5 bg-white">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h2 className="display-5 fw-bold text-dark">Our Expertise</h2>
+            <p className="lead text-muted mt-3">
               End-to-end software solutions for modern businesses
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {services.slice(0, 3).map((service, index) => (
-              <div 
-                key={service.id}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300"
-                data-testid={`card-service-${service.id}`}
-              >
-                <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-cyan-500 rounded-xl flex items-center justify-center mb-6">
-                  <div className="w-8 h-8 bg-white rounded-md"></div>
+          <div className="row g-4">
+            {services.slice(0, 3).map((service, index) => {
+              const IconComponent = serviceIconMap[service.icon as keyof typeof serviceIconMap];
+              return (
+                <div 
+                  key={service.id}
+                  className="col-md-4"
+                  data-testid={`card-service-${service.id}`}
+                >
+                  <div className="card h-100 shadow-sm border-0">
+                    <div className="card-body p-4 text-center">
+                      <div className="bg-primary rounded-3 d-flex align-items-center justify-content-center mx-auto mb-4" style={{ width: '4rem', height: '4rem' }}>
+                        {IconComponent ? (
+                          <IconComponent className="text-white" size={24} />
+                        ) : (
+                          <div className="bg-white rounded" style={{ width: '2rem', height: '2rem' }}></div>
+                        )}
+                      </div>
+                      <h3 className="h5 fw-semibold text-dark mb-3">
+                        {service.title}
+                      </h3>
+                      <p className="text-muted">
+                        {service.description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  {service.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Process Section */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">Our Process</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mt-4">
+      <section className="py-5 bg-light">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h2 className="display-5 fw-bold text-dark">Our Process</h2>
+            <p className="lead text-muted mt-3">
               From idea to launch in 5 proven steps
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-            {processSteps.map((step, index) => (
-              <div key={step.title} className="text-center relative">
-                <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-cyan-500 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                  <div className="w-8 h-8 bg-white rounded-md"></div>
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {step.description}
-                </p>
-                {index < processSteps.length - 1 && (
-                  <div className="hidden md:block absolute top-8 left-full w-full">
-                    <ArrowRight className="w-6 h-6 text-indigo-600 mx-auto" />
+          <div className="row g-4">
+            {processSteps.map((step, index) => {
+              const IconComponent = processIconMap[step.icon as keyof typeof processIconMap];
+              return (
+                <div key={step.title} className="col-md text-center position-relative">
+                  <div className="bg-primary rounded-3 d-flex align-items-center justify-content-center mx-auto mb-3" style={{ width: '4rem', height: '4rem' }}>
+                    {IconComponent ? (
+                      <IconComponent className="text-white" size={24} />
+                    ) : (
+                      <div className="bg-white rounded" style={{ width: '2rem', height: '2rem' }}></div>
+                    )}
                   </div>
-                )}
-              </div>
-            ))}
+                  <h3 className="h6 fw-semibold text-dark mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="small text-muted">
+                    {step.description}
+                  </p>
+                  {index < processSteps.length - 1 && (
+                    <div className="d-none d-md-block position-absolute top-0 start-100 w-100">
+                      <ArrowRight className="text-primary mx-auto" size={24} />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">What Our Clients Say</h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mt-4">
+      <section className="py-5 bg-white">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h2 className="display-5 fw-bold text-dark">What Our Clients Say</h2>
+            <p className="lead text-muted mt-3">
               Trusted by innovative companies worldwide
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="row g-4">
             {testimonials.map((testimonial) => (
               <div 
                 key={testimonial.id}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-8"
+                className="col-md-4"
                 data-testid={`card-testimonial-${testimonial.id}`}
               >
-                <div className="flex items-center mb-6">
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    className="w-12 h-12 rounded-full mr-4"
-                  />
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      {testimonial.role}, {testimonial.company}
-                    </p>
+                <div className="card h-100 shadow-sm border-0">
+                  <div className="card-body p-4">
+                    <div className="d-flex align-items-center mb-4">
+                      <img
+                        src={testimonial.avatar}
+                        alt={testimonial.name}
+                        className="rounded-circle me-3"
+                        width="48"
+                        height="48"
+                        loading="lazy"
+                      />
+                      <div>
+                        <h4 className="fw-semibold text-dark mb-1">{testimonial.name}</h4>
+                        <p className="small text-muted mb-0">
+                          {testimonial.role}, {testimonial.company}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-muted mb-3">"{testimonial.content}"</p>
+                    <div className="d-flex text-warning">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} size={20} className="fill-current" />
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">"{testimonial.content}"</p>
-                <div className="flex text-yellow-500">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-current" />
-                  ))}
                 </div>
               </div>
             ))}
@@ -179,16 +232,16 @@ export default function Home() {
       </section>
 
       {/* CTA Banner */}
-      <section className="py-20 bg-gradient-to-r from-indigo-600 to-cyan-500 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6">Ready to Build Something Amazing?</h2>
-          <p className="text-xl mb-8 opacity-90">
+      <section className="py-5 bg-primary text-white">
+        <div className="container text-center">
+          <h2 className="display-5 fw-bold mb-4">Ready to Build Something Amazing?</h2>
+          <p className="lead mb-4 opacity-75">
             Let's discuss your project and create software that makes a difference.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
             <Link href="/contact">
               <button 
-                className="bg-white text-indigo-600 px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+                className="btn btn-light btn-lg px-4 py-3"
                 data-testid="button-start-project-cta"
               >
                 Start Your Project
@@ -196,7 +249,7 @@ export default function Home() {
             </Link>
             <a 
               href="mailto:hello@digicraft.space"
-              className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-indigo-600 transition-all duration-200"
+              className="btn btn-outline-light btn-lg px-4 py-3"
               data-testid="link-email-cta"
             >
               hello@digicraft.space

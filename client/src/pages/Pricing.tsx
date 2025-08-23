@@ -3,7 +3,6 @@ import { Link } from "wouter";
 import SEO from "../components/SEO";
 import { useEffect, useState } from "react";
 import { logPageView } from "../utils/analytics";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function Pricing() {
   useEffect(() => {
@@ -87,105 +86,122 @@ export default function Pricing() {
         keywords="software development pricing, mvp cost, development team pricing, transparent pricing"
       />
 
-      <div className="min-h-screen bg-white dark:bg-gray-900 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+      <section className="py-5 bg-white">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h1 className="display-4 fw-bold text-dark mb-4">
               Transparent Pricing
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="lead text-muted max-w-3xl mx-auto">
               Choose the right engagement model for your project
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+          <div className="row g-4 mb-5">
             {plans.map((plan) => (
               <div 
                 key={plan.id}
-                className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 p-8 text-center hover:shadow-xl transition-all duration-300 ${
-                  plan.featured 
-                    ? "border-indigo-500 ring-2 ring-indigo-200 dark:ring-indigo-800 transform scale-105" 
-                    : "border-gray-200 dark:border-gray-700 hover:border-indigo-300 dark:hover:border-indigo-600"
-                }`}
+                className="col-lg-4"
                 data-testid={`card-pricing-${plan.id}`}
               >
-                {plan.featured && (
-                  <div className="flex justify-center mb-4">
-                    <span className="bg-indigo-500 text-white px-4 py-1 rounded-full text-sm font-semibold flex items-center">
-                      <Star className="w-4 h-4 mr-1" />
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-                
-                <h3 className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-4">
-                  {plan.name}
-                </h3>
-                
-                <div className="mb-6">
-                  <span className="text-4xl font-bold text-gray-900 dark:text-white">
-                    {plan.price}
-                  </span>
-                  <p className="text-gray-600 dark:text-gray-300 mt-2">
-                    {plan.period}
-                  </p>
-                </div>
-                
-                <ul className="space-y-4 mb-8 text-left">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center">
-                      {feature.included ? (
-                        <Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
-                      ) : (
-                        <X className="w-5 h-5 text-gray-400 mr-3 flex-shrink-0" />
-                      )}
-                      <span className={feature.included ? "text-gray-900 dark:text-white" : "text-gray-400"}>
-                        {feature.name}
+                <div className={`card h-100 shadow-sm border-0 text-center ${
+                  plan.featured ? 'border-primary border-2' : ''
+                }`}>
+                  <div className="card-body p-4">
+                    {plan.featured && (
+                      <div className="d-flex justify-content-center mb-3">
+                        <span className="badge bg-primary text-white px-3 py-2 d-flex align-items-center">
+                          <Star size={16} className="me-1" />
+                          Most Popular
+                        </span>
+                      </div>
+                    )}
+                    
+                    <h3 className="h4 fw-bold text-primary mb-3">
+                      {plan.name}
+                    </h3>
+                    
+                    <div className="mb-4">
+                      <span className="display-6 fw-bold text-dark">
+                        {plan.price}
                       </span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <Link href="/contact">
-                  <button 
-                    className={`w-full py-3 px-6 rounded-lg font-semibold transition-all duration-200 ${
-                      plan.featured
-                        ? "bg-gradient-to-r from-indigo-600 to-cyan-500 text-white hover:shadow-xl transform hover:scale-105"
-                        : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600"
-                    }`}
-                    data-testid={`button-get-started-${plan.id}`}
-                  >
-                    Get Started
-                  </button>
-                </Link>
-                
-                <p className="text-sm text-gray-600 dark:text-gray-300 mt-4">
-                  {plan.description}
-                </p>
+                      <p className="text-muted mt-2 mb-0">
+                        {plan.period}
+                      </p>
+                    </div>
+                    
+                    <ul className="list-unstyled mb-4 text-start">
+                      {plan.features.map((feature, index) => (
+                        <li key={index} className="d-flex align-items-center mb-2">
+                          {feature.included ? (
+                            <Check className="text-success me-2 flex-shrink-0" size={20} />
+                          ) : (
+                            <X className="text-muted me-2 flex-shrink-0" size={20} />
+                          )}
+                          <span className={feature.included ? "text-dark" : "text-muted"}>
+                            {feature.name}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <Link href="/contact">
+                      <button 
+                        className={`btn w-100 ${
+                          plan.featured
+                            ? "btn-primary"
+                            : "btn-outline-primary"
+                        }`}
+                        data-testid={`button-get-started-${plan.id}`}
+                      >
+                        Get Started
+                      </button>
+                    </Link>
+                    
+                    <p className="small text-muted mt-3 mb-0">
+                      {plan.description}
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
           
           {/* FAQ Section */}
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
-              Frequently Asked Questions
-            </h2>
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
-                  <AccordionTrigger className="text-left">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+          <div className="row justify-content-center">
+            <div className="col-lg-8">
+              <h2 className="display-5 fw-bold text-center text-dark mb-4">
+                Frequently Asked Questions
+              </h2>
+              <div className="accordion" id="faqAccordion">
+                {faqs.map((faq, index) => (
+                  <div key={index} className="accordion-item">
+                    <h2 className="accordion-header">
+                      <button 
+                        className="accordion-button collapsed" 
+                        type="button" 
+                        data-bs-toggle="collapse" 
+                        data-bs-target={`#faq-${index}`}
+                      >
+                        {faq.question}
+                      </button>
+                    </h2>
+                    <div 
+                      id={`faq-${index}`} 
+                      className="accordion-collapse collapse" 
+                      data-bs-parent="#faqAccordion"
+                    >
+                      <div className="accordion-body">
+                        {faq.answer}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

@@ -18,90 +18,93 @@ export default function Solutions() {
         keywords="mvp development, scale-up solutions, e-commerce platform, back-office suite, software packages"
       />
 
-      <div className="min-h-screen bg-white dark:bg-gray-900 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+      <section className="py-5 bg-white">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h1 className="display-4 fw-bold text-dark mb-4">
               Solutions & Packages
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="lead text-muted max-w-3xl mx-auto">
               Pre-designed solutions to accelerate your development
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="row g-4">
             {solutions.map((solution) => (
               <div 
                 key={solution.id}
-                className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg border-2 p-8 hover:shadow-xl transform hover:scale-105 transition-all duration-300 ${
-                  solution.featured 
-                    ? "border-indigo-500 ring-2 ring-indigo-200 dark:ring-indigo-800" 
-                    : "border-gray-200 dark:border-gray-700"
-                }`}
+                className="col-lg-6"
                 data-testid={`card-solution-${solution.id}`}
               >
-                {solution.featured && (
-                  <div className="flex justify-center mb-4">
-                    <span className="bg-indigo-500 text-white px-4 py-1 rounded-full text-sm font-semibold flex items-center">
-                      <Star className="w-4 h-4 mr-1" />
-                      Most Popular
-                    </span>
+                <div className={`card h-100 shadow-sm border-0 ${
+                  solution.featured ? 'border-primary border-2' : ''
+                }`}>
+                  <div className="card-body p-4">
+                    {solution.featured && (
+                      <div className="d-flex justify-content-center mb-3">
+                        <span className="badge bg-primary text-white px-3 py-2 d-flex align-items-center">
+                          <Star size={16} className="me-1" />
+                          Most Popular
+                        </span>
+                      </div>
+                    )}
+                    
+                    <div className="text-center mb-4">
+                      <h3 className="h3 fw-bold text-primary mb-2">
+                        {solution.title}
+                      </h3>
+                      <p className="text-muted">
+                        {solution.subtitle}
+                      </p>
+                    </div>
+                    
+                    <div className="mb-4">
+                      <img
+                        src={solution.image}
+                        alt={solution.title}
+                        className="img-fluid rounded"
+                        style={{ height: '12rem', objectFit: 'cover', width: '100%' }}
+                      />
+                    </div>
+                    
+                    <ul className="list-unstyled mb-4">
+                      {solution.features.map((feature, index) => (
+                        <li key={index} className="d-flex align-items-center mb-2">
+                          <Check className="text-success me-2 flex-shrink-0" size={20} />
+                          <span className="text-muted">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    
+                    <div className="text-center border-top pt-3">
+                      <div className="mb-3">
+                        <p className="h4 fw-bold text-dark mb-1">
+                          {solution.pricing}
+                        </p>
+                        <p className="small text-muted mb-0">
+                          {solution.timeline}
+                        </p>
+                      </div>
+                      <Link href="/contact">
+                        <button 
+                          className={`btn w-100 ${
+                            solution.featured
+                              ? "btn-primary"
+                              : "btn-outline-primary"
+                          }`}
+                          data-testid={`button-get-started-${solution.id}`}
+                        >
+                          {solution.pricing.includes("Custom") ? "Get Quote" : "Get Started"}
+                        </button>
+                      </Link>
+                    </div>
                   </div>
-                )}
-                
-                <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mb-2">
-                    {solution.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {solution.subtitle}
-                  </p>
-                </div>
-                
-                <div className="mb-6">
-                  <img
-                    src={solution.image}
-                    alt={solution.title}
-                    className="w-full h-48 object-cover rounded-lg"
-                  />
-                </div>
-                
-                <ul className="space-y-3 mb-6">
-                  {solution.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-600 dark:text-gray-300">
-                      <Check className="w-5 h-5 text-green-500 mr-3 flex-shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                
-                <div className="text-center border-t border-gray-200 dark:border-gray-700 pt-6">
-                  <div className="mb-4">
-                    <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                      {solution.pricing}
-                    </p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      {solution.timeline}
-                    </p>
-                  </div>
-                  <Link href="/contact">
-                    <button 
-                      className={`w-full py-3 px-6 rounded-lg font-semibold transition-all duration-200 ${
-                        solution.featured
-                          ? "bg-gradient-to-r from-indigo-600 to-cyan-500 text-white hover:shadow-xl transform hover:scale-105"
-                          : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600"
-                      }`}
-                      data-testid={`button-get-started-${solution.id}`}
-                    >
-                      {solution.pricing.includes("Custom") ? "Get Quote" : "Get Started"}
-                    </button>
-                  </Link>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

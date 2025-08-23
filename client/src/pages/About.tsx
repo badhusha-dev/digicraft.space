@@ -1,6 +1,7 @@
 import { Link } from "wouter";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Linkedin, Twitter, Handshake, Award, Rocket, Clock, DollarSign, Settings, Headphones } from "lucide-react";
 import SEO from "../components/SEO";
+import { getImageById } from "../data/images";
 import { useEffect } from "react";
 import { logPageView } from "../utils/analytics";
 
@@ -30,7 +31,7 @@ export default function About() {
   const techStack = [
     {
       category: "Frontend",
-      technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vue.js"],
+      technologies: ["React", "Next.js", "TypeScript", "Bootstrap"],
     },
     {
       category: "Backend",
@@ -69,6 +70,25 @@ export default function About() {
     },
   ];
 
+  // Icon mapping for values
+  const valuesIconMap = {
+    handshake: Handshake,
+    award: Award,
+    rocket: Rocket,
+  };
+
+  // Icon mapping for whyChooseUs
+  const whyChooseUsIconMap = {
+    clock: Clock,
+    "dollar-sign": DollarSign,
+    settings: Settings,
+    headphones: Headphones,
+  };
+
+  // Get local images
+  const missionImage = getImageById('workspace-mission');
+  const founderImage = getImageById('founder-ayaz');
+
   return (
     <>
       <SEO
@@ -77,75 +97,84 @@ export default function About() {
         keywords="about digicraft, software company, ayaz founder, company mission, development team"
       />
 
-      <div className="min-h-screen bg-white dark:bg-gray-900 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-5 bg-white">
+        <div className="container">
           {/* Company Vision */}
-          <div className="text-center mb-20">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+          <div className="text-center mb-5">
+            <h1 className="display-4 fw-bold text-dark mb-4">
               About DigiCraft.space
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="lead text-muted max-w-3xl mx-auto">
               Building software that ships and scales for the digital future
             </p>
           </div>
           
           {/* Mission Statement */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+          <div className="row align-items-center g-5 mb-5">
+            <div className="col-lg-6">
+              <h2 className="display-5 fw-bold text-dark mb-4">
                 Our Mission
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+              <p className="lead text-muted mb-4">
                 We believe great software should be accessible to every business, regardless of size. Our mission is to democratize high-quality software development by providing transparent pricing, predictable timelines, and exceptional results.
               </p>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
+              <p className="lead text-muted">
                 Founded on principles of craftsmanship and reliability, we combine cutting-edge technology with proven methodologies to deliver software that not only works but thrives in production.
               </p>
             </div>
-            <div className="relative">
+            <div className="col-lg-6">
               <img
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
-                alt="Modern collaborative workspace with innovative technology"
-                className="rounded-2xl shadow-xl w-full transform hover:scale-105 transition-transform duration-300"
+                src={missionImage?.src || "/images/ui/placeholder-workspace.jpg"}
+                alt={missionImage?.alt || "Modern collaborative workspace with innovative technology"}
+                className="img-fluid rounded-3 shadow"
+                width={missionImage?.width || 600}
+                height={missionImage?.height || 400}
                 data-testid="img-mission"
+                loading="lazy"
               />
             </div>
           </div>
           
           {/* Leadership Team */}
-          <div className="mb-20">
-            <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
+          <div className="mb-5">
+            <h2 className="display-5 fw-bold text-center text-dark mb-4">
               Meet Our Founder
             </h2>
-            <div className="flex justify-center">
-              <div className="max-w-md">
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 text-center hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300">
-                  <img
-                    src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=300"
-                    alt="Ayaz, CEO and Founder of DigiCraft.space"
-                    className="w-32 h-32 rounded-full mx-auto mb-6 object-cover"
-                    data-testid="img-founder-ayaz"
-                  />
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    Ayaz
-                  </h3>
-                  <p className="text-indigo-600 dark:text-indigo-400 font-semibold mb-4">
-                    CEO & Founder
-                  </p>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    Former senior engineer at top tech companies with 8+ years building scalable software. 
-                    Passionate about creating technology that makes a real difference.
-                  </p>
-                  <div className="flex justify-center space-x-4">
-                    <a href="#" className="text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-testid="link-ayaz-linkedin">
-                      <Linkedin className="w-6 h-6" />
-                    </a>
-                    <a href="#" className="text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-testid="link-ayaz-twitter">
-                      <Twitter className="w-6 h-6" />
-                    </a>
-                    <a href="#" className="text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors" data-testid="link-ayaz-github">
-                      <Github className="w-6 h-6" />
-                    </a>
+            <div className="row justify-content-center">
+              <div className="col-md-6 col-lg-4">
+                <div className="card shadow-sm border-0 text-center">
+                  <div className="card-body p-4">
+                    <img
+                      src={founderImage?.src || "/images/ui/placeholder-founder.jpg"}
+                      alt={founderImage?.alt || "Ayaz, CEO and Founder of DigiCraft.space"}
+                      className="rounded-circle mx-auto mb-4"
+                      width={founderImage?.width || 128}
+                      height={founderImage?.height || 128}
+                      style={{ objectFit: 'cover' }}
+                      data-testid="img-founder-ayaz"
+                      loading="lazy"
+                    />
+                    <h3 className="h3 fw-bold text-dark mb-2">
+                      Ayaz
+                    </h3>
+                    <p className="text-primary fw-semibold mb-3">
+                      CEO & Founder
+                    </p>
+                    <p className="text-muted mb-4">
+                      Former senior engineer at top tech companies with 8+ years building scalable software. 
+                      Passionate about creating technology that makes a real difference.
+                    </p>
+                    <div className="d-flex justify-content-center gap-3">
+                      <a href="#" className="text-muted text-decoration-none" data-testid="link-ayaz-linkedin">
+                        <Linkedin size={24} />
+                      </a>
+                      <a href="#" className="text-muted text-decoration-none" data-testid="link-ayaz-twitter">
+                        <Twitter size={24} />
+                      </a>
+                      <a href="#" className="text-muted text-decoration-none" data-testid="link-ayaz-github">
+                        <Github size={24} />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -153,43 +182,50 @@ export default function About() {
           </div>
           
           {/* Values */}
-          <div className="mb-20">
-            <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
+          <div className="mb-5">
+            <h2 className="display-5 fw-bold text-center text-dark mb-4">
               Our Values
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {values.map((value, index) => (
-                <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-6">
-                    <div className="w-8 h-8 bg-white rounded-md"></div>
+            <div className="row g-4">
+              {values.map((value, index) => {
+                const IconComponent = valuesIconMap[value.icon as keyof typeof valuesIconMap];
+                return (
+                  <div key={index} className="col-md-4 text-center">
+                    <div className="bg-primary rounded-3 d-flex align-items-center justify-content-center mx-auto mb-4" style={{ width: '4rem', height: '4rem' }}>
+                      {IconComponent ? (
+                        <IconComponent className="text-white" size={24} />
+                      ) : (
+                        <div className="bg-white rounded" style={{ width: '2rem', height: '2rem' }}></div>
+                      )}
+                    </div>
+                    <h3 className="h5 fw-semibold text-dark mb-3">
+                      {value.title}
+                    </h3>
+                    <p className="text-muted">
+                      {value.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                    {value.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300">
-                    {value.description}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
           
           {/* Technology Stack */}
-          <div className="bg-gray-50 dark:bg-gray-800 rounded-2xl p-12 mb-20">
-            <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
+          <div className="bg-light rounded-3 p-4 mb-5">
+            <h2 className="display-5 fw-bold text-center text-dark mb-4">
               Our Technology Stack
             </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div className="row g-4">
               {techStack.map((stack, index) => (
-                <div key={index} className="text-center">
-                  <h3 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-4">
+                <div key={index} className="col-lg-3 text-center">
+                  <h3 className="h6 fw-semibold text-primary mb-3">
                     {stack.category}
                   </h3>
-                  <div className="flex flex-wrap justify-center gap-2">
+                  <div className="d-flex flex-wrap justify-content-center gap-2">
                     {stack.technologies.map((tech, techIndex) => (
                       <span 
                         key={techIndex}
-                        className="bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm shadow-sm"
+                        className="badge bg-white text-dark px-3 py-2 shadow-sm"
                       >
                         {tech}
                       </span>
@@ -201,32 +237,39 @@ export default function About() {
           </div>
           
           {/* Why Choose Us */}
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-12">
-              Why Choose DigiCraft.space?
+          <div className="mb-5">
+            <h2 className="display-5 fw-bold text-center text-dark mb-4">
+              Why Choose Us?
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {whyChooseUs.map((item, index) => (
-                <div 
-                  key={index}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 text-center hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300"
-                  data-testid={`card-why-choose-${index}`}
-                >
-                  <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-cyan-500 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <div className="w-6 h-6 bg-white rounded-sm"></div>
+            <div className="row g-4">
+              {whyChooseUs.map((item, index) => {
+                const IconComponent = whyChooseUsIconMap[item.icon as keyof typeof whyChooseUsIconMap];
+                return (
+                  <div key={index} className="col-md-6 col-lg-3">
+                    <div className="card h-100 shadow-sm border-0 text-center">
+                      <div className="card-body p-4">
+                        <div className="bg-primary rounded-3 d-flex align-items-center justify-content-center mx-auto mb-3" style={{ width: '4rem', height: '4rem' }}>
+                          {IconComponent ? (
+                            <IconComponent className="text-white" size={24} />
+                          ) : (
+                            <div className="bg-white rounded" style={{ width: '2rem', height: '2rem' }}></div>
+                          )}
+                        </div>
+                        <h3 className="h6 fw-semibold text-dark mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-muted small">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

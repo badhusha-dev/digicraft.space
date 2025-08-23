@@ -66,6 +66,12 @@ server/
 - **What to change:** Menu items, links, logo
 - **Look for:** `navItems` array and navigation structure
 
+#### **Logo Management**
+- **Logo Location:** `client/public/` directory (typically named `logo.png`, `logo.svg`, or similar)
+- **Logo Usage:** The logo is referenced in `client/src/components/Navbar.tsx` and potentially other components
+- **What to change:** Replace the logo file in the public directory and update any hardcoded logo references in components
+- **File Types:** Supports PNG, SVG, JPG formats (SVG recommended for scalability)
+
 #### **Footer**
 - **File:** `client/src/components/Footer.tsx`
 - **What to change:** Footer links, social media, company info
@@ -125,7 +131,21 @@ server/
 - **What to change:** Data models, table structures
 - **Look for:** Drizzle schema definitions
 
-### 6. **SEO & Meta Changes**
+### 6. **Assets & Media Files**
+
+#### **Logo & Branding**
+- **Logo Location:** `client/public/` directory
+- **Common Names:** `logo.png`, `logo.svg`, `brand-logo.png`
+- **Update Process:** Replace the logo file in public directory, the components will automatically use the new file
+- **Best Practices:** Use SVG format for logos (scalable, smaller file size)
+
+#### **Images & Media**
+- **Location:** `client/public/` directory
+- **Usage:** Referenced in components using `/image-name.ext` path
+- **Formats:** PNG, JPG, SVG, WebP (WebP recommended for photos)
+- **Organization:** Consider creating subdirectories like `public/images/`, `public/icons/`
+
+### 7. **SEO & Meta Changes**
 
 #### **Page Meta Tags**
 - **File:** `client/src/components/SEO.tsx`
@@ -135,6 +155,7 @@ server/
 #### **Sitemap**
 - **File:** `public/sitemap.xml`
 - **What to change:** Add new pages, update existing URLs
+- **Purpose:** Sitemap.xml is an XML file that lists all the pages on your website. It helps search engines like Google discover and crawl your pages more efficiently, improving SEO and search visibility. When you add new pages, you should update this file to include the new URLs.
 
 #### **Robots.txt**
 - **File:** `public/robots.txt`

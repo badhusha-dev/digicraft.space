@@ -1,23 +1,39 @@
 import { HelmetProvider } from "react-helmet-async";
+import { useEffect, memo, useCallback } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import ScrollProgress from "./ScrollProgress";
 import BackToTop from "./BackToTop";
+import { useTheme } from "./ThemeProvider";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+const Layout = memo(function Layout({ children }: LayoutProps) {
+  const { theme } = useTheme();
+
+  // Memoize the theme application function
+  const applyThemeToBody = useCallback((currentTheme: string) => {
+    document.body.className = currentTheme;
+  }, []);
+
+  useEffect(() => {
+    // Apply theme class to body element for proper dark mode
+    applyThemeToBody(theme);
+  }, [theme, applyThemeToBody]);
+
   return (
     <HelmetProvider>
-      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+      <div className="min-vh-100 d-flex flex-column">
         <ScrollProgress />
         <Navbar />
-        <main>{children}</main>
+        <main className="flex-grow-1">{children}</main>
         <Footer />
         <BackToTop />
       </div>
     </HelmetProvider>
   );
-}
+});
+
+export default Layout;

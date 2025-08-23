@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Lightbulb, Globe, Smartphone, Server, Activity, Cloud, Bot, Settings } from "lucide-react";
 import { Link } from "wouter";
 import SEO from "../components/SEO";
 import { services } from "../data/services";
@@ -10,6 +10,18 @@ export default function Services() {
     logPageView("services");
   }, []);
 
+  // Icon mapping for services
+  const iconMap = {
+    lightbulb: Lightbulb,
+    globe: Globe,
+    smartphone: Smartphone,
+    server: Server,
+    activity: Activity,
+    cloud: Cloud,
+    bot: Bot,
+    settings: Settings,
+  };
+
   return (
     <>
       <SEO
@@ -18,53 +30,64 @@ export default function Services() {
         keywords="web development, mobile apps, api development, devops, cloud infrastructure, ai automation"
       />
 
-      <div className="min-h-screen bg-white dark:bg-gray-900 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+      <section className="py-5 bg-white">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h1 className="display-4 fw-bold text-dark mb-4">
               Our Services
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="lead text-muted max-w-3xl mx-auto">
               Comprehensive software solutions for every business need
             </p>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {services.map((service, index) => (
-              <div 
-                key={service.id}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300"
-                data-testid={`card-service-${service.id}`}
-              >
-                <div className="flex items-start space-x-4">
-                  <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-cyan-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <div className="w-8 h-8 bg-white rounded-md"></div>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      {service.description}
-                    </p>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-sm text-gray-600 dark:text-gray-300">
-                          <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+          <div className="row g-4">
+            {services.map((service, index) => {
+              const IconComponent = iconMap[service.icon as keyof typeof iconMap];
+              return (
+                <div 
+                  key={service.id}
+                  className="col-lg-6"
+                  data-testid={`card-service-${service.id}`}
+                >
+                  <div className="card h-100 shadow-sm border-0">
+                    <div className="card-body p-4">
+                      <div className="d-flex align-items-start gap-4">
+                        <div className="bg-primary rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: '4rem', height: '4rem' }}>
+                          {IconComponent ? (
+                            <IconComponent className="text-white" size={24} />
+                          ) : (
+                            <div className="bg-white rounded" style={{ width: '1.5rem', height: '1.5rem' }}></div>
+                          )}
+                        </div>
+                        <div className="flex-grow-1">
+                          <h3 className="h4 fw-semibold text-dark mb-3">
+                            {service.title}
+                          </h3>
+                          <p className="text-muted mb-4">
+                            {service.description}
+                          </p>
+                          <ul className="list-unstyled">
+                            {service.features.map((feature, featureIndex) => (
+                              <li key={featureIndex} className="d-flex align-items-center mb-2">
+                                <Check className="text-success me-2 flex-shrink-0" size={16} />
+                                <span className="small text-muted">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           
-          <div className="text-center mt-16">
+          <div className="text-center mt-5">
             <Link href="/contact">
               <button 
-                className="bg-gradient-to-r from-indigo-600 to-cyan-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+                className="btn btn-primary btn-lg px-4 py-3"
                 data-testid="button-discuss-project"
               >
                 Discuss Your Project
@@ -72,7 +95,7 @@ export default function Services() {
             </Link>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

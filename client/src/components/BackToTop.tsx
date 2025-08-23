@@ -32,9 +32,10 @@ export default function BackToTop() {
     <button
       data-testid="button-back-to-top"
       onClick={scrollToTop}
-      className="fixed bottom-8 right-8 w-12 h-12 bg-indigo-600 hover:bg-cyan-500 text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 flex items-center justify-center z-40"
+      className="position-fixed bottom-0 end-0 m-4 p-3 bg-primary text-white rounded-circle shadow-lg d-flex align-items-center justify-content-center"
+      style={{ bottom: '2rem', right: '2rem', width: '3rem', height: '3rem', zIndex: 1040 }}
     >
-      <ChevronUp className="w-6 h-6" />
+      <ChevronUp style={{ width: '1.5rem', height: '1.5rem' }} />
     </button>
   );
 }

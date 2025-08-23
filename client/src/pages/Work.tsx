@@ -1,5 +1,7 @@
 import { Link } from "wouter";
+import { Rocket, Building, ShoppingCart, Users, RefreshCw, Shield } from "lucide-react";
 import SEO from "../components/SEO";
+import { getImageById } from "../data/images";
 import { useEffect } from "react";
 import { logPageView } from "../utils/analytics";
 
@@ -29,7 +31,7 @@ export default function Work() {
   const techStack = [
     {
       category: "Frontend",
-      technologies: ["React", "Next.js", "TypeScript", "Tailwind"],
+      technologies: ["React", "Next.js", "TypeScript", "Bootstrap"],
     },
     {
       category: "Backend",
@@ -63,6 +65,23 @@ export default function Work() {
     },
   ];
 
+  // Icon mapping for capabilities
+  const capabilitiesIconMap = {
+    rocket: Rocket,
+    building: Building,
+    "shopping-cart": ShoppingCart,
+  };
+
+  // Icon mapping for approach
+  const approachIconMap = {
+    users: Users,
+    sync: RefreshCw,
+    shield: Shield,
+  };
+
+  // Get local images
+  const developmentImage = getImageById('workspace-development');
+
   return (
     <>
       <SEO
@@ -71,62 +90,77 @@ export default function Work() {
         keywords="software development capabilities, tech expertise, development approach, startup mvp, enterprise solutions"
       />
 
-      <div className="min-h-screen bg-white dark:bg-gray-900 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+      <section className="py-5 bg-white">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h1 className="display-4 fw-bold text-dark mb-4">
               Our Capabilities
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
+            <p className="lead text-muted max-w-4xl mx-auto">
               While we're a new company, our team brings years of expertise from leading tech companies
             </p>
           </div>
           
           {/* Expertise Areas */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-            {capabilities.map((capability, index) => (
-              <div 
-                key={index}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-8 text-center hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300"
-                data-testid={`card-capability-${index}`}
-              >
-                <div className="w-16 h-16 bg-gradient-to-r from-indigo-600 to-cyan-500 rounded-xl flex items-center justify-center mx-auto mb-6">
-                  <div className="w-8 h-8 bg-white rounded-md"></div>
+          <div className="row g-4 mb-5">
+            {capabilities.map((capability, index) => {
+              const IconComponent = capabilitiesIconMap[capability.icon as keyof typeof capabilitiesIconMap];
+              return (
+                <div 
+                  key={index}
+                  className="col-md-4"
+                  data-testid={`card-capability-${index}`}
+                >
+                  <div className="card h-100 shadow-sm border-0 text-center">
+                    <div className="card-body p-4">
+                      <div className="bg-primary rounded-3 d-flex align-items-center justify-content-center mx-auto mb-4" style={{ width: '4rem', height: '4rem' }}>
+                        {IconComponent ? (
+                          <IconComponent className="text-white" size={24} />
+                        ) : (
+                          <div className="bg-white rounded" style={{ width: '2rem', height: '2rem' }}></div>
+                        )}
+                      </div>
+                      <h3 className="h5 fw-semibold text-dark mb-3">
+                        {capability.title}
+                      </h3>
+                      <p className="text-muted">
+                        {capability.description}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  {capability.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300">
-                  {capability.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
           
           {/* Technology Stack */}
-          <div className="mb-20">
-            <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
+          <div className="mb-5">
+            <h2 className="display-5 fw-bold text-center text-dark mb-4">
               Our Technology Stack
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="row g-3">
               {techStack.map((stack, index) => (
                 <div 
                   key={index}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 text-center"
+                  className="col-md-3"
                   data-testid={`card-tech-stack-${index}`}
                 >
-                  <h4 className="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-4">
-                    {stack.category}
-                  </h4>
-                  <div className="flex flex-wrap justify-center gap-2">
-                    {stack.technologies.map((tech, techIndex) => (
-                      <span 
-                        key={techIndex}
-                        className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm"
-                      >
-                        {tech}
-                      </span>
-                    ))}
+                  <div className="card h-100 shadow-sm border-0 text-center">
+                    <div className="card-body p-3">
+                      <h4 className="h6 fw-semibold text-primary mb-3">
+                        {stack.category}
+                      </h4>
+                      <div className="d-flex flex-wrap justify-content-center gap-2">
+                        {stack.technologies.map((tech, techIndex) => (
+                          <span 
+                            key={techIndex}
+                            className="badge bg-light text-dark px-3 py-2"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -134,51 +168,61 @@ export default function Work() {
           </div>
           
           {/* Development Approach */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+          <div className="row align-items-center g-5 mb-5">
+            <div className="col-lg-6">
+              <h2 className="display-5 fw-bold text-dark mb-4">
                 Our Development Approach
               </h2>
-              <div className="space-y-6">
-                {approach.map((item, index) => (
-                  <div key={index} className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-cyan-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <div className="w-6 h-6 bg-white rounded-sm"></div>
+              <div className="d-flex flex-column gap-4">
+                {approach.map((item, index) => {
+                  const IconComponent = approachIconMap[item.icon as keyof typeof approachIconMap];
+                  return (
+                    <div key={index} className="d-flex align-items-start gap-3">
+                      <div className="bg-primary rounded d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: '3rem', height: '3rem' }}>
+                        {IconComponent ? (
+                          <IconComponent className="text-white" size={20} />
+                        ) : (
+                          <div className="bg-white rounded" style={{ width: '1.5rem', height: '1.5rem' }}></div>
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="h6 fw-semibold text-dark mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="text-muted small">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
             
-            <div className="relative">
+            <div className="col-lg-6">
               <img
-                src="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400"
-                alt="Software development team in collaborative workspace"
-                className="rounded-2xl shadow-xl w-full transform hover:scale-105 transition-transform duration-300"
+                src={developmentImage?.src || "/images/ui/placeholder-workspace.jpg"}
+                alt={developmentImage?.alt || "Software development team in collaborative workspace"}
+                className="img-fluid rounded-3 shadow"
+                width={developmentImage?.width || 600}
+                height={developmentImage?.height || 400}
                 data-testid="img-development-approach"
+                loading="lazy"
               />
             </div>
           </div>
           
           {/* CTA Section */}
-          <div className="text-center bg-gradient-to-r from-indigo-50 to-cyan-50 dark:from-indigo-900/20 dark:to-cyan-900/20 rounded-2xl p-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="text-center bg-light rounded-3 p-5">
+            <h2 className="display-5 fw-bold text-dark mb-3">
               Ready to Start Your Project?
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            <p className="lead text-muted mb-4">
               Let's discuss how we can bring your vision to life with clean, scalable code.
             </p>
             <Link href="/contact">
               <button 
-                className="bg-gradient-to-r from-indigo-600 to-cyan-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+                className="btn btn-primary btn-lg px-4 py-3"
                 data-testid="button-schedule-call"
               >
                 Schedule a Discovery Call
@@ -186,7 +230,7 @@ export default function Work() {
             </Link>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

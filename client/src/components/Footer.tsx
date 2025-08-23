@@ -33,44 +33,46 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-900 dark:bg-black text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+    <footer className="bg-dark text-white py-5 mt-auto">
+      <div className="container">
+        <div className="row g-4">
           {/* Brand */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="text-2xl font-bold">
-              <span className="text-indigo-400">Digi</span>
-              <span className="text-cyan-400">Craft</span>
-              <span className="text-white">.space</span>
+          <div className="col-lg-3 col-md-6">
+            <Link href="/" className="text-decoration-none">
+              <span className="h3 fw-bold mb-0">
+                <span className="text-primary">Digi</span>
+                <span className="text-info">Craft</span>
+                <span className="text-white">.space</span>
+              </span>
             </Link>
-            <p className="mt-4 text-gray-400 text-sm">
+            <p className="mt-3 text-light small opacity-75">
               Product-minded engineers building reliable, beautiful software that ships and scales.
             </p>
-            <div className="mt-4 flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors" data-testid="link-twitter">
-                <Twitter className="w-5 h-5" />
+            <div className="mt-3 d-flex gap-3">
+              <a href="#" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-twitter">
+                <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors" data-testid="link-linkedin">
-                <Linkedin className="w-5 h-5" />
+              <a href="#" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-linkedin">
+                <Linkedin size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors" data-testid="link-github">
-                <Github className="w-5 h-5" />
+              <a href="#" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-github">
+                <Github size={20} />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors" data-testid="link-dribbble">
-                <Dribbble className="w-5 h-5" />
+              <a href="#" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-dribbble">
+                <Dribbble size={20} />
               </a>
             </div>
           </div>
 
           {/* Services */}
-          <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Services</h3>
-            <ul className="mt-4 space-y-3">
+          <div className="col-lg-2 col-md-6">
+            <h6 className="text-white text-uppercase fw-semibold mb-3">Services</h6>
+            <ul className="list-unstyled">
               {services.map((item) => (
-                <li key={item.name}>
+                <li key={item.name} className="mb-2">
                   <Link
                     href={item.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-light text-decoration-none small opacity-75 hover-opacity-100"
                     data-testid={`footer-link-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                   >
                     {item.name}
@@ -81,14 +83,14 @@ export default function Footer() {
           </div>
 
           {/* Solutions */}
-          <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Solutions</h3>
-            <ul className="mt-4 space-y-3">
+          <div className="col-lg-2 col-md-6">
+            <h6 className="text-white text-uppercase fw-semibold mb-3">Solutions</h6>
+            <ul className="list-unstyled">
               {solutions.map((item) => (
-                <li key={item.name}>
+                <li key={item.name} className="mb-2">
                   <Link
                     href={item.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-light text-decoration-none small opacity-75 hover-opacity-100"
                     data-testid={`footer-link-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                   >
                     {item.name}
@@ -99,14 +101,14 @@ export default function Footer() {
           </div>
 
           {/* Company */}
-          <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Company</h3>
-            <ul className="mt-4 space-y-3">
+          <div className="col-lg-2 col-md-6">
+            <h6 className="text-white text-uppercase fw-semibold mb-3">Company</h6>
+            <ul className="list-unstyled">
               {company.map((item) => (
-                <li key={item.name}>
+                <li key={item.name} className="mb-2">
                   <Link
                     href={item.href}
-                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                    className="text-light text-decoration-none small opacity-75 hover-opacity-100"
                     data-testid={`footer-link-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                   >
                     {item.name}
@@ -117,15 +119,15 @@ export default function Footer() {
           </div>
 
           {/* Support */}
-          <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Support</h3>
-            <ul className="mt-4 space-y-3">
+          <div className="col-lg-3 col-md-6">
+            <h6 className="text-white text-uppercase fw-semibold mb-3">Support</h6>
+            <ul className="list-unstyled">
               {support.map((item) => (
-                <li key={item.name}>
+                <li key={item.name} className="mb-2">
                   {item.href.startsWith("mailto:") ? (
                     <a
                       href={item.href}
-                      className="text-sm text-gray-400 hover:text-white transition-colors"
+                      className="text-light text-decoration-none small opacity-75 hover-opacity-100"
                       data-testid={`footer-link-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                     >
                       {item.name}
@@ -133,7 +135,7 @@ export default function Footer() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="text-sm text-gray-400 hover:text-white transition-colors"
+                      className="text-light text-decoration-none small opacity-75 hover-opacity-100"
                       data-testid={`footer-link-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                     >
                       {item.name}
@@ -145,18 +147,22 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-gray-400">
-              © 2023 DigiCraft.space. All rights reserved.
-            </p>
-            <div className="mt-4 md:mt-0 flex space-x-6">
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors" data-testid="footer-link-privacy">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-sm text-gray-400 hover:text-white transition-colors" data-testid="footer-link-terms">
-                Terms of Service
-              </a>
+        <div className="mt-5 pt-4 border-top border-secondary">
+          <div className="row align-items-center">
+            <div className="col-md-6">
+              <p className="text-light small mb-0 opacity-75">
+                © 2025 DigiCraft.space. All rights reserved.
+              </p>
+            </div>
+            <div className="col-md-6 text-md-end">
+              <div className="d-flex gap-4 justify-content-md-end">
+                <a href="#" className="text-light text-decoration-none small opacity-75 hover-opacity-100" data-testid="footer-link-privacy">
+                  Privacy Policy
+                </a>
+                <a href="#" className="text-light text-decoration-none small opacity-75 hover-opacity-100" data-testid="footer-link-terms">
+                  Terms of Service
+                </a>
+              </div>
             </div>
           </div>
         </div>
