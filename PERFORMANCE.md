@@ -91,12 +91,16 @@ const toggleTheme = useCallback(() => {
 ```
 
 ### **5. CSS & Resource Loading**
+- **Bootstrap CDN**: Loaded from CDN for optimal performance
 - **Critical CSS inline**: Above-the-fold styles load immediately
 - **Font optimization**: `display=swap` for better performance
 - **Resource hints**: Preconnect, DNS prefetch, preload
-- **Bootstrap defer**: Non-critical CSS loads asynchronously
+- **Custom CSS variables**: Efficient theming system
 
 ```html
+<!-- Bootstrap 5 CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <!-- Critical CSS inline -->
 <style>
   body { margin: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
@@ -107,8 +111,8 @@ const toggleTheme = useCallback(() => {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
-<!-- Async CSS loading -->
-<link rel="preload" href="bootstrap.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 ```
 
 ### **6. Performance Monitoring**
@@ -242,7 +246,8 @@ npm run clean
 - [x] Code splitting and lazy loading
 - [x] Build optimization
 - [x] Component memoization
-- [x] CSS optimization
+- [x] Bootstrap 5 CDN integration
+- [x] Custom CSS variables for theming
 
 ### **Phase 2: Advanced Optimizations** 🚧
 - [ ] Service worker implementation
@@ -264,12 +269,34 @@ npm run clean
 - **⚡ 25-40% faster component renders**
 - **💾 20-30% reduced memory usage**
 - **🌐 Better Core Web Vitals scores**
+- **🎨 Efficient Bootstrap 5 integration**
 
 ### **User Experience Impact**
 - **Faster navigation** between pages
 - **Smoother interactions** and animations
 - **Better mobile performance** on slow networks
 - **Improved SEO** with better performance metrics
+- **Consistent theming** with custom CSS variables
+
+## 🎨 Bootstrap 5 Performance Benefits
+
+### **CDN Advantages**
+- **Global distribution**: Faster loading from edge locations
+- **Browser caching**: Shared cache across websites
+- **Parallel downloads**: Multiple CDN connections
+- **Reduced server load**: Offloads static assets
+
+### **Custom CSS Variables**
+- **Efficient theming**: CSS variables for dynamic changes
+- **Reduced CSS size**: Custom properties instead of utility classes
+- **Theme switching**: Fast dark/light mode transitions
+- **Maintainable code**: Centralized color and spacing definitions
+
+### **Component Optimization**
+- **Bootstrap components**: Pre-optimized, tested components
+- **Responsive design**: Built-in mobile-first approach
+- **Accessibility**: WCAG compliant out of the box
+- **Cross-browser**: Consistent behavior across browsers
 
 ---
 

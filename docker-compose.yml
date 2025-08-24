@@ -1,0 +1,110 @@
+version: '3.8'
+
+services:
+  # Main application
+  digicraft-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: digicraft-app
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - SESSION_SECRET=${SESSION_SECRET:-your-super-secret-session-key-here}
+      - DOMAIN=${DOMAIN:-digicraft.space}
+      - FRONTEND_URL=${FRONTEND_URL:-https://digicraft.space}
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+      - ./uploads:/app/uploads
+    networks:
+      - digicraft-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:5000/api/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    depends_on:
+      - postgres
+
+  # PostgreSQL database (optional - comment out if using external database)
+  postgres:
+    image: postgres:15-alpine
+    container_name: digicraft-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=digicraft
+      - POSTGRES_USER=digicraft_user
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-your_secure_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - digicraft-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U digicraft_user -d digicraft"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for session storage (optional - comment out if using memory store)
+  redis:
+    image: redis:7-alpine
+    container_name: digicraft-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-your_redis_password}
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - digicraft-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Nginx reverse proxy (optional - comment out if using external nginx)
+  nginx:
+    image: nginx:alpine
+    container_name: digicraft-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/sites-enabled:/etc/nginx/sites-enabled:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/logs:/var/log/nginx
+    networks:
+      - digicraft-network
+    depends_on:
+      - digicraft-app
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  digicraft-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

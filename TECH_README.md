@@ -1,7 +1,7 @@
 # DigiCraft.space - Technical Development Guide
 
 ## 🚀 Quick Start
-This is a React + TypeScript application built with Vite, featuring a modern UI with Tailwind CSS and shadcn/ui components.
+This is a React + TypeScript application built with Vite, featuring a modern UI with Bootstrap 5 and custom components.
 
 ## 📁 Project Structure Overview
 
@@ -22,7 +22,8 @@ client/
 server/
 ├── index.ts                # Main server entry point
 ├── routes.ts               # API route definitions
-└── storage.ts              # Data storage logic
+├── storage.ts              # Data storage logic
+└── vite.ts                 # Vite development setup
 ```
 
 ## 🎯 Common Change Scenarios
@@ -89,15 +90,15 @@ server/
 - **What to change:** Global CSS, custom properties, base styles
 - **Look for:** CSS variables and global styling rules
 
-#### **Tailwind Configuration**
-- **File:** `tailwind.config.ts`
-- **What to change:** Colors, fonts, spacing, custom utilities
-- **Look for:** `theme` section and custom configurations
+#### **Bootstrap Customization**
+- **File:** `client/src/index.css`
+- **What to change:** Custom CSS variables for DigiCraft theme
+- **Look for:** `:root` section and custom CSS variables
 
 #### **Component Styling**
-- **File:** `client/src/components/ui/` (any component file)
+- **File:** `client/src/components/` (any component file)
 - **What to change:** Individual component styles, variants
-- **Look for:** `className` props and Tailwind classes
+- **Look for:** `className` props and Bootstrap classes
 
 ### 4. **Adding New Pages**
 
@@ -166,7 +167,7 @@ server/
 ### **For Content Updates:**
 1. **Text/Images:** Modify data files in `client/src/data/`
 2. **Layout:** Update component files in `client/src/components/`
-3. **Styling:** Adjust CSS classes and Tailwind utilities
+3. **Styling:** Adjust CSS classes and Bootstrap utilities
 
 ### **For New Features:**
 1. **UI Components:** Create in `client/src/components/`
@@ -198,10 +199,10 @@ export const services = [
 ### **Changing Hero Text:**
 ```tsx
 // In client/src/pages/Home.tsx
-<h1 className="text-4xl font-bold">
+<h1 className="display-4 fw-bold">
   New Hero Title Here
 </h1>
-<p className="text-lg text-muted-foreground">
+<p className="lead text-muted">
   New hero description here
 </p>
 ```
@@ -220,7 +221,7 @@ const navItems = [
 - **Never modify:** `package.json`, `vite.config.ts`, `tsconfig.json` unless you know what you're doing
 - **Always backup:** Make a copy before making major changes
 - **Test locally:** Run `npm run dev` to see changes before committing
-- **Component library:** Uses shadcn/ui - refer to their docs for component customization
+- **Component library:** Uses Bootstrap 5 - refer to Bootstrap docs for component customization
 
 ## 🔍 Finding Specific Content
 
@@ -234,6 +235,39 @@ const navItems = [
 - Look for component imports in page files
 - Use component names to trace usage
 
+## 🎨 Bootstrap 5 Integration
+
+### **Custom Theme Variables**
+The project uses custom CSS variables for consistent theming:
+
+```css
+:root {
+  --bs-primary: #6366F1;        /* DigiCraft primary color */
+  --bs-secondary: #06B6D4;      /* DigiCraft secondary color */
+  --dc-background: #ffffff;     /* Custom background */
+  --dc-foreground: #1a1a1a;    /* Custom text color */
+}
+```
+
+### **Common Bootstrap Classes Used**
+- **Layout:** `container`, `row`, `col-*`, `d-flex`, `d-none`
+- **Spacing:** `p-*`, `m-*`, `py-*`, `px-*`, `gap-*`
+- **Typography:** `text-*`, `fw-*`, `display-*`, `lead`
+- **Components:** `btn`, `card`, `bg-*`, `border-*`
+- **Responsive:** `d-lg-none`, `col-lg-*`, `col-md-*`
+
+### **Dark Mode Support**
+The project includes dark mode support with Bootstrap-compatible CSS variables:
+
+```css
+.dark {
+  --dc-background: #000000;
+  --dc-foreground: #ffffff;
+  --bs-body-bg: #000000;
+  --bs-body-color: #ffffff;
+}
+```
+
 ## 📞 Need Help?
 
 If you're unsure about making changes:
@@ -241,7 +275,8 @@ If you're unsure about making changes:
 2. **Look at similar existing code** - use it as a template
 3. **Search the codebase** - find examples of what you want to do
 4. **Make small changes first** - test incrementally
+5. **Refer to Bootstrap 5 documentation** for component usage
 
 ---
 
-**Remember:** This app is built with modern React patterns. Most changes involve updating data files or component props rather than complex logic modifications.
+**Remember:** This app is built with modern React patterns and Bootstrap 5. Most changes involve updating data files or component props rather than complex logic modifications.

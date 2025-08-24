@@ -1,6 +1,6 @@
 # DigiCraft.space - Software Solutions Company Website
 
-A modern, animated website for DigiCraft.space, a software solutions company. Built with React, TypeScript, and Tailwind CSS, featuring comprehensive service offerings, pricing information, portfolio showcase, and contact functionality.
+A modern, animated website for DigiCraft.space, a software solutions company. Built with React, TypeScript, and Bootstrap 5, featuring comprehensive service offerings, pricing information, portfolio showcase, and contact functionality.
 
 ![DigiCraft.space](https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&h=600)
 
@@ -29,8 +29,8 @@ A modern, animated website for DigiCraft.space, a software solutions company. Bu
 - **State Management**: TanStack Query for server state and caching
 - **Form Handling**: React Hook Form with Zod validation
 - **Routing**: Client-side routing with Wouter
-- **Styling**: Tailwind CSS with custom design system
-- **Component Library**: shadcn/ui components built on Radix UI
+- **Styling**: Bootstrap 5 with custom DigiCraft design system
+- **Component Library**: Custom components built on Bootstrap 5
 - **Analytics**: Built-in page view and event tracking
 
 ## 🛠 Tech Stack
@@ -39,8 +39,8 @@ A modern, animated website for DigiCraft.space, a software solutions company. Bu
 - **React 18** - Modern React with hooks and concurrent features
 - **TypeScript** - Full type safety and better developer experience
 - **Vite** - Fast build tool and development server
-- **Tailwind CSS** - Utility-first CSS framework
-- **shadcn/ui** - High-quality component library
+- **Bootstrap 5** - Modern CSS framework with custom DigiCraft theme
+- **Custom Components** - High-quality component library built on Bootstrap
 - **Framer Motion** - Animation library for smooth transitions
 - **TanStack Query** - Server state management and caching
 - **React Hook Form** - Performant forms with easy validation
@@ -57,8 +57,8 @@ A modern, animated website for DigiCraft.space, a software solutions company. Bu
 ### Development Tools
 - **Vite** - Build tool and dev server
 - **ESLint** - Code linting
-- **PostCSS** - CSS processing
-- **Tailwind CSS** - Utility-first styling
+- **TypeScript** - Type checking and compilation
+- **esbuild** - Fast server-side bundling
 
 ## 📦 Installation
 
@@ -102,11 +102,11 @@ digicraft-space/
 ├── client/                     # Frontend React application
 │   ├── src/
 │   │   ├── components/         # Reusable UI components
-│   │   │   ├── ui/            # shadcn/ui components
+│   │   │   ├── ui/            # Custom UI components
 │   │   │   ├── Navbar.tsx     # Navigation component
 │   │   │   ├── Footer.tsx     # Footer component
 │   │   │   ├── Layout.tsx     # App layout wrapper
-│   │   │   └── ...
+│   │   │   └── ...            # Other components
 │   │   ├── pages/             # Route pages
 │   │   │   ├── Home.tsx       # Homepage
 │   │   │   ├── Services.tsx   # Services page
@@ -133,14 +133,14 @@ digicraft-space/
 ├── server/                    # Backend Express application
 │   ├── index.ts              # Server entry point
 │   ├── routes.ts             # API routes
-│   └── storage.ts            # Data storage interface
+│   ├── storage.ts            # Data storage interface
+│   └── vite.ts               # Vite development setup
 ├── shared/                   # Shared types and schemas
 │   └── schema.ts             # Database schemas
 ├── public/                   # Static assets
 │   ├── robots.txt            # Search engine directives
 │   └── sitemap.xml           # Site structure for SEO
 ├── package.json              # Dependencies and scripts
-├── tailwind.config.ts        # Tailwind CSS configuration
 ├── vite.config.ts            # Vite build configuration
 └── README.md                 # This file
 ```
@@ -206,7 +206,7 @@ Edit the data files in `client/src/data/`:
 - `careers.ts` - Update job positions
 
 #### Styling Changes
-- **Colors**: Update `tailwind.config.ts` and `client/src/index.css`
+- **Colors**: Update `client/src/index.css` CSS variables
 - **Fonts**: Modify font imports in `client/index.html` and CSS files
 - **Components**: Edit component files in `client/src/components/`
 
@@ -251,7 +251,7 @@ npm run build
 ### Development Guidelines
 1. **Code Style**: Follow existing TypeScript and React patterns
 2. **Components**: Use functional components with hooks
-3. **Styling**: Use Tailwind CSS classes, avoid custom CSS when possible
+3. **Styling**: Use Bootstrap 5 classes, avoid custom CSS when possible
 4. **Types**: Maintain full TypeScript coverage
 5. **Testing**: Add tests for new features
 
@@ -278,7 +278,7 @@ npm run build
 ### Common Issues
 - **Port conflicts**: Change port in server configuration
 - **Build errors**: Clear node_modules and reinstall dependencies
-- **Styling issues**: Check Tailwind CSS configuration and purge settings
+- **Styling issues**: Check Bootstrap CSS configuration and custom variables
 
 ## 📝 License
 
@@ -286,11 +286,10 @@ This project is proprietary software owned by DigiCraft.space. All rights reserv
 
 ## 🙏 Acknowledgments
 
-- **shadcn/ui** - Beautiful component library
-- **Tailwind CSS** - Utility-first CSS framework  
+- **Bootstrap 5** - Modern CSS framework
+- **React Community** - Amazing ecosystem and tools
 - **Lucide React** - Icon library
 - **Unsplash** - High-quality stock images
-- **React Community** - Amazing ecosystem and tools
 
 ---
 

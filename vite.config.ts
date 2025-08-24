@@ -3,9 +3,8 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  plugins: [
-    react(),
-  ],
+  plugins: [react()],
+  base: './', // 👈 important for relative paths
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

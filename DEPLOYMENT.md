@@ -95,7 +95,7 @@ Create `.env` file in the root directory:
 ```bash
 # Production Environment
 NODE_ENV=production
-PORT=3000
+PORT=5000
 
 # Database Configuration (if using PostgreSQL)
 DATABASE_URL="postgresql://username:password@localhost:5432/digicraft"
@@ -132,7 +132,7 @@ module.exports = {
     exec_mode: 'cluster',
     env: {
       NODE_ENV: 'production',
-      PORT: 3000
+      PORT: 5000
     },
     error_file: './logs/err.log',
     out_file: './logs/out.log',
@@ -219,7 +219,7 @@ server {
     
     # Proxy to Node.js Application
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:5000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -235,12 +235,12 @@ server {
     location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
         expires 1y;
         add_header Cache-Control "public, immutable";
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:5000;
     }
     
     # API Routes
     location /api/ {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://localhost:5000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -396,8 +396,8 @@ pm2 rollback digicraft-space
 
 #### 1. Port Already in Use
 ```bash
-# Check what's using port 3000
-sudo netstat -tulpn | grep :3000
+# Check what's using port 5000
+sudo netstat -tulpn | grep :5000
 
 # Kill process if needed
 sudo kill -9 <PID>
@@ -504,6 +504,42 @@ pm2 status
 - **Emergency**: [Your emergency contact]
 - **Documentation**: [Link to your documentation]
 
+## 🎯 Current Server Architecture
+
+### **Express.js Server**
+The application now uses a modern Express.js server with TypeScript:
+
+```typescript
+// server/index.ts
+import express from "express";
+import { registerRoutes } from "./routes";
+import { setupVite, serveStatic } from "./vite";
+
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Development: Vite dev server
+// Production: Static file serving
+if (app.get("env") === "development") {
+  await setupVite(app, server);
+} else {
+  serveStatic(app);
+}
+```
+
+### **Key Features**
+- **TypeScript**: Full type safety for backend code
+- **Vite Integration**: Hot reload in development
+- **Static Serving**: Optimized production builds
+- **API Routes**: RESTful API endpoints
+- **Middleware**: Request logging and error handling
+
+### **Port Configuration**
+- **Development**: Port 5000 (configurable via environment)
+- **Production**: Port 5000 (behind Nginx reverse proxy)
+- **Environment**: Automatic detection and configuration
+
 ---
 
 ## 🎯 Quick Deployment Checklist
@@ -521,7 +557,7 @@ pm2 status
 ---
 
 **Last Updated**: January 2025  
-**Version**: 1.0  
+**Version**: 2.0 (Bootstrap 5 + Express.js)  
 **Maintained by**: DigiCraft.space Team
 
 For more information, visit [digicraft.space](https://digicraft.space) or contact us at hello@digicraft.space.
