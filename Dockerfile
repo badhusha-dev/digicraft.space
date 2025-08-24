@@ -2,26 +2,25 @@
 # Multi-stage build for production deployment
 
 # Stage 1: Build the client application
-FROM node:18-alpine AS client-builder
+FROM node:20-alpine AS client-builder
 
 WORKDIR /app
 
-# Copy package files
+# Copy package files first
 COPY package*.json ./
-COPY client/package*.json ./client/
 
-# Install dependencies
-RUN npm ci --only=production --ignore-scripts
-RUN cd client && npm ci --only=production --ignore-scripts
+# Install root dependencies
+RUN npm install
 
 # Copy source code
 COPY . .
 
-# Build client application
+# Install client dependencies and build
+RUN cd client && npm install
 RUN npm run build
 
 # Stage 2: Build the server application
-FROM node:18-alpine AS server-builder
+FROM node:20-alpine AS server-builder
 
 WORKDIR /app
 
@@ -29,7 +28,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install all dependencies (including dev dependencies for build)
-RUN npm ci
+RUN npm install
 
 # Copy source code
 COPY . .
@@ -38,7 +37,7 @@ COPY . .
 RUN npm run build
 
 # Stage 3: Production runtime
-FROM node:18-alpine AS production
+FROM node:20-alpine AS production
 
 # Install dumb-init for proper signal handling
 RUN apk add --no-cache dumb-init
@@ -54,13 +53,10 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --only=production --ignore-scripts && npm cache clean --force
+RUN npm install --only=production && npm cache clean --force
 
 # Copy built applications from previous stages
-COPY --from=client-builder --chown=digicraft:nodejs /app/dist/public ./dist/public
-COPY --from=server-builder --chown=digicraft:nodejs /app/dist/index.js ./dist/index.js
-
-# Copy shared schemas
+COPY --from=client-builder --chown=digicraft:nodejs /app/dist ./dist
 COPY --from=server-builder --chown=digicraft:nodejs /app/shared ./shared
 
 # Create necessary directories
