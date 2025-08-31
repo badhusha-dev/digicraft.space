@@ -15,7 +15,6 @@ NC='\033[0m' # No Color
 # Configuration
 PROJECT_NAME="digicraft-space"
 DOCKER_COMPOSE_FILE="docker-compose.yml"
-ENV_FILE=".env"
 
 echo -e "${BLUE}🚀 DigiCraft.space Docker Deployment${NC}"
 echo "=================================="
@@ -52,36 +51,6 @@ check_docker() {
     fi
     
     print_status "Docker and Docker Compose are ready"
-}
-
-# Check environment file
-check_environment() {
-    echo "Checking environment configuration..."
-    
-    if [ ! -f "$ENV_FILE" ]; then
-        print_warning "Environment file not found. Creating from template..."
-        if [ -f "env.docker.example" ]; then
-            cp env.docker.example "$ENV_FILE"
-            print_warning "Please update $ENV_FILE with your production values before continuing"
-            read -p "Press Enter after updating the environment file..."
-        else
-            print_error "Environment template not found. Please create $ENV_FILE manually"
-            exit 1
-        fi
-    fi
-    
-    # Check required environment variables
-    source "$ENV_FILE"
-    required_vars=("SESSION_SECRET" "POSTGRES_PASSWORD")
-    
-    for var in "${required_vars[@]}"; do
-        if [ -z "${!var}" ] || [ "${!var}" = "your-super-secret-session-key-here-change-this-in-production" ]; then
-            print_error "Please update $var in $ENV_FILE with a secure value"
-            exit 1
-        fi
-    done
-    
-    print_status "Environment configuration is valid"
 }
 
 # Build and deploy
@@ -126,8 +95,8 @@ show_status() {
     echo "=================="
     
     # Check app health
-    if curl -s http://localhost:5000/api/health > /dev/null 2>&1; then
-        print_status "Application is healthy and responding"
+    if curl -s http://localhost:5000 > /dev/null 2>&1; then
+        print_status "Application is responding"
     else
         print_warning "Application health check failed"
     fi
@@ -143,7 +112,6 @@ show_status() {
 # Main deployment flow
 main() {
     check_docker
-    check_environment
     deploy
     show_status
     
@@ -152,7 +120,6 @@ main() {
     echo ""
     echo "Your application is now running at:"
     echo -e "  ${BLUE}Local:${NC} http://localhost:5000"
-    echo -e "  ${BLUE}Network:${NC} http://localhost:80 (via Nginx)"
     echo ""
     echo "Useful commands:"
     echo -e "  ${BLUE}View logs:${NC} docker-compose logs -f"

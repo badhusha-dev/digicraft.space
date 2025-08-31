@@ -14,24 +14,10 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=5000
-      - SESSION_SECRET=${SESSION_SECRET:-your-super-secret-session-key-here}
-      - DOMAIN=${DOMAIN:-digicraft.space}
-      - FRONTEND_URL=${FRONTEND_URL:-https://digicraft.space}
-    env_file:
-      - .env
     volumes:
       - ./logs:/app/logs
-      - ./uploads:/app/uploads
     networks:
       - digicraft-network
-    healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:5000/api/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-    depends_on:
-      - postgres
 
   # PostgreSQL database (optional - comment out if using external database)
   postgres:
@@ -41,7 +27,7 @@ services:
     environment:
       - POSTGRES_DB=digicraft
       - POSTGRES_USER=digicraft_user
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-your_secure_password}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password123}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -54,33 +40,10 @@ services:
       timeout: 5s
       retries: 5
 
-  # Redis for session storage (optional - comment out if using memory store)
-  redis:
-    image: redis:7-alpine
-    container_name: digicraft-redis
-    restart: unless-stopped
-    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-your_redis_password}
-    volumes:
-      - redis_data:/data
-    ports:
-      - "6379:6379"
-    networks:
-      - digicraft-network
-    healthcheck:
-      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
-      interval: 10s
-      timeout: 3s
-      retries: 5
-
 volumes:
   postgres_data:
-    driver: local
-  redis_data:
     driver: local
 
 networks:
   digicraft-network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.20.0.0/16

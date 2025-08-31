@@ -19,28 +19,8 @@ COPY . .
 RUN cd client && npm install
 RUN npm run build
 
-# Stage 2: Build the server application
-FROM node:20-alpine AS server-builder
-
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install all dependencies (including dev dependencies for build)
-RUN npm install
-
-# Copy source code
-COPY . .
-
-# Build server application
-RUN npm run build
-
-# Stage 3: Production runtime
+# Stage 2: Production runtime
 FROM node:20-alpine AS production
-
-# Install dumb-init for proper signal handling
-RUN apk add --no-cache dumb-init
 
 # Create app user for security
 RUN addgroup -g 1001 -S nodejs
@@ -52,12 +32,14 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install only production dependencies
-RUN npm install --only=production && npm cache clean --force
+# Install all dependencies (including tsx for TypeScript execution)
+RUN npm install && npm cache clean --force
 
-# Copy built applications from previous stages
-COPY --from=client-builder --chown=digicraft:nodejs /app/dist ./dist
-COPY --from=server-builder --chown=digicraft:nodejs /app/shared ./shared
+# Copy built client from previous stage
+COPY --from=client-builder --chown=digicraft:nodejs /app/client/dist ./client/dist
+
+# Copy server source code
+COPY --chown=digicraft:nodejs server ./server
 
 # Create necessary directories
 RUN mkdir -p logs && chown -R digicraft:nodejs logs
@@ -68,10 +50,5 @@ USER digicraft
 # Expose port
 EXPOSE 5000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:5000/api/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })" || exit 1
-
-# Start the application
-ENTRYPOINT ["dumb-init", "--"]
-CMD ["node", "dist/index.js"]
+# Start the application with tsx
+CMD ["npx", "tsx", "server/index.ts"]
