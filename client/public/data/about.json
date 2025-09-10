@@ -1,0 +1,90 @@
+{
+  "founder": {
+    "name": "Ayaz",
+    "role": "Founder & Lead Developer",
+    "bio": "With over 8 years of experience in software development, Ayaz founded DigiCraft to bridge the gap between great ideas and great software. He's passionate about building products that solve real problems and scale with growing businesses.",
+    "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200",
+    "socialLinks": {
+      "github": "https://github.com/ayaz",
+      "linkedin": "https://linkedin.com/in/ayaz",
+      "twitter": "https://twitter.com/ayaz"
+    }
+  },
+  "values": [
+    {
+      "title": "Transparency",
+      "description": "Clear communication, honest timelines, and upfront pricing. No surprises, ever.",
+      "icon": "handshake"
+    },
+    {
+      "title": "Quality",
+      "description": "We write code like our reputation depends on it—because it does.",
+      "icon": "award"
+    },
+    {
+      "title": "Speed",
+      "description": "Fast iterations, quick feedback, and rapid deployment without cutting corners.",
+      "icon": "rocket"
+    }
+  ],
+  "techStack": [
+    {
+      "category": "Frontend",
+      "technologies": ["React", "Next.js", "TypeScript", "Bootstrap"]
+    },
+    {
+      "category": "Backend",
+      "technologies": ["Node.js", "Python", "GraphQL", "REST APIs", "PostgreSQL"]
+    },
+    {
+      "category": "Mobile",
+      "technologies": ["React Native", "Flutter", "Expo", "iOS", "Android"]
+    },
+    {
+      "category": "Cloud & DevOps",
+      "technologies": ["AWS", "Docker", "Kubernetes", "CI/CD", "Terraform"]
+    }
+  ],
+  "whyChooseUs": [
+    {
+      "title": "Product-Minded Engineers",
+      "description": "We don't just write code—we think about user experience, business goals, and long-term scalability.",
+      "icon": "lightbulb"
+    },
+    {
+      "title": "Fast Time to Market",
+      "description": "Our streamlined process gets your MVP to market in 6-12 weeks, not months.",
+      "icon": "clock"
+    },
+    {
+      "title": "Transparent Pricing",
+      "description": "No hidden fees or surprise costs. Clear packages with upfront pricing.",
+      "icon": "dollar-sign"
+    },
+    {
+      "title": "Ongoing Support",
+      "description": "We're here for the long haul with maintenance, updates, and scaling support.",
+      "icon": "settings"
+    },
+    {
+      "title": "Modern Technology",
+      "description": "We use cutting-edge tools and frameworks to build fast, secure, and maintainable software.",
+      "icon": "code"
+    },
+    {
+      "title": "Dedicated Team",
+      "description": "Work directly with experienced developers who understand your business goals.",
+      "icon": "headphones"
+    }
+  ],
+  "companyInfo": {
+    "title": "About DigiCraft.space",
+    "description": "We're a team of product-minded engineers who believe great software starts with understanding the problem. Founded in 2023, we've helped dozens of startups and growing businesses turn their ideas into successful digital products.",
+    "stats": [
+      { "label": "Projects Delivered", "value": "50+" },
+      { "label": "Client Satisfaction", "value": "100%" },
+      { "label": "Years Experience", "value": "8+" },
+      { "label": "Team Members", "value": "10+" }
+    ]
+  }
+}

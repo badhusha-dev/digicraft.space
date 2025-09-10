@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { ArrowRight, Check, Star, Lightbulb, Globe, Smartphone, Server, Activity, Cloud, Bot, Settings, Search, Palette, Code, Rocket, TrendingUp } from "lucide-react";
 import SEO from "../components/SEO";
+import { homeData } from "../data/home";
 import { services } from "../data/services";
 import { testimonials } from "../data/testimonials";
 import { getImageById } from "../data/images";
@@ -11,14 +12,6 @@ export default function Home() {
   useEffect(() => {
     logPageView("home");
   }, []);
-
-  const processSteps = [
-    { icon: "search", title: "Discover", description: "Understanding your vision and requirements" },
-    { icon: "palette", title: "Design", description: "Creating user-centered experiences" },
-    { icon: "code", title: "Build", description: "Developing with modern technologies" },
-    { icon: "rocket", title: "Ship", description: "Launching to production smoothly" },
-    { icon: "trending-up", title: "Grow", description: "Scaling and optimizing for success" },
-  ];
 
   // Icon mapping for services
   const serviceIconMap = {
@@ -43,6 +36,9 @@ export default function Home() {
 
   // Get local images
   const heroImage = getImageById('hero-team-collaboration');
+
+  // Process steps from homeData
+  const processSteps = homeData.process.steps;
 
   return (
     <>
@@ -146,9 +142,9 @@ export default function Home() {
       <section className="py-5 bg-light">
         <div className="container">
           <div className="text-center mb-5">
-            <h2 className="display-5 fw-bold text-dark">Our Process</h2>
+            <h2 className="display-5 fw-bold text-dark">{homeData.process.title}</h2>
             <p className="lead text-muted mt-3">
-              From idea to launch in 5 proven steps
+              {homeData.process.subtitle}
             </p>
           </div>
           
@@ -186,9 +182,9 @@ export default function Home() {
       <section className="py-5 bg-white">
         <div className="container">
           <div className="text-center mb-5">
-            <h2 className="display-5 fw-bold text-dark">What Our Clients Say</h2>
+            <h2 className="display-5 fw-bold text-dark">{homeData.testimonials.title}</h2>
             <p className="lead text-muted mt-3">
-              Trusted by innovative companies worldwide
+              {homeData.testimonials.subtitle}
             </p>
           </div>
           
@@ -202,14 +198,34 @@ export default function Home() {
                 <div className="card h-100 shadow-sm border-0">
                   <div className="card-body p-4">
                     <div className="d-flex align-items-center mb-4">
-                      <img
-                        src={testimonial.avatar}
-                        alt={testimonial.name}
-                        className="rounded-circle me-3"
-                        width="48"
-                        height="48"
-                        loading="lazy"
-                      />
+                      <div className="position-relative me-3">
+                        <img
+                          src={testimonial.avatar}
+                          alt={testimonial.name}
+                          className="rounded-circle"
+                          width="48"
+                          height="48"
+                          loading="lazy"
+                          style={{ objectFit: 'cover' }}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const fallback = target.nextElementSibling as HTMLElement;
+                            if (fallback) fallback.style.display = 'flex';
+                          }}
+                        />
+                        <div 
+                          className="rounded-circle d-none align-items-center justify-content-center text-white fw-bold"
+                          style={{ 
+                            width: '48px', 
+                            height: '48px', 
+                            background: 'var(--dc-gradient-primary)',
+                            fontSize: '18px'
+                          }}
+                        >
+                          {testimonial.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                      </div>
                       <div>
                         <h4 className="fw-semibold text-dark mb-1">{testimonial.name}</h4>
                         <p className="small text-muted mb-0">

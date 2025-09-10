@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://digicraft.space/sitemap.xml
+Sitemap: https://digi-craft.digicraft.space/sitemap.xml
 
 # Block crawlers from admin paths if they exist
 Disallow: /admin/

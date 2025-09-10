@@ -1,5 +1,8 @@
 export function logPageView(page: string): void {
-  console.log(`Analytics: Page view - ${page}`);
+  // Only log in development mode
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`Analytics: Page view - ${page}`);
+  }
   
   // In a real application, you would send this data to your analytics service
   // Example: Google Analytics, Mixpanel, Amplitude, etc.
@@ -13,7 +16,10 @@ export function logPageView(page: string): void {
 }
 
 export function logEvent(event: string, properties?: Record<string, any>): void {
-  console.log(`Analytics: Event - ${event}`, properties);
+  // Only log in development mode
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`Analytics: Event - ${event}`, properties);
+  }
   
   // In a real application, you would send this data to your analytics service
   if (typeof window !== "undefined") {

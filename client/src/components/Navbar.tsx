@@ -16,8 +16,8 @@ const Navbar = memo(function Navbar() {
     { name: "Work", href: "/work" },
     { name: "Pricing", href: "/pricing" },
     { name: "About", href: "/about" },
-    { name: "Blog", href: "/blog" },
-    { name: "Careers", href: "/careers" },
+    // { name: "Blog", href: "/blog" }, // Hidden - uncomment to restore
+    // { name: "Careers", href: "/careers" }, // Hidden - uncomment to restore
     { name: "Contact", href: "/contact" },
   ], []);
 
@@ -37,10 +37,15 @@ const Navbar = memo(function Navbar() {
   , [theme]);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+    <nav className={`navbar navbar-expand-lg navbar-light shadow-sm sticky-top ${theme === 'dark' ? 'bg-dark' : 'bg-white'}`}>
       <div className="container">
         {/* Logo */}
-        <Link href="/" className="navbar-brand text-decoration-none">
+        <Link href="/" className="navbar-brand text-decoration-none d-flex align-items-center">
+          <img 
+            src="/logo.svg" 
+            alt="DigiCraft Logo" 
+            className="me-2 dc-logo" 
+          />
           <span className="h3 fw-bold mb-0">
             <span className="text-primary">Digi</span>
             <span className="text-info">Craft</span>

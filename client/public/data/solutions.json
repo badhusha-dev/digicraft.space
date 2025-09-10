@@ -1,0 +1,70 @@
+[
+  {
+    "id": "mvp-sprint",
+    "title": "MVP Sprint",
+    "subtitle": "Get your idea to market fast",
+    "description": "Perfect for validating ideas and launching quickly",
+    "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300",
+    "features": [
+      "Product Discovery & UX Design",
+      "MVP Development (Web or Mobile)",
+      "Basic Backend & Database",
+      "Deployment & Launch",
+      "2 Weeks Post-Launch Support"
+    ],
+    "pricing": "Starting at $8,000",
+    "timeline": "4-6 weeks delivery"
+  },
+  {
+    "id": "scale-up-kit",
+    "title": "Scale-Up Kit",
+    "subtitle": "Full-featured platform for growth",
+    "description": "Ideal for growing businesses needing continuous development",
+    "image": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300",
+    "features": [
+      "Everything in MVP Sprint",
+      "Advanced Features & Integrations",
+      "Scalable Architecture",
+      "Admin Dashboard",
+      "API Documentation",
+      "3 Months Support & Updates"
+    ],
+    "pricing": "$12,000/month",
+    "timeline": "Dedicated development squad",
+    "featured": true
+  },
+  {
+    "id": "commerce-core",
+    "title": "Commerce Core",
+    "subtitle": "E-commerce platform ready to sell",
+    "description": "Complete e-commerce solution with all essential features",
+    "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300",
+    "features": [
+      "Complete E-commerce Platform",
+      "Payment Gateway Integration",
+      "Inventory Management",
+      "Order Processing System",
+      "Analytics Dashboard",
+      "Mobile App Included"
+    ],
+    "pricing": "Custom Quote",
+    "timeline": "8-12 weeks delivery"
+  },
+  {
+    "id": "back-office-suite",
+    "title": "Back-Office Suite",
+    "subtitle": "Internal tools for efficiency",
+    "description": "Comprehensive business management tools",
+    "image": "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=300",
+    "features": [
+      "CRM & Customer Management",
+      "Project Management Tools",
+      "Reporting & Analytics",
+      "Team Collaboration Features",
+      "Workflow Automation",
+      "Role-based Access Control"
+    ],
+    "pricing": "Custom Quote",
+    "timeline": "6-10 weeks delivery"
+  }
+]

@@ -1,87 +1,89 @@
+// Careers data - preserved for future use when Careers page is restored
+// To restore: uncomment Careers routes in App.tsx, Navbar.tsx, and Footer.tsx
+
 export interface JobPosition {
   id: string;
   title: string;
-  type: "full-time" | "part-time" | "contract";
-  location: "remote" | "hybrid" | "onsite";
-  salary: string;
+  department: string;
+  location: string;
+  type: "Full-time" | "Part-time" | "Contract" | "Internship";
   description: string;
   requirements: string[];
+  benefits: string[];
+  salary?: string;
+  applyLink: string;
+  featured?: boolean;
 }
 
 export const jobPositions: JobPosition[] = [
   {
-    id: "senior-fullstack",
-    title: "Senior Full-Stack Developer",
-    type: "full-time",
-    location: "remote",
-    salary: "$80k - $120k",
-    description: "Lead development of React/Node.js applications. 5+ years experience with modern web technologies.",
+    id: "senior-frontend-developer",
+    title: "Senior Frontend Developer",
+    department: "Engineering",
+    location: "Remote",
+    type: "Full-time",
+    description: "We're looking for a senior frontend developer to join our team and help build amazing user experiences.",
     requirements: [
-      "React, TypeScript, Node.js",
-      "GraphQL, PostgreSQL, AWS",
-      "Team leadership experience",
+      "5+ years of React/TypeScript experience",
+      "Strong understanding of modern CSS and responsive design",
+      "Experience with state management (Redux, Zustand)",
+      "Knowledge of testing frameworks (Jest, React Testing Library)",
+      "Experience with build tools (Vite, Webpack)"
     ],
+    benefits: [
+      "Competitive salary",
+      "Remote work flexibility",
+      "Health insurance",
+      "Professional development budget",
+      "Flexible PTO"
+    ],
+    applyLink: "mailto:careers@digicraft.space?subject=Senior Frontend Developer Application",
+    featured: true
   },
   {
-    id: "mobile-developer",
-    title: "Mobile App Developer",
-    type: "full-time",
-    location: "remote",
-    salary: "$70k - $100k",
-    description: "Build beautiful mobile apps with React Native and Flutter. 3+ years mobile development experience.",
+    id: "full-stack-developer",
+    title: "Full-Stack Developer",
+    department: "Engineering",
+    location: "Remote",
+    type: "Full-time",
+    description: "Join our team as a full-stack developer working on both frontend and backend solutions.",
     requirements: [
-      "React Native, Flutter",
-      "iOS/Android platforms",
-      "App Store deployment",
+      "3+ years of full-stack development experience",
+      "Proficiency in React, Node.js, and TypeScript",
+      "Database experience (PostgreSQL, MongoDB)",
+      "API development (REST, GraphQL)",
+      "Cloud platform experience (AWS, Azure)"
     ],
+    benefits: [
+      "Competitive salary",
+      "Remote work flexibility",
+      "Health insurance",
+      "Professional development budget",
+      "Flexible PTO"
+    ],
+    applyLink: "mailto:careers@digicraft.space?subject=Full-Stack Developer Application"
   },
   {
     id: "devops-engineer",
     title: "DevOps Engineer",
-    type: "full-time",
-    location: "remote",
-    salary: "$75k - $110k",
-    description: "Manage cloud infrastructure and CI/CD pipelines. Experience with AWS, Docker, and Kubernetes.",
+    department: "Engineering",
+    location: "Remote",
+    type: "Full-time",
+    description: "Help us build and maintain scalable infrastructure and deployment pipelines.",
     requirements: [
-      "AWS, GCP, or Azure",
-      "Docker, Kubernetes",
-      "CI/CD, Infrastructure as Code",
+      "3+ years of DevOps experience",
+      "Docker and Kubernetes expertise",
+      "CI/CD pipeline development",
+      "Cloud platform experience (AWS, Azure)",
+      "Infrastructure as Code (Terraform, CloudFormation)"
     ],
-  },
-  {
-    id: "ux-ui-designer",
-    title: "UX/UI Designer",
-    type: "contract",
-    location: "remote",
-    salary: "$50-80/hr",
-    description: "Design exceptional user experiences for web and mobile applications. Portfolio required.",
-    requirements: [
-      "Figma, Adobe Creative Suite",
-      "User research, prototyping",
-      "Design systems experience",
+    benefits: [
+      "Competitive salary",
+      "Remote work flexibility",
+      "Health insurance",
+      "Professional development budget",
+      "Flexible PTO"
     ],
-  },
-];
-
-export const benefits = [
-  {
-    title: "Remote Work",
-    description: "Work from anywhere with flexible hours",
-    icon: "laptop",
-  },
-  {
-    title: "Learning Budget",
-    description: "$2k annual budget for courses and conferences",
-    icon: "graduation-cap",
-  },
-  {
-    title: "Health & Wellness",
-    description: "Health insurance and wellness programs",
-    icon: "heart",
-  },
-  {
-    title: "Flexible PTO",
-    description: "Unlimited vacation and personal time",
-    icon: "calendar",
-  },
+    applyLink: "mailto:careers@digicraft.space?subject=DevOps Engineer Application"
+  }
 ];

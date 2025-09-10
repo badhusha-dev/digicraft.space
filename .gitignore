@@ -111,17 +111,6 @@ temp/
 vite.config.ts.*
 *.tar.gz
 
-# Server specific
-server/public
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# PM2
-ecosystem.config.js
-
 # TypeScript
 *.tsbuildinfo
 

@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Github, Linkedin, Twitter, Handshake, Award, Rocket, Clock, DollarSign, Settings, Headphones } from "lucide-react";
 import SEO from "../components/SEO";
+import { aboutData } from "../data/about";
 import { getImageById } from "../data/images";
 import { useEffect } from "react";
 import { logPageView } from "../utils/analytics";
@@ -9,66 +10,6 @@ export default function About() {
   useEffect(() => {
     logPageView("about");
   }, []);
-
-  const values = [
-    {
-      title: "Transparency",
-      description: "Clear communication, honest timelines, and upfront pricing. No surprises, ever.",
-      icon: "handshake",
-    },
-    {
-      title: "Quality",
-      description: "We write code like our reputation depends on it—because it does.",
-      icon: "award",
-    },
-    {
-      title: "Speed",
-      description: "Fast iterations, quick feedback, and rapid deployment without cutting corners.",
-      icon: "rocket",
-    },
-  ];
-
-  const techStack = [
-    {
-      category: "Frontend",
-      technologies: ["React", "Next.js", "TypeScript", "Bootstrap"],
-    },
-    {
-      category: "Backend",
-      technologies: ["Node.js", "Python", "GraphQL", "REST APIs", "PostgreSQL"],
-    },
-    {
-      category: "Mobile",
-      technologies: ["React Native", "Flutter", "Expo", "iOS", "Android"],
-    },
-    {
-      category: "Cloud & DevOps",
-      technologies: ["AWS", "Docker", "Kubernetes", "CI/CD", "Terraform"],
-    },
-  ];
-
-  const whyChooseUs = [
-    {
-      title: "Fast Delivery",
-      description: "MVPs in 4-6 weeks, features in 2-week sprints",
-      icon: "clock",
-    },
-    {
-      title: "Transparent Pricing",
-      description: "No hidden costs, clear packages, honest quotes",
-      icon: "dollar-sign",
-    },
-    {
-      title: "Modern Tech",
-      description: "Latest technologies, best practices, scalable architecture",
-      icon: "settings",
-    },
-    {
-      title: "Ongoing Support",
-      description: "Post-launch support, maintenance, and growth planning",
-      icon: "headphones",
-    },
-  ];
 
   // Icon mapping for values
   const valuesIconMap = {
@@ -165,13 +106,13 @@ export default function About() {
                       Passionate about creating technology that makes a real difference.
                     </p>
                     <div className="d-flex justify-content-center gap-3">
-                      <a href="#" className="text-muted text-decoration-none" data-testid="link-ayaz-linkedin">
+                      <a href="https://linkedin.com/in/ayaz-digicraft" target="_blank" rel="noopener noreferrer" className="text-muted text-decoration-none" data-testid="link-ayaz-linkedin">
                         <Linkedin size={24} />
                       </a>
-                      <a href="#" className="text-muted text-decoration-none" data-testid="link-ayaz-twitter">
+                      <a href="https://twitter.com/ayaz_digicraft" target="_blank" rel="noopener noreferrer" className="text-muted text-decoration-none" data-testid="link-ayaz-twitter">
                         <Twitter size={24} />
                       </a>
-                      <a href="#" className="text-muted text-decoration-none" data-testid="link-ayaz-github">
+                      <a href="https://github.com/ayaz-digicraft" target="_blank" rel="noopener noreferrer" className="text-muted text-decoration-none" data-testid="link-ayaz-github">
                         <Github size={24} />
                       </a>
                     </div>
@@ -186,8 +127,8 @@ export default function About() {
             <h2 className="display-5 fw-bold text-center text-dark mb-4">
               Our Values
             </h2>
-            <div className="row g-4">
-              {values.map((value, index) => {
+             <div className="row g-4">
+               {aboutData.values.map((value, index) => {
                 const IconComponent = valuesIconMap[value.icon as keyof typeof valuesIconMap];
                 return (
                   <div key={index} className="col-md-4 text-center">
@@ -215,8 +156,8 @@ export default function About() {
             <h2 className="display-5 fw-bold text-center text-dark mb-4">
               Our Technology Stack
             </h2>
-            <div className="row g-4">
-              {techStack.map((stack, index) => (
+             <div className="row g-4">
+               {aboutData.techStack.map((stack, index) => (
                 <div key={index} className="col-lg-3 text-center">
                   <h3 className="h6 fw-semibold text-primary mb-3">
                     {stack.category}
@@ -241,8 +182,8 @@ export default function About() {
             <h2 className="display-5 fw-bold text-center text-dark mb-4">
               Why Choose Us?
             </h2>
-            <div className="row g-4">
-              {whyChooseUs.map((item, index) => {
+             <div className="row g-4">
+               {aboutData.whyChooseUs.map((item, index) => {
                 const IconComponent = whyChooseUsIconMap[item.icon as keyof typeof whyChooseUsIconMap];
                 return (
                   <div key={index} className="col-md-6 col-lg-3">

@@ -1,0 +1,69 @@
+{
+  "contactInfo": {
+    "title": "Get in Touch",
+    "description": "Ready to start your project? Let's discuss your needs and find the perfect solution.",
+    "email": "hello@digicraft.space",
+    "phone": "+1 (555) 123-4567",
+    "address": "123 Tech Street, San Francisco, CA 94105",
+    "officeHours": "Monday - Friday, 9:00 AM - 6:00 PM PST"
+  },
+  "formFields": [
+    {
+      "name": "name",
+      "label": "Full Name",
+      "type": "text",
+      "placeholder": "Enter your full name",
+      "required": true
+    },
+    {
+      "name": "email",
+      "label": "Email Address",
+      "type": "email",
+      "placeholder": "Enter your email address",
+      "required": true
+    },
+    {
+      "name": "company",
+      "label": "Company",
+      "type": "text",
+      "placeholder": "Enter your company name",
+      "required": false
+    },
+    {
+      "name": "budget",
+      "label": "Budget Range",
+      "type": "select",
+      "required": true
+    },
+    {
+      "name": "message",
+      "label": "Project Description",
+      "type": "textarea",
+      "placeholder": "Tell us about your project, goals, and any specific requirements...",
+      "required": true
+    }
+  ],
+  "projectTypes": [
+    { "value": "web-app", "label": "Web Application" },
+    { "value": "mobile-app", "label": "Mobile App" },
+    { "value": "api", "label": "API Development" },
+    { "value": "ecommerce", "label": "E-commerce Platform" },
+    { "value": "mvp", "label": "MVP Development" },
+    { "value": "maintenance", "label": "Maintenance & Support" },
+    { "value": "consulting", "label": "Technical Consulting" }
+  ],
+  "budgetOptions": [
+    "Under $10k",
+    "$10k - $25k",
+    "$25k - $50k",
+    "$50k - $100k",
+    "$100k+",
+    "Not sure yet"
+  ],
+  "formLabels": {
+    "submitButton": "Send Message",
+    "submittingButton": "Sending...",
+    "successMessage": "Thank you! We'll get back to you within 24 hours.",
+    "errorMessage": "There was an error sending your message. Please try again."
+  }
+}

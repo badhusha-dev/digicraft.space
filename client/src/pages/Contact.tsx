@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Mail, Clock, Globe, MapPin, Phone, Calendar } from "lucide-react";
 import SEO from "../components/SEO";
+import { contactData } from "../data/contact";
 import { validateContactForm, ContactFormData } from "../utils/validation";
 import { logPageView, logFormSubmission } from "../utils/analytics";
 
@@ -9,11 +10,12 @@ export default function Contact() {
     name: "",
     email: "",
     company: "",
-    budget: "",
     projectTypes: [],
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
     logPageView("contact");
@@ -37,10 +39,12 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setErrorMessage(null);
+    setSuccessMessage(null);
 
     const errors = validateContactForm(formData);
     if (errors.length > 0) {
-      alert(`Validation Error: ${errors[0].message}`);
+      setErrorMessage(`Validation Error: ${errors[0].message}`);
       setIsSubmitting(false);
       logFormSubmission("contact", false);
       return;
@@ -51,7 +55,7 @@ export default function Contact() {
       // For now, we'll simulate a successful submission
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      alert("Message Sent Successfully! We'll get back to you within 24 hours.");
+      setSuccessMessage("Message Sent Successfully! We'll get back to you within 24 hours.");
 
       logFormSubmission("contact", true);
       
@@ -60,33 +64,17 @@ export default function Contact() {
         name: "",
         email: "",
         company: "",
-        budget: "",
         projectTypes: [],
         message: "",
       });
     } catch (error) {
-      alert("Failed to send message. Please try again.");
+      setErrorMessage("Failed to send message. Please try again.");
       logFormSubmission("contact", false);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const projectTypeOptions = [
-    { id: "web-app", label: "Web Application" },
-    { id: "mobile-app", label: "Mobile App" },
-    { id: "api-backend", label: "API/Backend" },
-    { id: "ecommerce", label: "E-commerce" },
-    { id: "ai-automation", label: "AI/Automation" },
-    { id: "consulting", label: "Consulting" },
-  ];
-
-  const nextSteps = [
-    { step: 1, title: "We review your project details" },
-    { step: 2, title: "Schedule a discovery call" },
-    { step: 3, title: "Provide detailed proposal" },
-    { step: 4, title: "Start building your solution" },
-  ];
 
   return (
     <>
@@ -115,6 +103,18 @@ export default function Contact() {
                   <h2 className="h3 fw-bold text-dark mb-4">
                     Tell Us About Your Project
                   </h2>
+                  
+                  {/* Error and Success Messages */}
+                  {errorMessage && (
+                    <div className="alert alert-danger mb-4" role="alert">
+                      {errorMessage}
+                    </div>
+                  )}
+                  {successMessage && (
+                    <div className="alert alert-success mb-4" role="alert">
+                      {successMessage}
+                    </div>
+                  )}
                   
                   <form onSubmit={handleSubmit}>
                     <div className="row g-3 mb-3">
@@ -151,50 +151,27 @@ export default function Contact() {
                       </div>
                     </div>
                     
-                    <div className="row g-3 mb-3">
-                      <div className="col-md-6">
-                        <label htmlFor="company" className="form-label fw-medium">
-                          Company
-                        </label>
-                        <input
-                          type="text"
-                          id="company"
-                          name="company"
-                          value={formData.company}
-                          onChange={handleInputChange}
-                          className="form-control"
-                          data-testid="input-company"
-                        />
-                      </div>
-                      
-                      <div className="col-md-6">
-                        <label htmlFor="budget" className="form-label fw-medium">
-                          Project Budget
-                        </label>
-                        <select
-                          id="budget"
-                          name="budget"
-                          value={formData.budget}
-                          onChange={handleInputChange}
-                          className="form-select"
-                          data-testid="select-budget"
-                        >
-                          <option value="">Select budget range</option>
-                          <option value="under-10k">Under $10k</option>
-                          <option value="10k-25k">$10k - $25k</option>
-                          <option value="25k-50k">$25k - $50k</option>
-                          <option value="50k-100k">$50k - $100k</option>
-                          <option value="100k-plus">$100k+</option>
-                        </select>
-                      </div>
+                    <div className="mb-3">
+                      <label htmlFor="company" className="form-label fw-medium">
+                        Company
+                      </label>
+                      <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleInputChange}
+                        className="form-control"
+                        data-testid="input-company"
+                      />
                     </div>
                     
                     <div className="mb-3">
                       <label className="form-label fw-medium">
                         Project Type
                       </label>
-                      <div className="row g-3">
-                        {projectTypeOptions.map((option) => (
+                       <div className="row g-3">
+                         {contactData.projectTypeOptions.map((option) => (
                           <div key={option.id} className="col-md-6 col-lg-4">
                             <div className="form-check">
                               <input
@@ -294,8 +271,8 @@ export default function Contact() {
                       What Happens Next?
                     </h3>
                     
-                    <div className="d-flex flex-column gap-3">
-                      {nextSteps.map((item) => (
+                     <div className="d-flex flex-column gap-3">
+                       {contactData.nextSteps.map((item) => (
                         <div key={item.step} className="d-flex align-items-start gap-3">
                           <div className="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: '2rem', height: '2rem' }}>
                             <span className="small fw-semibold">{item.step}</span>

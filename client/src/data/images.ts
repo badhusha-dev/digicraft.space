@@ -65,6 +65,30 @@ export const appImages: AppImage[] = [
     width: 800,
     height: 600,
     category: 'ui'
+  },
+  {
+    id: 'placeholder-workspace',
+    src: '/images/ui/placeholder-workspace.jpg',
+    alt: 'Placeholder workspace image',
+    width: 600,
+    height: 400,
+    category: 'ui'
+  },
+  {
+    id: 'placeholder-founder',
+    src: '/images/ui/placeholder-founder.jpg',
+    alt: 'Placeholder founder image',
+    width: 300,
+    height: 300,
+    category: 'ui'
+  },
+  {
+    id: 'placeholder-team',
+    src: '/images/ui/placeholder-team.jpg',
+    alt: 'Placeholder team image',
+    width: 600,
+    height: 400,
+    category: 'ui'
   }
 ];
 

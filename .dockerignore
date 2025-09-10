@@ -5,9 +5,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Build outputs
-dist
 client/dist
-build
+dist
 
 # Environment files
 .env
@@ -16,20 +15,14 @@ build
 .env.test.local
 .env.production.local
 
-# IDE and editor files
+# IDE files
 .vscode
 .idea
 *.swp
 *.swo
-*~
 
-# OS generated files
+# OS files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 
 # Git
@@ -37,30 +30,23 @@ Thumbs.db
 .gitignore
 
 # Docker
-Dockerfile*
-docker-compose*
+Dockerfile
+docker-compose.yml
 .dockerignore
-
-# Documentation
-README.md
-*.md
-docs/
 
 # Logs
 logs
 *.log
 
-# Test files
-test/
-tests/
-__tests__/
-*.test.js
-*.test.ts
-*.test.tsx
-*.spec.js
-*.spec.ts
-*.spec.tsx
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
 
 # Temporary folders
-tmp/
-temp/
+tmp
+temp

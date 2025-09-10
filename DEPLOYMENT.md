@@ -97,8 +97,7 @@ Create `.env` file in the root directory:
 NODE_ENV=production
 PORT=5000
 
-# Database Configuration (if using PostgreSQL)
-DATABASE_URL="postgresql://username:password@localhost:5432/digicraft"
+
 
 # Session Secret
 SESSION_SECRET="your-super-secret-session-key-here"
@@ -298,29 +297,7 @@ sudo crontab -e
 0 12 * * * /usr/bin/certbot renew --quiet
 ```
 
-## 🗄 Database Setup (Optional)
 
-### PostgreSQL Installation
-
-```bash
-# Install PostgreSQL
-sudo apt install -y postgresql postgresql-contrib
-
-# Start and enable PostgreSQL
-sudo systemctl start postgresql
-sudo systemctl enable postgresql
-
-# Create database and user
-sudo -u postgres psql
-
-CREATE DATABASE digicraft;
-CREATE USER digicraft_user WITH PASSWORD 'your_secure_password';
-GRANT ALL PRIVILEGES ON DATABASE digicraft TO digicraft_user;
-ALTER USER digicraft_user CREATEDB;
-\q
-
-# Update your .env file with the database credentials
-```
 
 ## 📊 Monitoring and Logs
 
@@ -484,7 +461,6 @@ free -h
 
 # Check service status
 sudo systemctl status nginx
-sudo systemctl status postgresql
 pm2 status
 ```
 
@@ -548,7 +524,7 @@ if (app.get("env") === "development") {
 - [ ] Application deployment with PM2
 - [ ] Nginx configuration and SSL setup
 - [ ] Domain DNS configuration
-- [ ] Database setup (if applicable)
+
 - [ ] Monitoring and logging setup
 - [ ] Performance optimization
 - [ ] Health checks and testing

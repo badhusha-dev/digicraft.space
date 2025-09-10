@@ -15,7 +15,7 @@ export const testimonials: Testimonial[] = [
     role: "CTO",
     company: "TechFlow",
     content: "DigiCraft delivered our MVP in just 6 weeks. Their technical expertise and communication was outstanding.",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+    avatar: "/images/people/marcus-chen.svg",
     rating: 5,
   },
   {
@@ -24,7 +24,7 @@ export const testimonials: Testimonial[] = [
     role: "Founder",
     company: "EcoCommerce",
     content: "They built our e-commerce platform with perfect attention to UX. Sales increased 300% after launch.",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+    avatar: "/images/people/sarah-williams.svg",
     rating: 5,
   },
   {
@@ -33,7 +33,7 @@ export const testimonials: Testimonial[] = [
     role: "CEO",
     company: "DataInsights",
     content: "Their AI automation solution saved us 40 hours per week. ROI was immediate and substantial.",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100",
+    avatar: "/images/people/david-rodriguez.svg",
     rating: 5,
   },
 ];

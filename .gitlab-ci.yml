@@ -1,0 +1,55 @@
+stages:
+  - build
+  - deploy
+
+# Deploy to production - Docker handles the build process
+deploy_production:
+  stage: deploy
+  tags:
+    - digicraft
+  before_script:
+    - echo "Setting up deployment environment..."
+    - pwd
+    - ls -la
+    - echo "Making deploy script executable..."
+    - chmod +x deploy-docker.sh
+    - echo "Checking Docker availability..."
+    - docker --version
+    - docker-compose --version
+  script:
+    - echo "Deploying to production using Docker..."
+    - ./deploy-docker.sh
+  after_script:
+    - echo "Deployment completed"
+    - docker-compose ps
+  environment:
+    name: production
+    url: http://localhost:6060
+  only:
+    - main
+
+# Deploy to staging - Docker handles the build process
+deploy_staging:
+  stage: deploy
+  tags:
+    - digicraft
+  before_script:
+    - echo "Setting up deployment environment..."
+    - pwd
+    - ls -la
+    - echo "Making deploy script executable..."
+    - chmod +x deploy-docker.sh
+    - echo "Checking Docker availability..."
+    - docker --version
+    - docker-compose --version
+  script:
+    - echo "Deploying to staging using Docker..."
+    - ./deploy-docker.sh
+  after_script:
+    - echo "Deployment completed"
+    - docker-compose ps
+  environment:
+    name: staging
+    url: http://localhost:6060
+  only:
+    - staging

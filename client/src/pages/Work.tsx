@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Rocket, Building, ShoppingCart, Users, RefreshCw, Shield } from "lucide-react";
 import SEO from "../components/SEO";
+import { workData } from "../data/work";
 import { getImageById } from "../data/images";
 import { useEffect } from "react";
 import { logPageView } from "../utils/analytics";
@@ -9,61 +10,6 @@ export default function Work() {
   useEffect(() => {
     logPageView("work");
   }, []);
-
-  const capabilities = [
-    {
-      title: "Startup MVPs",
-      description: "Fast-track your startup idea from concept to market with lean, scalable MVPs that validate your vision.",
-      icon: "rocket",
-    },
-    {
-      title: "Enterprise Solutions",
-      description: "Robust, scalable platforms that handle enterprise complexity while maintaining performance and security.",
-      icon: "building",
-    },
-    {
-      title: "E-commerce Platforms",
-      description: "Full-featured online stores with payment processing, inventory management, and growth optimization.",
-      icon: "shopping-cart",
-    },
-  ];
-
-  const techStack = [
-    {
-      category: "Frontend",
-      technologies: ["React", "Next.js", "TypeScript", "Bootstrap"],
-    },
-    {
-      category: "Backend",
-      technologies: ["Node.js", "Python", "GraphQL", "PostgreSQL"],
-    },
-    {
-      category: "Mobile",
-      technologies: ["React Native", "Flutter", "Expo", "Native APIs"],
-    },
-    {
-      category: "Cloud & DevOps",
-      technologies: ["AWS", "Docker", "Kubernetes", "CI/CD"],
-    },
-  ];
-
-  const approach = [
-    {
-      title: "Product-Minded Development",
-      description: "We think like product owners, focusing on user value and business outcomes, not just code.",
-      icon: "users",
-    },
-    {
-      title: "Agile & Iterative",
-      description: "Regular demos, feedback loops, and iterative improvements ensure we build exactly what you need.",
-      icon: "sync",
-    },
-    {
-      title: "Quality-First",
-      description: "Comprehensive testing, code reviews, and security best practices are built into our process.",
-      icon: "shield",
-    },
-  ];
 
   // Icon mapping for capabilities
   const capabilitiesIconMap = {
@@ -101,9 +47,9 @@ export default function Work() {
             </p>
           </div>
           
-          {/* Expertise Areas */}
-          <div className="row g-4 mb-5">
-            {capabilities.map((capability, index) => {
+           {/* Expertise Areas */}
+           <div className="row g-4 mb-5">
+             {workData.capabilities.map((capability, index) => {
               const IconComponent = capabilitiesIconMap[capability.icon as keyof typeof capabilitiesIconMap];
               return (
                 <div 
@@ -138,8 +84,8 @@ export default function Work() {
             <h2 className="display-5 fw-bold text-center text-dark mb-4">
               Our Technology Stack
             </h2>
-            <div className="row g-3">
-              {techStack.map((stack, index) => (
+             <div className="row g-3">
+               {workData.techStack.map((stack, index) => (
                 <div 
                   key={index}
                   className="col-md-3"
@@ -173,8 +119,8 @@ export default function Work() {
               <h2 className="display-5 fw-bold text-dark mb-4">
                 Our Development Approach
               </h2>
-              <div className="d-flex flex-column gap-4">
-                {approach.map((item, index) => {
+               <div className="d-flex flex-column gap-4">
+                 {workData.approach.map((item, index) => {
                   const IconComponent = approachIconMap[item.icon as keyof typeof approachIconMap];
                   return (
                     <div key={index} className="d-flex align-items-start gap-3">

@@ -5,7 +5,7 @@ export interface Solution {
   description: string;
   image: string;
   features: string[];
-  pricing: string;
+  // pricing: string; // Hidden - uncomment to restore
   timeline: string;
   featured?: boolean;
 }
@@ -24,7 +24,7 @@ export const solutions: Solution[] = [
       "Deployment & Launch",
       "2 Weeks Post-Launch Support",
     ],
-    pricing: "Starting at $8,000",
+    // pricing: "Starting at $8,000", // Hidden - uncomment to restore
     timeline: "4-6 weeks delivery",
   },
   {
@@ -41,7 +41,7 @@ export const solutions: Solution[] = [
       "API Documentation",
       "3 Months Support & Updates",
     ],
-    pricing: "$12,000/month",
+    // pricing: "$12,000/month", // Hidden - uncomment to restore
     timeline: "Dedicated development squad",
     featured: true,
   },
@@ -59,7 +59,7 @@ export const solutions: Solution[] = [
       "Analytics Dashboard",
       "Mobile App Included",
     ],
-    pricing: "Custom Quote",
+    // pricing: "Custom Quote", // Hidden - uncomment to restore
     timeline: "8-12 weeks delivery",
   },
   {
@@ -76,7 +76,7 @@ export const solutions: Solution[] = [
       "Workflow Automation",
       "Role-based Access Control",
     ],
-    pricing: "Custom Quote",
+    // pricing: "Custom Quote", // Hidden - uncomment to restore
     timeline: "6-10 weeks delivery",
   },
 ];

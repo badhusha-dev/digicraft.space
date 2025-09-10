@@ -1,0 +1,59 @@
+{
+  "capabilities": [
+    {
+      "title": "Startup MVPs",
+      "description": "Fast-track your startup idea from concept to market with lean, scalable MVPs that validate your vision.",
+      "icon": "rocket"
+    },
+    {
+      "title": "Enterprise Solutions",
+      "description": "Robust, scalable platforms that handle enterprise complexity while maintaining performance and security.",
+      "icon": "building"
+    },
+    {
+      "title": "E-commerce Platforms",
+      "description": "Full-featured online stores with payment processing, inventory management, and growth optimization.",
+      "icon": "shopping-cart"
+    }
+  ],
+  "techStack": [
+    {
+      "category": "Frontend",
+      "technologies": ["React", "Next.js", "TypeScript", "Bootstrap"]
+    },
+    {
+      "category": "Backend",
+      "technologies": ["Node.js", "Python", "GraphQL", "PostgreSQL"]
+    },
+    {
+      "category": "Mobile",
+      "technologies": ["React Native", "Flutter", "Expo", "Native APIs"]
+    },
+    {
+      "category": "Cloud & DevOps",
+      "technologies": ["AWS", "Docker", "Kubernetes", "CI/CD"]
+    }
+  ],
+  "approach": [
+    {
+      "title": "User-Centered Design",
+      "description": "We start with user research and design thinking to create experiences that people actually want to use.",
+      "icon": "users"
+    },
+    {
+      "title": "Agile Development",
+      "description": "Short sprints, continuous feedback, and iterative improvements ensure we build the right thing.",
+      "icon": "refresh-cw"
+    },
+    {
+      "title": "Quality Assurance",
+      "description": "Comprehensive testing, code reviews, and security audits ensure reliable, maintainable software.",
+      "icon": "shield"
+    }
+  ],
+  "portfolio": {
+    "title": "Ready to See Our Work?",
+    "description": "Explore our portfolio of successful projects and see how we can help bring your vision to life.",
+    "ctaText": "View Portfolio"
+  }
+}

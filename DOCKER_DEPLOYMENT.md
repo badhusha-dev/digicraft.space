@@ -1,16 +1,23 @@
-# 🐳 DigiCraft.space Docker Deployment Guide
+# Docker Deployment Guide for DigiCraft Frontend
 
-This guide provides comprehensive instructions for deploying your DigiCraft.space application using Docker and Docker Compose.
+This guide explains how to deploy the DigiCraft React application using Docker.
+
+## 🐳 Overview
+
+The application uses a multi-stage Docker build process:
+1. **Builder Stage**: Node.js environment to build the React app
+2. **Production Stage**: Simple HTTP server to serve the static files
+
+## 📋 Prerequisites
+
+- Docker Desktop installed and running
+- Docker Compose installed
+- At least 2GB of available disk space
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Docker 20.10+ installed and running
-- Docker Compose 2.0+ installed
-- Git access to your repository
-- Server with at least 2GB RAM and 20GB storage
+### Option 1: Using Docker Compose (Recommended)
 
-### One-Command Deployment
 ```bash
 # Clone and deploy
 git clone https://github.com/your-username/digicraft-space.git
@@ -23,6 +30,7 @@ chmod +x deploy-docker.sh
 
 ### **Dockerfile**
 - **Multi-stage build** for optimized production images
+- **Simple HTTP server** using Node.js serve package
 - **Security-focused** with non-root user
 - **Health checks** for monitoring
 - **Optimized layers** for faster builds
@@ -87,9 +95,9 @@ nano .env
 ```bash
 # Application
 NODE_ENV=production
-PORT=5000
+PORT=6060
 DOMAIN=digicraft.space
-FRONTEND_URL=https://digicraft.space
+FRONTEND_URL=https://digi-craft.digicraft.space
 
 # Security (CHANGE THESE!)
 SESSION_SECRET=your-super-secret-session-key-here
@@ -100,27 +108,14 @@ REDIS_PASSWORD=your_redis_password
 DATABASE_URL=postgresql://digicraft_user:your_secure_password@postgres:5432/digicraft
 ```
 
-### 3. Optional Services
-Comment out services you don't need in `docker-compose.yml`:
-```yaml
-# Comment out if using external database
-# postgres:
+### Option 2: Using Deployment Scripts
 
-# Comment out if using memory store for sessions
-# redis:
-
-# Comment out if using external nginx
-# nginx:
-```
-
-## 🚀 Deployment
-
-### 1. Automated Deployment
+#### For Linux/Mac:
 ```bash
 # Make script executable
 chmod +x deploy-docker.sh
 
-# Deploy everything
+# Run deployment
 ./deploy-docker.sh
 ```
 
@@ -142,7 +137,7 @@ docker-compose logs -f
 ./deploy-docker.sh status
 
 # Test application
-curl http://localhost:5000/api/health
+curl http://localhost:6060/api/health
 
 # Check all services
 docker-compose ps
@@ -152,41 +147,17 @@ docker-compose ps
 
 ### **Application Commands**
 ```bash
-# View status
-./deploy-docker.sh status
+# Build the image
+docker build -t digicraft-frontend .
 
-# View logs
-./deploy-docker.sh logs
+# Run the container
+docker run -d -p 6060:6060 --name digicraft-app digicraft-frontend
 
-# Restart services
-./deploy-docker.sh restart
-
-# Stop services
-./deploy-docker.sh stop
-
-# Clean up everything
-./deploy-docker.sh clean
+# Access the application
+# Open http://localhost:6060 in your browser
 ```
 
-### **Docker Compose Commands**
-```bash
-# Start services
-docker-compose up -d
-
-# Stop services
-docker-compose down
-
-# Restart specific service
-docker-compose restart digicraft-app
-
-# View logs
-docker-compose logs -f digicraft-app
-
-# Execute commands in container
-docker-compose exec digicraft-app sh
-```
-
-## 🔧 Customization
+## 🔧 Configuration
 
 ### 1. Port Configuration
 ```yaml
@@ -194,52 +165,68 @@ docker-compose exec digicraft-app sh
 services:
   digicraft-app:
     ports:
-      - "3000:5000"  # Change 3000 to your preferred port
+      - "6060:6060"  # Change 6060 to your preferred port
 ```
 
-### 2. Volume Mounts
-```yaml
-# Add custom volumes
-volumes:
-  - ./custom-config:/app/config
-  - ./uploads:/app/uploads
-  - ./logs:/app/logs
-```
+### Environment Variables
 
-### 3. Environment Overrides
+The following environment variables can be configured:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `NODE_ENV` | `production` | Node.js environment |
+
+### HTTP Server Configuration
+
+The application uses a simple HTTP server (serve package) that includes:
+
+- **SPA routing support** for React Router
+- **Static file serving** for built assets
+- **Health check endpoint** at `/health`
+- **Production-ready** configuration for digicraft.space
+
+Note: Since you're deploying to a GitLab server with existing nginx, the external nginx will handle:
+- **Gzip compression** for better performance
+- **Security headers** for enhanced security
+- **Static asset caching** for better performance
+
+## 📊 Monitoring and Logs
+
+### View Application Logs
+
 ```bash
-# Create environment-specific files
-cp .env .env.production
-cp .env .env.staging
+# Docker Compose
+docker-compose logs -f
 
-# Use specific environment
-docker-compose --env-file .env.production up -d
+# Manual Docker
+docker logs -f digicraft-app
 ```
 
-## 📈 Monitoring & Logs
+### Health Check
 
-### 1. Application Logs
+The application includes a health check endpoint:
+
 ```bash
-# Follow application logs
-docker-compose logs -f digicraft-app
-
-# View recent logs
-docker-compose logs --tail=100 digicraft-app
-
-# Export logs to file
-docker-compose logs digicraft-app > app.log
+# Check if the application is healthy
+curl http://localhost:6060/health
 ```
 
-### 2. Database Logs
+Expected response: `healthy`
+
+### Container Status
+
 ```bash
-# PostgreSQL logs
-docker-compose logs -f postgres
+# Check container status
+docker ps
 
-# Redis logs
-docker-compose logs -f redis
+# Check container details
+docker inspect digicraft-app
 ```
 
-### 3. System Monitoring
+## 🔄 Updating the Application
+
+### Option 1: Using Deployment Scripts
+
 ```bash
 # Container resource usage
 docker stats
@@ -272,143 +259,120 @@ services:
 ```dockerfile
 # Non-root user in Dockerfile
 USER digicraft
-EXPOSE 5000
+EXPOSE 6060
 ```
 
-## 🚨 Troubleshooting
+## 🛠️ Troubleshooting
 
 ### Common Issues
 
 #### 1. Port Already in Use
 ```bash
 # Check what's using the port
-sudo netstat -tulpn | grep :5000
+sudo netstat -tulpn | grep :6060
 
-# Kill process or change port
-docker-compose down
-# Edit docker-compose.yml to change port
-docker-compose up -d
+# Kill the process or change the port
 ```
 
-#### 2. Permission Denied
+#### 2. Build Failures
 ```bash
-# Fix volume permissions
-sudo chown -R $USER:$USER ./logs ./uploads
+# Clean build
+docker-compose build --no-cache
 
-# Or run with sudo (not recommended for production)
+# Check build logs
+docker-compose build --progress=plain
+```
+
+#### 3. Container Won't Start
+```bash
+# Check container logs
+docker-compose logs
+
+# Check container status
+docker ps -a
+```
+
+#### 4. Permission Issues
+```bash
+# Fix file permissions
+chmod +x deploy-docker.sh
+
+# Run with sudo if needed
 sudo docker-compose up -d
 ```
 
-#### 3. Database Connection Issues
+### Debugging Commands
+
 ```bash
-# Check database health
-docker-compose exec postgres pg_isready -U digicraft_user
+# Enter the container
+docker exec -it digicraft-app sh
 
-# View database logs
-docker-compose logs postgres
+# Check application logs
+docker exec -it digicraft-frontend tail -f /app/logs/app.log
 
-# Restart database
-docker-compose restart postgres
+# Check container processes
+docker exec -it digicraft-frontend ps aux
 ```
 
-#### 4. Build Failures
-```bash
-# Clean build cache
-docker system prune -a
+## 🚀 Production Deployment
 
-# Rebuild without cache
-docker-compose build --no-cache
+### Environment-Specific Configurations
 
-# Check Dockerfile syntax
-docker build -t test .
-```
-
-### Debug Commands
-```bash
-# Inspect container
-docker inspect digicraft-app
-
-# Execute shell in container
-docker-compose exec digicraft-app sh
-
-# View container processes
-docker-compose exec digicraft-app ps aux
-
-# Check container resources
-docker stats digicraft-app
-```
-
-## 🔄 Updates & Maintenance
-
-### 1. Application Updates
-```bash
-# Pull latest code
-git pull origin main
-
-# Rebuild and restart
-./deploy-docker.sh deploy
-```
-
-### 2. Database Backups
-```bash
-# Backup PostgreSQL
-docker-compose exec postgres pg_dump -U digicraft_user digicraft > backup.sql
-
-# Backup Redis (if using)
-docker-compose exec redis redis-cli --rdb /data/dump.rdb
-```
-
-### 3. Log Rotation
-```bash
-# Create logrotate configuration
-sudo nano /etc/logrotate.d/digicraft
-
-# Add configuration
-/path/to/digicraft/logs/*.log {
-    daily
-    missingok
-    rotate 7
-    compress
-    delaycompress
-    notifempty
-    create 644 digicraft digicraft
-}
-```
-
-## 📚 Advanced Configuration
-
-### 1. Production Optimizations
+#### Development
 ```yaml
-# In docker-compose.yml
+# docker-compose.dev.yml
+version: '3.8'
 services:
   digicraft-app:
-    deploy:
-      resources:
-        limits:
-          memory: 1G
-          cpus: '0.5'
-        reservations:
-          memory: 512M
-          cpus: '0.25'
+    build: .
+    ports:
+      - "6060:6060"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./client/src:/app/client/src:ro
 ```
 
-### 2. Load Balancing
+#### Production
 ```yaml
-# Scale application instances
-docker-compose up -d --scale digicraft-app=3
-
-# Use external load balancer
-# Configure nginx or haproxy
+# docker-compose.prod.yml
+version: '3.8'
+services:
+  digicraft-app:
+    build: .
+    ports:
+      - "6060:6060"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:6060/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 ```
 
-### 3. SSL/TLS Configuration
-```yaml
-# Add SSL certificates
-volumes:
-  - ./ssl:/etc/nginx/ssl:ro
+### Docker Swarm (Optional)
 
-# Configure nginx for HTTPS
-# See nginx configuration examples
+For production deployments with multiple instances:
+
+```bash
+# Initialize swarm
+docker swarm init
+
+# Deploy stack
+docker stack deploy -c docker-compose.yml digicraft
+```
+
+## 📁 File Structure
+
+```
+├── Dockerfile              # Multi-stage Docker build with HTTP server
+├── docker-compose.yml       # Docker Compose configuration
+├── .dockerignore           # Files to exclude from build
+├── deploy-docker.sh        # Linux/Mac deployment script
+├── deploy-docker.bat       # Windows deployment script
+└── DOCKER_DEPLOYMENT.md    # This documentation
 ```
 
 ## 🎯 Production Checklist
@@ -420,7 +384,7 @@ volumes:
 - [ ] **Health Checks**: All services responding
 - [ **Logs**: Logging and monitoring configured
 - [ ] **Backups**: Database backup strategy in place
-- [ ] **SSL**: HTTPS configuration (if using nginx)
+- [ ] **SSL**: HTTPS configuration (handled by external nginx)
 - [ ] **Monitoring**: Resource usage and health monitoring
 - [ ] **Documentation**: Team trained on deployment process
 
@@ -442,4 +406,4 @@ volumes:
 
 **Happy Deploying! 🚀**
 
-For more information, visit [digicraft.space](https://digicraft.space) or contact us at hello@digicraft.space.
+For more information, visit [digicraft.space](https://digi-craft.digicraft.space) or contact us at hello@digicraft.space.

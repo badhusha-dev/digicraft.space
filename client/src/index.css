@@ -1,11 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Bootstrap 5 custom properties for DigiCraft theme */
-  --bs-primary: #6366F1;
-  --bs-primary-rgb: 99, 102, 241;
-  --bs-secondary: #06B6D4;
-  --bs-secondary-rgb: 6, 182, 212;
+  /* DigiCraft Brand Colors - Based on logo design */
+  --bs-primary: #3B0A45;        /* Deep purple background */
+  --bs-primary-rgb: 59, 10, 69;
+  --bs-secondary: #EC4899;      /* Magenta from logo */
+  --bs-secondary-rgb: 236, 72, 153;
+  --bs-info: #8B5CF6;           /* Purple from logo */
+  --bs-info-rgb: 139, 92, 246;
+  --bs-warning: #F59E0B;       /* Yellow from logo */
+  --bs-warning-rgb: 245, 158, 11;
+  
+  /* DigiCraft Logo Element Colors */
+  --dc-logo-white: #FFFFFF;
+  --dc-logo-yellow: #F59E0B;
+  --dc-logo-purple: #8B5CF6;
+  --dc-logo-magenta: #EC4899;
   
   /* Custom DigiCraft color variables */
   --dc-background: #ffffff;
@@ -17,21 +27,47 @@
   --dc-border: #dee2e6;
   --dc-radius: 1.3rem;
   --dc-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* DigiCraft specific gradients */
+  --dc-gradient-primary: linear-gradient(135deg, var(--dc-logo-yellow) 0%, var(--dc-logo-magenta) 50%, var(--dc-logo-purple) 100%);
+  --dc-gradient-button: linear-gradient(135deg, var(--dc-logo-yellow) 0%, var(--dc-logo-magenta) 100%);
+  --dc-gradient-accent: linear-gradient(135deg, var(--dc-logo-purple) 0%, var(--dc-logo-magenta) 100%);
+  --dc-gradient-logo: linear-gradient(135deg, var(--dc-logo-white) 0%, var(--dc-logo-yellow) 25%, var(--dc-logo-purple) 50%, var(--dc-logo-magenta) 100%);
 }
 
 .dark {
-  --dc-background: #000000;
+  /* Dark mode with DigiCraft purple theme */
+  --dc-background: #1a0a1f;
   --dc-foreground: #ffffff;
-  --dc-card: #1a1a1a;
+  --dc-card: #2a072f;
   --dc-card-foreground: #ffffff;
   --dc-muted: #adb5bd;
-  --dc-accent: #2d3748;
-  --dc-border: #4a5568;
+  --dc-accent: #3B0A45;
+  --dc-border: #4A0F56;
   
-  /* Dark mode Bootstrap overrides */
-  --bs-body-bg: #000000;
+  /* Dark mode Bootstrap overrides with DigiCraft colors */
+  --bs-body-bg: #1a0a1f;
   --bs-body-color: #ffffff;
-  --bs-border-color: #4a5568;
+  --bs-border-color: #4A0F56;
+  
+  /* Dark mode text color overrides */
+  --bs-text-body: #ffffff;
+  --bs-text-muted: #adb5bd;
+  --bs-text-secondary: #adb5bd;
+  --bs-text-tertiary: #6c757d;
+  
+  /* Dark mode navbar */
+  --bs-navbar-bg: #1a0a1f;
+  --bs-navbar-color: #ffffff;
+  
+  /* Dark mode card */
+  --bs-card-bg: #2a072f;
+  --bs-card-color: #ffffff;
+  
+  /* Dark mode form controls */
+  --bs-form-control-bg: #2a072f;
+  --bs-form-control-color: #ffffff;
+  --bs-form-control-border-color: #4A0F56;
 }
 
 /* Base styles */
@@ -49,6 +85,207 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Dark mode text visibility fixes */
+.dark {
+  /* Ensure all text is visible in dark mode */
+  color: #ffffff !important;
+}
+
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: #ffffff !important;
+}
+
+.dark p, .dark span, .dark div {
+  color: #ffffff !important;
+}
+
+.dark .text-muted {
+  color: #adb5bd !important;
+}
+
+.dark .text-secondary {
+  color: #adb5bd !important;
+}
+
+.dark .text-dark {
+  color: #ffffff !important;
+}
+
+.dark .text-body {
+  color: #ffffff !important;
+}
+
+.dark .text-black {
+  color: #ffffff !important;
+}
+
+.dark .text-black-50 {
+  color: #adb5bd !important;
+}
+
+.dark .text-white-50 {
+  color: #adb5bd !important;
+}
+
+.dark .text-white-75 {
+  color: #e9ecef !important;
+}
+
+/* Dark mode navbar fixes */
+.dark .navbar {
+  background-color: #1a0a1f !important;
+  color: #ffffff !important;
+}
+
+.dark .navbar-brand {
+  color: #ffffff !important;
+}
+
+.dark .navbar-nav .nav-link {
+  color: #ffffff !important;
+}
+
+.dark .navbar-nav .nav-link:hover {
+  color: #adb5bd !important;
+}
+
+.dark .navbar-nav .nav-link.active {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Dark mode card fixes */
+.dark .card {
+  background-color: #2a072f !important;
+  color: #ffffff !important;
+  border-color: #4A0F56 !important;
+}
+
+.dark .card-body {
+  color: #ffffff !important;
+}
+
+.dark .card-title {
+  color: #ffffff !important;
+}
+
+.dark .card-text {
+  color: #ffffff !important;
+}
+
+/* Dark mode button fixes */
+.dark .btn-outline-secondary {
+  color: #ffffff !important;
+  border-color: #4A0F56 !important;
+}
+
+.dark .btn-outline-secondary:hover {
+  background-color: #4A0F56 !important;
+  color: #ffffff !important;
+}
+
+/* Dark mode specific text classes */
+.dark .lead {
+  color: #ffffff !important;
+}
+
+.dark .display-1, .dark .display-2, .dark .display-3, 
+.dark .display-4, .dark .display-5, .dark .display-6 {
+  color: #ffffff !important;
+}
+
+.dark .fw-bold, .dark .fw-semibold, .dark .fw-medium {
+  color: #ffffff !important;
+}
+
+.dark .small {
+  color: #adb5bd !important;
+}
+
+/* Dark mode alert fixes */
+.dark .alert {
+  background-color: #2a072f !important;
+  color: #ffffff !important;
+  border-color: #4A0F56 !important;
+}
+
+.dark .alert-primary {
+  background-color: #3B0A45 !important;
+  color: #ffffff !important;
+  border-color: #4A0F56 !important;
+}
+
+/* Dark mode form fixes */
+.dark .form-control {
+  background-color: #2a072f !important;
+  color: #ffffff !important;
+  border-color: #4A0F56 !important;
+}
+
+.dark .form-control:focus {
+  background-color: #2a072f !important;
+  color: #ffffff !important;
+  border-color: #8B5CF6 !important;
+  box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.25) !important;
+}
+
+.dark .form-label {
+  color: #ffffff !important;
+}
+
+/* Dark mode list fixes */
+.dark .list-unstyled li {
+  color: #ffffff !important;
+}
+
+.dark .list-unstyled li a {
+  color: #adb5bd !important;
+}
+
+.dark .list-unstyled li a:hover {
+  color: #ffffff !important;
+}
+
+/* Dark mode additional Bootstrap class fixes */
+.dark .text-decoration-none {
+  color: #ffffff !important;
+}
+
+.dark .text-decoration-none:hover {
+  color: #adb5bd !important;
+}
+
+.dark .mb-0, .dark .mb-1, .dark .mb-2, .dark .mb-3, .dark .mb-4, .dark .mb-5 {
+  color: #ffffff !important;
+}
+
+.dark .mt-0, .dark .mt-1, .dark .mt-2, .dark .mt-3, .dark .mt-4, .dark .mt-5 {
+  color: #ffffff !important;
+}
+
+.dark .py-1, .dark .py-2, .dark .py-3, .dark .py-4, .dark .py-5 {
+  color: #ffffff !important;
+}
+
+.dark .px-1, .dark .px-2, .dark .px-3, .dark .px-4, .dark .px-5 {
+  color: #ffffff !important;
+}
+
+/* Dark mode container and row fixes */
+.dark .container, .dark .container-fluid {
+  color: #ffffff !important;
+}
+
+.dark .row {
+  color: #ffffff !important;
+}
+
+.dark .col, .dark .col-1, .dark .col-2, .dark .col-3, .dark .col-4, 
+.dark .col-5, .dark .col-6, .dark .col-7, .dark .col-8, .dark .col-9, 
+.dark .col-10, .dark .col-11, .dark .col-12 {
+  color: #ffffff !important;
 }
 
 /* Footer specific styles for better visibility */
@@ -188,6 +425,43 @@ footer .border-secondary {
   color: var(--dc-card-foreground);
 }
 
+/* Dark mode DigiCraft specific styles */
+.dark .section-purple {
+  background: linear-gradient(135deg, var(--bs-primary) 0%, rgba(59, 10, 69, 0.9) 100%);
+}
+
+.dark .section-gradient {
+  background: var(--dc-gradient-primary);
+}
+
+.dark .card-gradient {
+  background: linear-gradient(135deg, var(--dc-card) 0%, rgba(255, 105, 180, 0.1) 100%);
+  border-color: rgba(255, 105, 180, 0.2);
+}
+
+.dark .text-gradient {
+  background: var(--dc-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .btn-primary {
+  background: var(--dc-gradient-button);
+}
+
+.dark .btn-primary:hover {
+  background: var(--dc-gradient-primary);
+}
+
+.dark .btn-gradient {
+  background: var(--dc-gradient-button);
+}
+
+.dark .btn-gradient:hover {
+  background: var(--dc-gradient-primary);
+}
+
 /* Ensure Bootstrap components are properly styled */
 .navbar {
   padding: 1rem 0;
@@ -210,18 +484,32 @@ footer .border-secondary {
   color: var(--bs-primary) !important;
 }
 
-/* Card improvements */
+/* DigiCraft Card improvements */
 .card {
   border: none;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  transition: box-shadow 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 0.125rem 0.25rem rgba(59, 10, 69, 0.075);
+  transition: box-shadow 0.2s ease, background-color 0.3s ease, transform 0.2s ease;
+  background: var(--dc-card);
+  border-radius: var(--dc-radius);
 }
 
 .card:hover {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0.5rem 1rem rgba(59, 10, 69, 0.15);
+  transform: translateY(-4px);
 }
 
-/* Button improvements */
+/* DigiCraft gradient card variant */
+.card-gradient {
+  background: linear-gradient(135deg, var(--dc-card) 0%, rgba(255, 105, 180, 0.05) 100%);
+  border: 1px solid rgba(255, 105, 180, 0.1);
+}
+
+.card-gradient:hover {
+  background: linear-gradient(135deg, var(--dc-card) 0%, rgba(255, 105, 180, 0.1) 100%);
+  border-color: rgba(255, 105, 180, 0.2);
+}
+
+/* DigiCraft Button improvements */
 .btn {
   border-radius: 0.5rem;
   font-weight: 500;
@@ -229,26 +517,50 @@ footer .border-secondary {
 }
 
 .btn-primary {
-  background-color: var(--bs-primary);
-  border-color: var(--bs-primary);
+  background: var(--dc-gradient-button);
+  border: none;
+  color: white;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary:hover {
-  background-color: #5a5fef;
-  border-color: #5a5fef;
+  background: var(--dc-gradient-primary);
   transform: translateY(-2px);
-  box-shadow: 0 0.5rem 1rem rgba(99, 102, 241, 0.3);
+  box-shadow: 0 0.5rem 1rem rgba(255, 105, 180, 0.3);
+  color: white;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-outline-primary {
   color: var(--bs-primary);
   border-color: var(--bs-primary);
+  background: transparent;
 }
 
 .btn-outline-primary:hover {
-  background-color: var(--bs-primary);
-  border-color: var(--bs-primary);
+  background: var(--dc-gradient-button);
+  border-color: transparent;
   transform: translateY(-2px);
+  color: white;
+}
+
+/* DigiCraft gradient button utility class */
+.btn-gradient {
+  background: var(--dc-gradient-button);
+  border: none;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.btn-gradient:hover {
+  background: var(--dc-gradient-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(255, 105, 180, 0.3);
+  color: white;
 }
 
 /* Section spacing */
@@ -264,9 +576,25 @@ section {
   align-items: center;
 }
 
-/* Custom DigiCraft styles */
+/* DigiCraft Link styles */
+a {
+  color: var(--bs-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--dc-gradient-pink);
+  text-decoration: underline;
+}
+
+/* DigiCraft Custom styles */
 .gradient-bg {
-  background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-secondary) 100%);
+  background: var(--dc-gradient-primary);
+}
+
+.gradient-bg-accent {
+  background: var(--dc-gradient-accent);
 }
 
 .hover-lift {
@@ -275,26 +603,33 @@ section {
 
 .hover-lift:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 20px 40px rgba(255, 105, 180, 0.15);
 }
 
-.btn-gradient {
-  background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-secondary) 100%);
-  border: none;
+/* DigiCraft section backgrounds */
+.section-purple {
+  background: linear-gradient(135deg, var(--bs-primary) 0%, rgba(59, 10, 69, 0.8) 100%);
   color: white;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn-gradient:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+.section-gradient {
+  background: var(--dc-gradient-primary);
   color: white;
+}
+
+/* DigiCraft text utilities */
+.text-gradient {
+  background: var(--dc-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Line clamp utilities */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -379,6 +714,155 @@ html {
 
 .border-secondary {
   border-color: var(--bs-secondary) !important;
+}
+
+/* DigiCraft Logo SVG Enhancements */
+.dc-logo {
+  height: 32px;
+  width: 32px;
+  transition: all 0.3s ease;
+}
+
+.dc-logo:hover {
+  transform: scale(1.05);
+}
+
+.dc-logo-sm {
+  height: 24px;
+  width: 24px;
+}
+
+.dc-logo-lg {
+  height: 48px;
+  width: 48px;
+}
+
+.dc-logo-xl {
+  height: 64px;
+  width: 64px;
+}
+
+/* Ensure SVG logos scale properly */
+img[src$=".svg"] {
+  max-width: 100%;
+  height: auto;
+}
+
+/* SVG logo in navbar */
+.navbar-brand img[src$=".svg"] {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+}
+
+/* SVG logo in footer */
+footer img[src$=".svg"] {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+}
+
+/* SVG logo responsive behavior */
+@media (max-width: 768px) {
+  .dc-logo {
+    height: 28px;
+    width: 28px;
+  }
+  
+  .dc-logo-sm {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+/* DigiCraft Brand Utility Classes */
+.dc-gradient-primary {
+  background: var(--dc-gradient-primary) !important;
+}
+
+.dc-gradient-button {
+  background: var(--dc-gradient-button) !important;
+}
+
+.dc-gradient-accent {
+  background: var(--dc-gradient-accent) !important;
+}
+
+.dc-gradient-logo {
+  background: var(--dc-gradient-logo) !important;
+}
+
+.dc-text-gradient {
+  background: var(--dc-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dc-logo-yellow {
+  color: var(--dc-logo-yellow) !important;
+}
+
+.dc-logo-purple {
+  color: var(--dc-logo-purple) !important;
+}
+
+.dc-logo-magenta {
+  color: var(--dc-logo-magenta) !important;
+}
+
+.dc-bg-logo-yellow {
+  background-color: var(--dc-logo-yellow) !important;
+}
+
+.dc-bg-logo-purple {
+  background-color: var(--dc-logo-purple) !important;
+}
+
+.dc-bg-logo-magenta {
+  background-color: var(--dc-logo-magenta) !important;
+}
+
+/* DigiCraft Button Styles */
+.btn-dc-primary {
+  background: var(--dc-gradient-button);
+  border: none;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-dc-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
+  color: white;
+}
+
+.btn-dc-secondary {
+  background: var(--dc-gradient-accent);
+  border: none;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-dc-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+  color: white;
+}
+
+/* DigiCraft Card Styles */
+.dc-card {
+  background: var(--dc-card);
+  border: 1px solid var(--dc-border);
+  border-radius: var(--dc-radius);
+  transition: all 0.3s ease;
+}
+
+.dc-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive improvements */

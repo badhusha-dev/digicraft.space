@@ -13,8 +13,8 @@ export default function Pricing() {
     {
       id: "mvp",
       name: "MVP",
-      price: "$8k+",
-      period: "One-time payment",
+      // price: "$8k+", // Hidden - uncomment to restore
+      // period: "One-time payment", // Hidden - uncomment to restore
       description: "Perfect for validating ideas and launching quickly",
       features: [
         { name: "Product Discovery & Design", included: true },
@@ -30,8 +30,8 @@ export default function Pricing() {
     {
       id: "squad",
       name: "Squad",
-      price: "$12k",
-      period: "per month",
+      // price: "$12k", // Hidden - uncomment to restore
+      // period: "per month", // Hidden - uncomment to restore
       description: "Ideal for growing businesses needing continuous development",
       features: [
         { name: "Everything in MVP", included: true },
@@ -47,8 +47,8 @@ export default function Pricing() {
     {
       id: "support",
       name: "Support",
-      price: "$999",
-      period: "per month",
+      // price: "$999", // Hidden - uncomment to restore
+      // period: "per month", // Hidden - uncomment to restore
       description: "Perfect for maintaining existing applications",
       features: [
         { name: "Bug Fixes & Maintenance", included: true },
@@ -122,11 +122,14 @@ export default function Pricing() {
                     </h3>
                     
                     <div className="mb-4">
-                      <span className="display-6 fw-bold text-dark">
+                      {/* <span className="display-6 fw-bold text-dark">
                         {plan.price}
                       </span>
                       <p className="text-muted mt-2 mb-0">
                         {plan.period}
+                      </p> */} {/* Price amounts hidden - uncomment to restore */}
+                      <p className="text-muted mt-2 mb-0">
+                        Contact for pricing
                       </p>
                     </div>
                     

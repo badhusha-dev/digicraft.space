@@ -10,6 +10,8 @@ import { validateJobApplication, JobApplicationData } from "../utils/validation"
 const Careers = memo(function Careers() {
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [formData, setFormData] = useState<JobApplicationData>({
     firstName: "",
     lastName: "",
@@ -32,6 +34,8 @@ const Careers = memo(function Careers() {
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedJob(null);
+    setErrorMessage(null);
+    setSuccessMessage(null);
     setFormData({
       firstName: "",
       lastName: "",
@@ -45,19 +49,25 @@ const Careers = memo(function Careers() {
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
+    setSuccessMessage(null);
     
     const errors = validateJobApplication(formData);
     if (errors.length > 0) {
-      alert(`Validation Error: ${errors[0].message}`);
+      setErrorMessage(`Validation Error: ${errors[0].message}`);
       logFormSubmission("job_application", false);
       return;
     }
 
     // In a real application, you would send this data to your backend
-    alert("Application Submitted! We'll be in touch soon.");
+    setSuccessMessage("Application Submitted! We'll be in touch soon.");
     
     logFormSubmission("job_application", true);
-    closeModal();
+    
+    // Close modal after a short delay to show success message
+    setTimeout(() => {
+      closeModal();
+    }, 2000);
   }, [formData, closeModal]);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

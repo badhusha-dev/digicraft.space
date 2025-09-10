@@ -1,0 +1,53 @@
+[
+  {
+    "id": "mvp",
+    "name": "MVP",
+    "price": "$8k+",
+    "period": "One-time payment",
+    "description": "Perfect for validating ideas and launching quickly",
+    "features": [
+      { "name": "Product Discovery & Design", "included": true },
+      { "name": "Full-stack Development", "included": true },
+      { "name": "Database & Backend", "included": true },
+      { "name": "Deployment & Launch", "included": true },
+      { "name": "2 Weeks Support", "included": true },
+      { "name": "Ongoing Updates", "included": false },
+      { "name": "Dedicated Team", "included": false }
+    ],
+    "featured": false
+  },
+  {
+    "id": "squad",
+    "name": "Squad",
+    "price": "$12k",
+    "period": "per month",
+    "description": "Ideal for growing businesses needing continuous development",
+    "features": [
+      { "name": "Everything in MVP", "included": true },
+      { "name": "Dedicated Development Team", "included": true },
+      { "name": "Ongoing Feature Development", "included": true },
+      { "name": "Weekly Progress Calls", "included": true },
+      { "name": "Unlimited Revisions", "included": true },
+      { "name": "Priority Support", "included": true },
+      { "name": "Scalability Planning", "included": true }
+    ],
+    "featured": true
+  },
+  {
+    "id": "support",
+    "name": "Support",
+    "price": "$999",
+    "period": "per month",
+    "description": "Ongoing maintenance and support for existing applications",
+    "features": [
+      { "name": "Bug Fixes & Updates", "included": true },
+      { "name": "Security Patches", "included": true },
+      { "name": "Performance Monitoring", "included": true },
+      { "name": "Monthly Reports", "included": true },
+      { "name": "Emergency Support", "included": true },
+      { "name": "New Features", "included": false },
+      { "name": "Dedicated Team", "included": false }
+    ],
+    "featured": false
+  }
+]

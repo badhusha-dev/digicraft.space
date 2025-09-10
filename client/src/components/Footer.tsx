@@ -20,8 +20,8 @@ export default function Footer() {
   const company = [
     { name: "About", href: "/about" },
     { name: "Our Work", href: "/work" },
-    { name: "Blog", href: "/blog" },
-    { name: "Careers", href: "/careers" },
+    // { name: "Blog", href: "/blog" }, // Hidden - uncomment to restore
+    // { name: "Careers", href: "/careers" }, // Hidden - uncomment to restore
     { name: "Contact", href: "/contact" },
   ];
 
@@ -38,7 +38,12 @@ export default function Footer() {
         <div className="row g-4">
           {/* Brand */}
           <div className="col-lg-3 col-md-6">
-            <Link href="/" className="text-decoration-none">
+            <Link href="/" className="text-decoration-none d-flex align-items-center mb-3">
+              <img 
+                src="/logo.svg" 
+                alt="DigiCraft Logo" 
+                className="me-2 dc-logo" 
+              />
               <span className="h3 fw-bold mb-0">
                 <span className="text-primary">Digi</span>
                 <span className="text-info">Craft</span>
@@ -49,16 +54,16 @@ export default function Footer() {
               Product-minded engineers building reliable, beautiful software that ships and scales.
             </p>
             <div className="mt-3 d-flex gap-3">
-              <a href="#" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-twitter">
+              <a href="https://twitter.com/digicraft" target="_blank" rel="noopener noreferrer" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-twitter">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-linkedin">
+              <a href="https://linkedin.com/company/digicraft-space" target="_blank" rel="noopener noreferrer" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-linkedin">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-github">
+              <a href="https://github.com/digicraft-space" target="_blank" rel="noopener noreferrer" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-github">
                 <Github size={20} />
               </a>
-              <a href="#" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-dribbble">
+              <a href="https://dribbble.com/digicraft" target="_blank" rel="noopener noreferrer" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-dribbble">
                 <Dribbble size={20} />
               </a>
             </div>
@@ -156,10 +161,10 @@ export default function Footer() {
             </div>
             <div className="col-md-6 text-md-end">
               <div className="d-flex gap-4 justify-content-md-end">
-                <a href="#" className="text-light text-decoration-none small opacity-75 hover-opacity-100" data-testid="footer-link-privacy">
+                <a href="/privacy" className="text-light text-decoration-none small opacity-75 hover-opacity-100" data-testid="footer-link-privacy">
                   Privacy Policy
                 </a>
-                <a href="#" className="text-light text-decoration-none small opacity-75 hover-opacity-100" data-testid="footer-link-terms">
+                <a href="/terms" className="text-light text-decoration-none small opacity-75 hover-opacity-100" data-testid="footer-link-terms">
                   Terms of Service
                 </a>
               </div>

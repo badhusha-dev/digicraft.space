@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  digicraft-staging:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: digicraft-staging
+    container_name: digicraft-staging
+    restart: always
+    environment:
+      SERVER_PORT: 6060
+    ports:
+      - 6060:6060

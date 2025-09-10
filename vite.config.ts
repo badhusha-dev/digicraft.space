@@ -3,8 +3,10 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  plugins: [react()],
-  base: './',
+  plugins: [react({
+    jsxRuntime: 'automatic'
+  })],
+  base: '/',
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
@@ -21,7 +23,6 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['wouter'],
-          query: ['@tanstack/react-query'],
           icons: ['lucide-react'],
         },
         chunkFileNames: 'assets/[name]-[hash].js',
@@ -42,7 +43,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'wouter', '@tanstack/react-query', 'lucide-react'],
+    include: ['react', 'react-dom', 'wouter', 'lucide-react'],
     exclude: [],
   },
   css: {

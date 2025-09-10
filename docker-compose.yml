@@ -1,49 +1,17 @@
 version: '3.8'
 
 services:
-  # Main application
   digicraft-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: production
-    container_name: digicraft-app
-    restart: unless-stopped
+    build: .
     ports:
-      - "5000:5000"
+      - "${APP_PORT:-6060}:6060"
+    container_name: digicraft-frontend
+    restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - PORT=5000
-    volumes:
-      - ./logs:/app/logs
-    networks:
-      - digicraft-network
-
-  # PostgreSQL database (optional - comment out if using external database)
-  postgres:
-    image: postgres:16-alpine
-    container_name: digicraft-postgres
-    restart: unless-stopped
-    environment:
-      - POSTGRES_DB=digicraft
-      - POSTGRES_USER=digicraft_user
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password123}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    networks:
-      - digicraft-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U digicraft_user -d digicraft"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-volumes:
-  postgres_data:
-    driver: local
-
-networks:
-  digicraft-network:
-    driver: bridge
+      test: ["CMD", "curl", "-f", "http://localhost:6060/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

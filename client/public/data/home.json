@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "title": "Software Solutions That Ship & Scale",
+    "subtitle": "Product-minded engineers building reliable, beautiful software—fast.",
+    "description": "Get your MVP from $8k or hire our development squad from $12k/mo. We build web apps, mobile apps, APIs, and cloud infrastructure that actually work.",
+    "primaryCta": "Start Your Project",
+    "secondaryCta": "View Our Work",
+    "imageAlt": "Team collaboration and development workspace"
+  },
+  "highlights": [
+    {
+      "title": "Fast Delivery",
+      "description": "MVPs delivered in 6-12 weeks with modern tech stack",
+      "icon": "rocket"
+    },
+    {
+      "title": "Transparent Pricing",
+      "description": "Clear packages: MVP ($8k+), Squad ($12k/mo), Support ($999/mo)",
+      "icon": "dollar-sign"
+    },
+    {
+      "title": "Modern Stack",
+      "description": "React, Node.js, TypeScript, AWS, Docker, and more",
+      "icon": "code"
+    }
+  ],
+  "processSteps": [
+    { "icon": "search", "title": "Discover", "description": "Understanding your vision and requirements" },
+    { "icon": "palette", "title": "Design", "description": "Creating user-centered experiences" },
+    { "icon": "code", "title": "Build", "description": "Developing with modern technologies" },
+    { "icon": "rocket", "title": "Ship", "description": "Launching to production smoothly" },
+    { "icon": "trending-up", "title": "Grow", "description": "Scaling and optimizing for success" }
+  ],
+  "testimonialsPreview": {
+    "title": "Trusted by Growing Businesses",
+    "description": "See what our clients say about working with DigiCraft",
+    "ctaText": "Read All Testimonials"
+  }
+}

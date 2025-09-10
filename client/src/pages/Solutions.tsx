@@ -78,9 +78,9 @@ export default function Solutions() {
                     
                     <div className="text-center border-top pt-3">
                       <div className="mb-3">
-                        <p className="h4 fw-bold text-dark mb-1">
+                        {/* <p className="h4 fw-bold text-dark mb-1">
                           {solution.pricing}
-                        </p>
+                        </p> */} {/* Price amount hidden - uncomment to restore */}
                         <p className="small text-muted mb-0">
                           {solution.timeline}
                         </p>
@@ -94,7 +94,8 @@ export default function Solutions() {
                           }`}
                           data-testid={`button-get-started-${solution.id}`}
                         >
-                          {solution.pricing.includes("Custom") ? "Get Quote" : "Get Started"}
+                          {/* {solution.pricing.includes("Custom") ? "Get Quote" : "Get Started"} */} {/* Price-based button text hidden - uncomment to restore */}
+                          Get Started
                         </button>
                       </Link>
                     </div>
