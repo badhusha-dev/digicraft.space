@@ -3,7 +3,7 @@ name: Deploy Vite App to EC2
 on:
   push:
     branches:
-      - main   # change if needed
+      - main   # change if you deploy from another branch
 
 jobs:
   build-and-deploy:
@@ -27,7 +27,7 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p $HOME/.ssh
-          echo "${{ secrets.EC2_SSH_KEY }}" > $HOME/.ssh/id_rsa
+          printf "%s\n" "${{ secrets.EC2_SSH_KEY }}" > $HOME/.ssh/id_rsa
           chmod 600 $HOME/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> $HOME/.ssh/known_hosts
 
