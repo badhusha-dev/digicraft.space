@@ -5,8 +5,11 @@ import { aboutData } from "../data/about";
 import { getImageById } from "../data/images";
 import { useEffect } from "react";
 import { logPageView } from "../utils/analytics";
+import { useTranslation } from "../utils/i18n";
 
 export default function About() {
+  const { t } = useTranslation();
+  
   useEffect(() => {
     logPageView("about");
   }, []);
@@ -43,10 +46,10 @@ export default function About() {
           {/* Company Vision */}
           <div className="text-center mb-5">
             <h1 className="display-4 fw-bold text-dark mb-4">
-              About DigiCraft.space
+              {t("about.title")}
             </h1>
             <p className="lead text-muted max-w-3xl mx-auto">
-              Building software that ships and scales for the digital future
+              {t("about.subtitle")}
             </p>
           </div>
           
@@ -54,13 +57,13 @@ export default function About() {
           <div className="row align-items-center g-5 mb-5">
             <div className="col-lg-6">
               <h2 className="display-5 fw-bold text-dark mb-4">
-                Our Mission
+                {t("about.mission.title")}
               </h2>
               <p className="lead text-muted mb-4">
-                We believe great software should be accessible to every business, regardless of size. Our mission is to democratize high-quality software development by providing transparent pricing, predictable timelines, and exceptional results.
+                {t("about.mission.description")}
               </p>
               <p className="lead text-muted">
-                Founded on principles of craftsmanship and reliability, we combine cutting-edge technology with proven methodologies to deliver software that not only works but thrives in production.
+                {t("about.mission.description2")}
               </p>
             </div>
             <div className="col-lg-6">
@@ -79,7 +82,7 @@ export default function About() {
           {/* Leadership Team */}
           <div className="mb-5">
             <h2 className="display-5 fw-bold text-center text-dark mb-4">
-              Meet Our Founder
+              {t("about.founder.title")}
             </h2>
             <div className="row justify-content-center">
               <div className="col-md-6 col-lg-4">
@@ -99,11 +102,10 @@ export default function About() {
                       Ayaz
                     </h3>
                     <p className="text-primary fw-semibold mb-3">
-                      CEO & Founder
+                      {t("about.founder.role")}
                     </p>
                     <p className="text-muted mb-4">
-                      Former senior engineer at top tech companies with 8+ years building scalable software. 
-                      Passionate about creating technology that makes a real difference.
+                      {t("about.founder.description")}
                     </p>
                     <div className="d-flex justify-content-center gap-3">
                       <a href="https://linkedin.com/in/ayaz-digicraft" target="_blank" rel="noopener noreferrer" className="text-muted text-decoration-none" data-testid="link-ayaz-linkedin">
@@ -125,10 +127,26 @@ export default function About() {
           {/* Values */}
           <div className="mb-5">
             <h2 className="display-5 fw-bold text-center text-dark mb-4">
-              Our Values
+              {t("about.values.title")}
             </h2>
              <div className="row g-4">
-               {aboutData.values.map((value, index) => {
+               {[
+                 {
+                   title: t("about.values.transparency.title"),
+                   description: t("about.values.transparency.description"),
+                   icon: "handshake"
+                 },
+                 {
+                   title: t("about.values.quality.title"),
+                   description: t("about.values.quality.description"),
+                   icon: "award"
+                 },
+                 {
+                   title: t("about.values.speed.title"),
+                   description: t("about.values.speed.description"),
+                   icon: "rocket"
+                 }
+               ].map((value, index) => {
                 const IconComponent = valuesIconMap[value.icon as keyof typeof valuesIconMap];
                 return (
                   <div key={index} className="col-md-4 text-center">
@@ -180,10 +198,31 @@ export default function About() {
           {/* Why Choose Us */}
           <div className="mb-5">
             <h2 className="display-5 fw-bold text-center text-dark mb-4">
-              Why Choose Us?
+              {t("about.whyChooseUs.title")}
             </h2>
              <div className="row g-4">
-               {aboutData.whyChooseUs.map((item, index) => {
+               {[
+                 {
+                   title: t("about.whyChooseUs.fast.title"),
+                   description: t("about.whyChooseUs.fast.description"),
+                   icon: "clock"
+                 },
+                 {
+                   title: t("about.whyChooseUs.affordable.title"),
+                   description: t("about.whyChooseUs.affordable.description"),
+                   icon: "dollar-sign"
+                 },
+                 {
+                   title: t("about.whyChooseUs.reliable.title"),
+                   description: t("about.whyChooseUs.reliable.description"),
+                   icon: "settings"
+                 },
+                 {
+                   title: t("about.whyChooseUs.support.title"),
+                   description: t("about.whyChooseUs.support.description"),
+                   icon: "headphones"
+                 }
+               ].map((item, index) => {
                 const IconComponent = whyChooseUsIconMap[item.icon as keyof typeof whyChooseUsIconMap];
                 return (
                   <div key={index} className="col-md-6 col-lg-3">

@@ -4,8 +4,11 @@ import SEO from "../components/SEO";
 import { solutions } from "../data/solutions";
 import { useEffect } from "react";
 import { logPageView } from "../utils/analytics";
+import { useTranslation } from "../utils/i18n";
 
 export default function Solutions() {
+  const { t } = useTranslation();
+  
   useEffect(() => {
     logPageView("solutions");
   }, []);
@@ -22,10 +25,10 @@ export default function Solutions() {
         <div className="container">
           <div className="text-center mb-5">
             <h1 className="display-4 fw-bold text-dark mb-4">
-              Solutions & Packages
+              {t("solutions.title")}
             </h1>
             <p className="lead text-muted max-w-3xl mx-auto">
-              Pre-designed solutions to accelerate your development
+              {t("solutions.subtitle")}
             </p>
           </div>
           

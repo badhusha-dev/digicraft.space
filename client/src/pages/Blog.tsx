@@ -28,10 +28,13 @@ export default function Blog() {
     { id: "tips", name: "Development Tips" },
   ];
 
-  const categoryColors = {
+  const categoryColors: { [key: string]: string } = {
     tutorial: "bg-primary",
     insights: "bg-success",
     tips: "bg-info",
+    Development: "bg-primary",
+    Frontend: "bg-success",
+    Backend: "bg-info",
   };
 
   return (
@@ -105,18 +108,24 @@ export default function Blog() {
                     <div className="d-flex align-items-center justify-content-between small text-muted">
                       <div className="d-flex align-items-center gap-3">
                         <div className="d-flex align-items-center">
-                          <img
-                            src={post.authorAvatar}
-                            alt={post.author}
-                            className="rounded-circle me-2"
-                            width="24"
-                            height="24"
-                          />
+                          {post.authorAvatar ? (
+                            <img
+                              src={post.authorAvatar}
+                              alt={post.author}
+                              className="rounded-circle me-2"
+                              width="24"
+                              height="24"
+                            />
+                          ) : (
+                            <div className="rounded-circle me-2 bg-primary text-white d-flex align-items-center justify-content-center" style={{ width: '24px', height: '24px', fontSize: '10px' }}>
+                              {post.author.charAt(0)}
+                            </div>
+                          )}
                           <span>{post.author}</span>
                         </div>
                         <div className="d-flex align-items-center">
                           <Calendar size={16} className="me-1" />
-                          <span>{post.publishedAt}</span>
+                          <span>{post.publishedAt || post.date}</span>
                         </div>
                       </div>
                       {post.readTime && (

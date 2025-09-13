@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "wouter";
 import { lazy, Suspense } from "react";
 import { ThemeProvider } from "./components/ThemeProvider";
 import Layout from "./components/Layout";
+import { initializeGA } from "./utils/analytics";
+import config, { validateConfig } from "./config/env";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 // Lazy load pages for better performance
 const Home = lazy(() => import("./pages/Home"));
@@ -12,7 +16,7 @@ const Work = lazy(() => import("./pages/Work"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const About = lazy(() => import("./pages/About"));
 // const Blog = lazy(() => import("./pages/Blog")); // Hidden - uncomment to restore
-// const Careers = lazy(() => import("./pages/Careers")); // Hidden - uncomment to restore
+const Careers = lazy(() => import("./pages/Careers"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/not-found"));
 
@@ -37,7 +41,7 @@ function Router() {
           <Route path="/pricing" component={Pricing} />
           <Route path="/about" component={About} />
           {/* <Route path="/blog" component={Blog} /> */} {/* Hidden - uncomment to restore */}
-          {/* <Route path="/careers" component={Careers} /> */} {/* Hidden - uncomment to restore */}
+          <Route path="/careers" component={Careers} />
           <Route path="/contact" component={Contact} />
           <Route component={NotFound} />
         </Switch>
@@ -47,6 +51,23 @@ function Router() {
 }
 
 function App() {
+  useEffect(() => {
+    // Validate configuration
+    validateConfig();
+    
+    // Initialize Google Analytics 4
+    if (config.ENABLE_ANALYTICS && config.GA_MEASUREMENT_ID !== 'G-XXXXXXXXXX') {
+      initializeGA(config.GA_MEASUREMENT_ID);
+    }
+    
+    // Initialize AOS once for the entire app
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 100
+    });
+  }, []);
+
   return (
     <ThemeProvider>
       <Router />

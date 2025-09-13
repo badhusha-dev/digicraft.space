@@ -7,7 +7,7 @@ export interface ContactFormData {
   name: string;
   email: string;
   company?: string;
-  projectTypes: string[];
+  projectType: string;
   message: string;
 }
 
@@ -31,6 +31,10 @@ export function validateContactForm(data: ContactFormData): ValidationError[] {
 
   if (!data.email || !isValidEmail(data.email)) {
     errors.push({ field: "email", message: "Please enter a valid email address" });
+  }
+
+  if (!data.projectType) {
+    errors.push({ field: "projectType", message: "Please select a project type" });
   }
 
   if (!data.message || data.message.trim().length < 10) {

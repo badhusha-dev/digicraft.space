@@ -1,30 +1,70 @@
+/**
+ * Footer Component
+ * 
+ * A comprehensive footer with the following sections:
+ * - Company branding and logo
+ * - Social media links
+ * - Services navigation
+ * - Solutions navigation  
+ * - Company pages navigation
+ * - Support links
+ * - Copyright and legal links
+ * 
+ * Features:
+ * - Responsive Bootstrap grid layout
+ * - Dark theme styling
+ * - Social media icons with hover effects
+ * - Organized link sections
+ * - Proper accessibility attributes
+ */
+
 import { Link } from "wouter";
 import { Github, Linkedin, Twitter, Dribbble } from "lucide-react";
+import { useTranslation } from "../utils/i18n";
+import logo from "../assets/logo.jpeg";
 
 export default function Footer() {
+  const { t } = useTranslation();
+  
+  /**
+   * Services navigation links
+   * All services link to the main services page
+   */
   const services = [
-    { name: "Web Apps", href: "/services" },
-    { name: "Mobile Apps", href: "/services" },
-    { name: "API Development", href: "/services" },
-    { name: "DevOps & Cloud", href: "/services" },
-    { name: "AI & Automation", href: "/services" },
+    { name: t("nav.services"), href: "/services" },
+    { name: t("nav.services"), href: "/services" },
+    { name: t("nav.services"), href: "/services" },
+    { name: t("nav.services"), href: "/services" },
+    { name: t("nav.services"), href: "/services" },
   ];
 
+  /**
+   * Solutions navigation links
+   * All solutions link to the main solutions page
+   */
   const solutions = [
-    { name: "MVP Sprint", href: "/solutions" },
-    { name: "Scale-Up Kit", href: "/solutions" },
-    { name: "Commerce Core", href: "/solutions" },
-    { name: "Back-Office Suite", href: "/solutions" },
+    { name: t("nav.solutions"), href: "/solutions" },
+    { name: t("nav.solutions"), href: "/solutions" },
+    { name: t("nav.solutions"), href: "/solutions" },
+    { name: t("nav.solutions"), href: "/solutions" },
   ];
 
+  /**
+   * Company pages navigation
+   * Commented items can be uncommented to restore hidden pages
+   */
   const company = [
-    { name: "About", href: "/about" },
-    { name: "Our Work", href: "/work" },
-    // { name: "Blog", href: "/blog" }, // Hidden - uncomment to restore
-    // { name: "Careers", href: "/careers" }, // Hidden - uncomment to restore
-    { name: "Contact", href: "/contact" },
+    { name: t("nav.about"), href: "/about" },
+    { name: t("nav.work"), href: "/work" },
+    // { name: t("nav.blog"), href: "/blog" }, // Hidden - uncomment to restore
+    // { name: t("nav.careers"), href: "/careers" }, // Hidden - uncomment to restore
+    { name: t("nav.contact"), href: "/contact" },
   ];
 
+  /**
+   * Support and help links
+   * Mix of internal links and external mailto links
+   */
   const support = [
     { name: "Help Center", href: "#" },
     { name: "Documentation", href: "#" },
@@ -36,23 +76,32 @@ export default function Footer() {
     <footer className="bg-dark text-white py-5 mt-auto">
       <div className="container">
         <div className="row g-4">
-          {/* Brand */}
+          {/* 
+            Brand Section
+            - Company logo and branding
+            - Company tagline
+            - Social media links with hover effects
+          */}
           <div className="col-lg-3 col-md-6">
             <Link href="/" className="text-decoration-none d-flex align-items-center mb-3">
               <img 
-                src="/logo.svg" 
-                alt="DigiCraft Logo" 
-                className="me-2 dc-logo" 
+                src={logo} 
+                alt="Company Logo" 
+                className="me-2 img-fluid" 
+                style={{ width: "250px", height: "auto" }}
               />
+              {/*
               <span className="h3 fw-bold mb-0">
                 <span className="text-primary">Digi</span>
                 <span className="text-info">Craft</span>
                 <span className="text-white">.space</span>
               </span>
+              */}
             </Link>
             <p className="mt-3 text-light small opacity-75">
               Product-minded engineers building reliable, beautiful software that ships and scales.
             </p>
+            {/* Social Media Links */}
             <div className="mt-3 d-flex gap-3">
               <a href="https://twitter.com/digicraft" target="_blank" rel="noopener noreferrer" className="text-light text-decoration-none opacity-75 hover-opacity-100" data-testid="link-twitter">
                 <Twitter size={20} />
@@ -69,7 +118,11 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Services */}
+          {/* 
+            Services Section
+            - Lists all available services
+            - Links to main services page
+          */}
           <div className="col-lg-2 col-md-6">
             <h6 className="text-white text-uppercase fw-semibold mb-3">Services</h6>
             <ul className="list-unstyled">
@@ -87,7 +140,11 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Solutions */}
+          {/* 
+            Solutions Section
+            - Lists all available solutions
+            - Links to main solutions page
+          */}
           <div className="col-lg-2 col-md-6">
             <h6 className="text-white text-uppercase fw-semibold mb-3">Solutions</h6>
             <ul className="list-unstyled">
@@ -105,7 +162,11 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Company */}
+          {/* 
+            Company Section
+            - Company pages and information
+            - Includes hidden pages that can be restored
+          */}
           <div className="col-lg-2 col-md-6">
             <h6 className="text-white text-uppercase fw-semibold mb-3">Company</h6>
             <ul className="list-unstyled">
@@ -123,12 +184,18 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Support */}
+          {/* 
+            Support Section
+            - Help and support links
+            - Mix of internal links and external mailto links
+            - Conditional rendering for different link types
+          */}
           <div className="col-lg-3 col-md-6">
             <h6 className="text-white text-uppercase fw-semibold mb-3">Support</h6>
             <ul className="list-unstyled">
               {support.map((item) => (
                 <li key={item.name} className="mb-2">
+                  {/* Conditional rendering: mailto links use <a>, others use <Link> */}
                   {item.href.startsWith("mailto:") ? (
                     <a
                       href={item.href}
@@ -152,6 +219,12 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* 
+          Footer Bottom Section
+          - Copyright notice
+          - Legal links (Privacy Policy, Terms of Service)
+          - Responsive layout with proper alignment
+        */}
         <div className="mt-5 pt-4 border-top border-secondary">
           <div className="row align-items-center">
             <div className="col-md-6">

@@ -1,24 +1,34 @@
 import { useState, useEffect } from "react";
-import { Mail, Clock, Globe, MapPin, Phone, Calendar } from "lucide-react";
+import { Mail, Clock, Globe, MapPin, Phone, Calendar, CheckCircle, AlertCircle } from "lucide-react";
 import SEO from "../components/SEO";
 import { contactData } from "../data/contact";
 import { validateContactForm, ContactFormData } from "../utils/validation";
-import { logPageView, logFormSubmission } from "../utils/analytics";
+import { logPageView, logFormSubmission, logContactFormStart, logContactFormComplete, logButtonClick } from "../utils/analytics";
+import { useTranslation } from "../utils/i18n";
+import emailjs from '@emailjs/browser';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import CalendlyWidget from '../components/CalendlyWidget';
+import config from '../config/env';
 
 export default function Contact() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     company: "",
-    projectTypes: [],
+    projectType: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [validationErrors, setValidationErrors] = useState<{[key: string]: string}>({});
 
   useEffect(() => {
     logPageView("contact");
+    // Refresh AOS for new content
+    AOS.refresh();
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -26,37 +36,54 @@ export default function Contact() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      projectTypes: checked 
-        ? [...prev.projectTypes, value]
-        : prev.projectTypes.filter(type => type !== value)
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrorMessage(null);
     setSuccessMessage(null);
+    setValidationErrors({});
+
+    // Bootstrap validation
+    const form = e.target as HTMLFormElement;
+    if (!form.checkValidity()) {
+      form.classList.add('was-validated');
+      setIsSubmitting(false);
+      return;
+    }
 
     const errors = validateContactForm(formData);
     if (errors.length > 0) {
-      setErrorMessage(`Validation Error: ${errors[0].message}`);
+      const errorMap: {[key: string]: string} = {};
+      errors.forEach(error => {
+        errorMap[error.field] = error.message;
+      });
+      setValidationErrors(errorMap);
       setIsSubmitting(false);
       logFormSubmission("contact", false);
       return;
     }
 
     try {
-      // In a real application, you would send this data to your backend
-      // For now, we'll simulate a successful submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // EmailJS configuration (you'll need to set up your EmailJS account)
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        company: formData.company || 'Not provided',
+        project_type: formData.projectType,
+        message: formData.message,
+        to_name: 'DigiCraft Team'
+      };
+
+      // Send email using EmailJS
+      await emailjs.send(
+        config.EMAILJS_SERVICE_ID,
+        config.EMAILJS_TEMPLATE_ID,
+        templateParams,
+        config.EMAILJS_PUBLIC_KEY
+      );
       
       setSuccessMessage("Message Sent Successfully! We'll get back to you within 24 hours.");
-
+      form.classList.remove('was-validated');
       logFormSubmission("contact", true);
       
       // Reset form
@@ -64,11 +91,12 @@ export default function Contact() {
         name: "",
         email: "",
         company: "",
-        projectTypes: [],
+        projectType: "",
         message: "",
       });
     } catch (error) {
-      setErrorMessage("Failed to send message. Please try again.");
+      console.error('EmailJS Error:', error);
+      setErrorMessage("Failed to send message. Please try again or contact us directly at hello@digicraft.space");
       logFormSubmission("contact", false);
     } finally {
       setIsSubmitting(false);
@@ -88,39 +116,41 @@ export default function Contact() {
         <div className="container">
           <div className="text-center mb-5">
             <h1 className="display-4 fw-bold text-dark mb-4">
-              Get In Touch
+              {t("contact.title")}
             </h1>
             <p className="lead text-muted max-w-3xl mx-auto">
-              Ready to build something amazing? Let's discuss your project.
+              {t("contact.subtitle")}
             </p>
           </div>
           
           <div className="row g-4">
             {/* Contact Form */}
-            <div className="col-lg-8">
-              <div className="card shadow-sm border-0">
+            <div className="col-lg-8" data-aos="fade-right">
+              <div className="card shadow-sm border-0 hover-lift">
                 <div className="card-body p-4">
                   <h2 className="h3 fw-bold text-dark mb-4">
                     Tell Us About Your Project
                   </h2>
                   
-                  {/* Error and Success Messages */}
+                  {/* Enhanced Error and Success Messages */}
                   {errorMessage && (
-                    <div className="alert alert-danger mb-4" role="alert">
+                    <div className="alert alert-danger d-flex align-items-center mb-4" role="alert" data-aos="fade-down">
+                      <AlertCircle className="me-2" size={20} />
                       {errorMessage}
                     </div>
                   )}
                   {successMessage && (
-                    <div className="alert alert-success mb-4" role="alert">
+                    <div className="alert alert-success d-flex align-items-center mb-4" role="alert" data-aos="fade-down">
+                      <CheckCircle className="me-2" size={20} />
                       {successMessage}
                     </div>
                   )}
                   
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit} id="contact-form">
                     <div className="row g-3 mb-3">
                       <div className="col-md-6">
                         <label htmlFor="name" className="form-label fw-medium">
-                          Name *
+                          {t("contact.form.name")} *
                         </label>
                         <input
                           type="text"
@@ -129,14 +159,19 @@ export default function Contact() {
                           required
                           value={formData.name}
                           onChange={handleInputChange}
-                          className="form-control"
+                          className={`form-control ${validationErrors.name ? 'is-invalid' : ''}`}
                           data-testid="input-name"
                         />
+                        {validationErrors.name && (
+                          <div className="invalid-feedback">
+                            {validationErrors.name}
+                          </div>
+                        )}
                       </div>
                       
                       <div className="col-md-6">
                         <label htmlFor="email" className="form-label fw-medium">
-                          Email *
+                          {t("contact.form.email")} *
                         </label>
                         <input
                           type="email"
@@ -145,15 +180,20 @@ export default function Contact() {
                           required
                           value={formData.email}
                           onChange={handleInputChange}
-                          className="form-control"
+                          className={`form-control ${validationErrors.email ? 'is-invalid' : ''}`}
                           data-testid="input-email"
                         />
+                        {validationErrors.email && (
+                          <div className="invalid-feedback">
+                            {validationErrors.email}
+                          </div>
+                        )}
                       </div>
                     </div>
                     
                     <div className="mb-3">
                       <label htmlFor="company" className="form-label fw-medium">
-                        Company
+                        {t("contact.form.company")}
                       </label>
                       <input
                         type="text"
@@ -167,34 +207,35 @@ export default function Contact() {
                     </div>
                     
                     <div className="mb-3">
-                      <label className="form-label fw-medium">
-                        Project Type
+                      <label htmlFor="projectType" className="form-label fw-medium">
+                        {t("contact.form.projectType")} *
                       </label>
-                       <div className="row g-3">
-                         {contactData.projectTypeOptions.map((option) => (
-                          <div key={option.id} className="col-md-6 col-lg-4">
-                            <div className="form-check">
-                              <input
-                                type="checkbox"
-                                id={option.id}
-                                value={option.id}
-                                checked={formData.projectTypes.includes(option.id)}
-                                onChange={handleCheckboxChange}
-                                className="form-check-input"
-                                data-testid={`checkbox-${option.id}`}
-                              />
-                              <label className="form-check-label small" htmlFor={option.id}>
-                                {option.label}
-                              </label>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                      <select
+                        id="projectType"
+                        name="projectType"
+                        required
+                        value={formData.projectType || ''}
+                        onChange={handleInputChange}
+                        className={`form-select ${validationErrors.projectType ? 'is-invalid' : ''}`}
+                        data-testid="select-project-type"
+                      >
+                        <option value="">Select project type...</option>
+                        <option value="mvp">MVP Development</option>
+                        <option value="dedicated-squad">Dedicated Squad</option>
+                        <option value="support">Support & Maintenance</option>
+                        <option value="consultation">Consultation</option>
+                        <option value="other">Other</option>
+                      </select>
+                      {validationErrors.projectType && (
+                        <div className="invalid-feedback">
+                          {validationErrors.projectType}
+                        </div>
+                      )}
                     </div>
                     
                     <div className="mb-4">
                       <label htmlFor="message" className="form-label fw-medium">
-                        Project Description *
+                        {t("contact.form.message")} *
                       </label>
                       <textarea
                         id="message"
@@ -204,9 +245,14 @@ export default function Contact() {
                         value={formData.message}
                         onChange={handleInputChange}
                         placeholder="Tell us about your project, goals, timeline, and any specific requirements..."
-                        className="form-control"
+                        className={`form-control ${validationErrors.message ? 'is-invalid' : ''}`}
                         data-testid="textarea-message"
                       />
+                      {validationErrors.message && (
+                        <div className="invalid-feedback">
+                          {validationErrors.message}
+                        </div>
+                      )}
                     </div>
                     
                     <button
@@ -215,7 +261,7 @@ export default function Contact() {
                       className="btn btn-primary w-100 py-3"
                       data-testid="button-send-message"
                     >
-                      {isSubmitting ? "Sending..." : "Send Message"}
+                      {isSubmitting ? "Sending..." : t("contact.form.submit")}
                     </button>
                   </form>
                 </div>
@@ -223,7 +269,7 @@ export default function Contact() {
             </div>
             
             {/* Contact Information */}
-            <div className="col-lg-4">
+            <div className="col-lg-4" data-aos="fade-left">
               <div className="d-flex flex-column gap-4">
                 <div className="card shadow-sm border-0">
                   <div className="card-body p-4">
@@ -285,18 +331,14 @@ export default function Contact() {
                 </div>
                 
                 <div className="bg-light rounded-3 p-4 text-center">
-                  <h3 className="h5 fw-bold text-dark mb-3">
-                    Prefer to call?
-                  </h3>
-                  <p className="text-muted mb-4">
-                    Schedule a free 30-minute consultation to discuss your project in detail.
-                  </p>
-                  <button 
-                    className="btn btn-outline-primary"
-                    data-testid="button-schedule-call"
-                  >
-                    Schedule Call
-                  </button>
+                  <CalendlyWidget 
+                    username={config.CALENDLY_USERNAME} 
+                    eventType={config.CALENDLY_EVENT_TYPE}
+                    prefill={{
+                      name: formData.name || '',
+                      email: formData.email || ''
+                    }}
+                  />
                 </div>
               </div>
             </div>

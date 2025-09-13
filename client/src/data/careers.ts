@@ -87,3 +87,16 @@ export const jobPositions: JobPosition[] = [
     applyLink: "mailto:careers@digicraft.space?subject=DevOps Engineer Application"
   }
 ];
+
+export const benefits = [
+  "Competitive salary and equity",
+  "100% remote work flexibility",
+  "Comprehensive health insurance",
+  "Professional development budget",
+  "Flexible PTO and sick leave",
+  "Latest tech equipment",
+  "Team building events",
+  "Mentorship opportunities",
+  "Career growth support",
+  "Work-life balance focus"
+];

@@ -3,8 +3,11 @@ import { Link } from "wouter";
 import SEO from "../components/SEO";
 import { useEffect, useState } from "react";
 import { logPageView } from "../utils/analytics";
+import { useTranslation } from "../utils/i18n";
 
 export default function Pricing() {
+  const { t } = useTranslation();
+  
   useEffect(() => {
     logPageView("pricing");
   }, []);
@@ -90,10 +93,10 @@ export default function Pricing() {
         <div className="container">
           <div className="text-center mb-5">
             <h1 className="display-4 fw-bold text-dark mb-4">
-              Transparent Pricing
+              {t("pricing.title")}
             </h1>
             <p className="lead text-muted max-w-3xl mx-auto">
-              Choose the right engagement model for your project
+              {t("pricing.subtitle")}
             </p>
           </div>
           

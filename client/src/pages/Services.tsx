@@ -4,10 +4,17 @@ import SEO from "../components/SEO";
 import { services } from "../data/services";
 import { useEffect } from "react";
 import { logPageView } from "../utils/analytics";
+import { useTranslation } from "../utils/i18n";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function Services() {
+  const { t } = useTranslation();
+  
   useEffect(() => {
     logPageView("services");
+    // Refresh AOS for new content
+    AOS.refresh();
   }, []);
 
   // Icon mapping for services
@@ -34,10 +41,10 @@ export default function Services() {
         <div className="container">
           <div className="text-center mb-5">
             <h1 className="display-4 fw-bold text-dark mb-4">
-              Our Services
+              {t("services.title")}
             </h1>
             <p className="lead text-muted max-w-3xl mx-auto">
-              Comprehensive software solutions for every business need
+              {t("services.subtitle")}
             </p>
           </div>
           
@@ -48,14 +55,13 @@ export default function Services() {
                 <div 
                   key={service.id}
                   className="col-lg-6"
-                  data-testid={`card-service-${service.id}`}
                 >
-                  <div className="card h-100 shadow-sm border-0">
+                  <div className="card h-100 shadow-sm border-0 service-card hover-lift">
                     <div className="card-body p-4">
                       <div className="d-flex align-items-start gap-4">
-                        <div className="bg-primary rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style={{ width: '4rem', height: '4rem' }}>
+                        <div className="service-icon-bg flex-shrink-0">
                           {IconComponent ? (
-                            <IconComponent className="text-white" size={24} />
+                            <IconComponent className="text-white" size={28} />
                           ) : (
                             <div className="bg-white rounded" style={{ width: '1.5rem', height: '1.5rem' }}></div>
                           )}
@@ -87,8 +93,7 @@ export default function Services() {
           <div className="text-center mt-5">
             <Link href="/contact">
               <button 
-                className="btn btn-primary btn-lg px-4 py-3"
-                data-testid="button-discuss-project"
+                className="btn btn-primary btn-lg px-4 py-3 hover-lift"
               >
                 Discuss Your Project
               </button>

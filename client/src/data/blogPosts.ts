@@ -2,14 +2,18 @@
 // To restore: uncomment Blog routes in App.tsx, Navbar.tsx, and Footer.tsx
 
 export interface BlogPost {
+  id: string;
   title: string;
   excerpt: string;
   content: string;
   author: string;
+  authorAvatar?: string;
   date: string;
+  publishedAt?: string;
   category: string;
   tags: string[];
   image: string;
+  readTime?: string;
   featured?: boolean;
 }
 

@@ -186,8 +186,8 @@ const Careers = memo(function Careers() {
                           </h3>
                           <div className="d-flex flex-wrap gap-2">
                             <span className={`badge ${
-                              position.type === "full-time" ? "bg-primary" :
-                              position.type === "contract" ? "bg-warning text-dark" :
+                              position.type === "Full-time" ? "bg-primary" :
+                              position.type === "Contract" ? "bg-warning text-dark" :
                               "bg-success"
                             }`}>
                               {position.type.charAt(0).toUpperCase() + position.type.slice(1)}
@@ -235,22 +235,16 @@ const Careers = memo(function Careers() {
               Benefits & Perks
             </h2>
             <div className="row g-4">
-              {benefits.map((benefit, index) => {
-                const IconComponent = iconMap[benefit.icon as keyof typeof iconMap];
-                return (
-                  <div key={index} className="col-md-6 col-lg-3 text-center">
-                    <div className="bg-primary rounded-3 d-flex align-items-center justify-content-center mx-auto mb-3" style={{ width: '4rem', height: '4rem' }}>
-                      {IconComponent && <IconComponent className="text-white" size={32} />}
-                    </div>
-                    <h3 className="h6 fw-semibold text-dark mb-2">
-                      {benefit.title}
-                    </h3>
-                    <p className="text-muted small">
-                      {benefit.description}
-                    </p>
+              {benefits.map((benefit, index) => (
+                <div key={index} className="col-md-6 col-lg-3 text-center">
+                  <div className="bg-primary rounded-3 d-flex align-items-center justify-content-center mx-auto mb-3" style={{ width: '4rem', height: '4rem' }}>
+                    <Users className="text-white" size={32} />
                   </div>
-                );
-              })}
+                  <h3 className="h6 fw-semibold text-dark mb-2">
+                    {benefit}
+                  </h3>
+                </div>
+              ))}
             </div>
           </div>
         </div>

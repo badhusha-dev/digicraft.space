@@ -5,8 +5,11 @@ import { workData } from "../data/work";
 import { getImageById } from "../data/images";
 import { useEffect } from "react";
 import { logPageView } from "../utils/analytics";
+import { useTranslation } from "../utils/i18n";
 
 export default function Work() {
+  const { t } = useTranslation();
+  
   useEffect(() => {
     logPageView("work");
   }, []);
@@ -40,16 +43,32 @@ export default function Work() {
         <div className="container">
           <div className="text-center mb-5">
             <h1 className="display-4 fw-bold text-dark mb-4">
-              Our Capabilities
+              {t("work.title")}
             </h1>
             <p className="lead text-muted max-w-4xl mx-auto">
-              While we're a new company, our team brings years of expertise from leading tech companies
+              {t("work.subtitle")}
             </p>
           </div>
           
            {/* Expertise Areas */}
            <div className="row g-4 mb-5">
-             {workData.capabilities.map((capability, index) => {
+             {[
+               {
+                 title: t("work.capabilities.mvp.title"),
+                 description: t("work.capabilities.mvp.description"),
+                 icon: "rocket"
+               },
+               {
+                 title: t("work.capabilities.enterprise.title"),
+                 description: t("work.capabilities.enterprise.description"),
+                 icon: "building"
+               },
+               {
+                 title: t("work.capabilities.ecommerce.title"),
+                 description: t("work.capabilities.ecommerce.description"),
+                 icon: "shopping-cart"
+               }
+             ].map((capability, index) => {
               const IconComponent = capabilitiesIconMap[capability.icon as keyof typeof capabilitiesIconMap];
               return (
                 <div 
@@ -82,7 +101,7 @@ export default function Work() {
           {/* Technology Stack */}
           <div className="mb-5">
             <h2 className="display-5 fw-bold text-center text-dark mb-4">
-              Our Technology Stack
+              {t("work.techStack.title")}
             </h2>
              <div className="row g-3">
                {workData.techStack.map((stack, index) => (
@@ -117,10 +136,26 @@ export default function Work() {
           <div className="row align-items-center g-5 mb-5">
             <div className="col-lg-6">
               <h2 className="display-5 fw-bold text-dark mb-4">
-                Our Development Approach
+                {t("work.approach.title")}
               </h2>
                <div className="d-flex flex-column gap-4">
-                 {workData.approach.map((item, index) => {
+                 {[
+                   {
+                     title: t("work.approach.collaboration.title"),
+                     description: t("work.approach.collaboration.description"),
+                     icon: "users"
+                   },
+                   {
+                     title: t("work.approach.iteration.title"),
+                     description: t("work.approach.iteration.description"),
+                     icon: "sync"
+                   },
+                   {
+                     title: t("work.approach.security.title"),
+                     description: t("work.approach.security.description"),
+                     icon: "shield"
+                   }
+                 ].map((item, index) => {
                   const IconComponent = approachIconMap[item.icon as keyof typeof approachIconMap];
                   return (
                     <div key={index} className="d-flex align-items-start gap-3">

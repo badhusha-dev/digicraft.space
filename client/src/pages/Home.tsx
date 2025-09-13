@@ -1,17 +1,63 @@
 import { Link } from "wouter";
-import { ArrowRight, Check, Star, Lightbulb, Globe, Smartphone, Server, Activity, Cloud, Bot, Settings, Search, Palette, Code, Rocket, TrendingUp } from "lucide-react";
+import { ArrowRight, Check, Star, Lightbulb, Globe, Smartphone, Server, Activity, Cloud, Bot, Settings, Search, Palette, Code, Rocket, TrendingUp, Download, Mail } from "lucide-react";
 import SEO from "../components/SEO";
 import { homeData } from "../data/home";
 import { services } from "../data/services";
 import { testimonials } from "../data/testimonials";
+import { getTestimonials } from "../data/testimonials";
+import { getCaseStudies } from "../data/caseStudies";
 import { getImageById } from "../data/images";
-import { useEffect } from "react";
-import { logPageView } from "../utils/analytics";
+import { useEffect, useState } from "react";
+import { logPageView, logBrochureDownload, logButtonClick } from "../utils/analytics";
+import { useTranslation } from "../utils/i18n";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import TestimonialsCarousel from "../components/TestimonialsCarousel";
+import CaseStudiesSection from "../components/CaseStudiesSection";
+import SocialProofBadges from "../components/SocialProofBadges";
+import { useInView } from 'react-intersection-observer';
 
 export default function Home() {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { ref: heroImageRef, inView: heroImageInView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+  const { t } = useTranslation();
+  
+  // Get translated testimonials
+  const translatedTestimonials = getTestimonials(t);
+  
+  // Get translated case studies
+  const translatedCaseStudies = getCaseStudies(t);
+
   useEffect(() => {
     logPageView("home");
+    // Refresh AOS for new content
+    AOS.refresh();
   }, []);
+
+  const handleBrochureDownload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    setIsSubmitting(true);
+    
+    // Track brochure download
+    logBrochureDownload(email);
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setIsSubmitted(true);
+    setIsSubmitting(false);
+    
+    // In a real implementation, you would:
+    // 1. Send email to your backend
+    // 2. Generate download link
+    // 3. Track conversion in analytics
+  };
 
   // Icon mapping for services
   const serviceIconMap = {
@@ -48,60 +94,84 @@ export default function Home() {
         keywords="software development, react development, mobile apps, web applications, mvp development, digicraft"
       />
 
-      {/* Hero Section */}
-      <section className="py-5 bg-light d-flex align-items-center" style={{ minHeight: '80vh' }}>
-        <div className="container">
-          <div className="row align-items-center g-5">
-            <div className="col-lg-6">
-              <h1 className="display-4 fw-bold lh-base">
-                We craft software that{" "}
-                <span className="text-primary">ships</span> and{" "}
-                <span className="text-info">scales</span>.
+      {/* Modern Hero Section */}
+      <section className="hero-section position-relative overflow-hidden" id="home">
+        <div className="hero-gradient position-absolute w-100 h-100"></div>
+        <div className="container position-relative">
+          <div className="row align-items-center min-vh-100 py-5">
+            <div className="col-lg-6" data-aos="fade-right" data-aos-delay="200">
+              <h1 className="display-3 fw-bold lh-base mb-4">
+                {t("hero.title")}
               </h1>
-              <p className="lead text-muted mt-4">
-                Product-minded engineers building reliable, beautiful software—fast.
+              <p className="lead text-muted mb-4 fs-5">
+                {t("hero.subtitle")}
               </p>
-              <div className="d-flex flex-column flex-sm-row gap-3 mt-4">
+              <div className="d-flex flex-column flex-sm-row gap-3 mb-4">
                 <Link href="/contact">
                   <button 
-                    className="btn btn-primary btn-lg px-4 py-3"
+                    className="btn btn-primary btn-lg px-4 py-3 shadow-lg hover-lift"
                     data-testid="button-get-quote-hero"
+                    onClick={() => logButtonClick('get_started', 'hero')}
                   >
-                    Get a Free Quote
+                    {t("hero.cta")}
+                    <ArrowRight className="ms-2" size={20} />
                   </button>
                 </Link>
                 <Link href="/work">
                   <button 
-                    className="btn btn-outline-primary btn-lg px-4 py-3"
+                    className="btn btn-outline-primary btn-lg px-4 py-3 hover-lift"
                     data-testid="button-see-work-hero"
+                    onClick={() => logButtonClick('see_work', 'hero')}
                   >
-                    See Our Work
+                    {t("hero.ctaSecondary")}
                   </button>
                 </Link>
               </div>
+              <div className="d-flex align-items-center gap-4 text-muted small">
+                <div className="d-flex align-items-center gap-2">
+                  <Check className="text-success" size={16} />
+                  <span>Free Consultation</span>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <Check className="text-success" size={16} />
+                  <span>24h Response</span>
+                </div>
+                <div className="d-flex align-items-center gap-2">
+                  <Check className="text-success" size={16} />
+                  <span>Transparent Pricing</span>
+                </div>
+              </div>
             </div>
-            <div className="col-lg-6">
-              <img
-                src={heroImage?.src || "/images/ui/placeholder-hero.jpg"}
-                alt={heroImage?.alt || "Modern office workspace with team collaboration"}
-                className="img-fluid rounded-3 shadow"
-                width={heroImage?.width || 800}
-                height={heroImage?.height || 600}
-                data-testid="img-hero"
-                loading="eager"
-              />
+            <div className="col-lg-6" data-aos="fade-left" data-aos-delay="400">
+              <div className="hero-illustration position-relative">
+                <div className="hero-gradient-circle position-absolute"></div>
+                <div ref={heroImageRef}>
+                  {heroImageInView && (
+                    <img
+                      src={heroImage?.src || "/images/ui/placeholder-hero.jpg"}
+                      alt={heroImage?.alt || "Modern office workspace with team collaboration"}
+                      className="img-fluid rounded-4 shadow-lg"
+                      width={heroImage?.width || 800}
+                      height={heroImage?.height || 600}
+                      data-testid="img-hero"
+                      loading="eager"
+                      fetchPriority="high"
+                    />
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Services Preview */}
-      <section className="py-5 bg-white">
+      {/* Enhanced Services Preview */}
+      <section className="py-5 bg-white" id="services">
         <div className="container">
-          <div className="text-center mb-5">
-            <h2 className="display-5 fw-bold text-dark">Our Expertise</h2>
+          <div className="text-center mb-5" data-aos="fade-up">
+            <h2 className="display-5 fw-bold text-dark">{t("services.title")}</h2>
             <p className="lead text-muted mt-3">
-              End-to-end software solutions for modern businesses
+              {t("services.subtitle")}
             </p>
           </div>
           
@@ -113,22 +183,32 @@ export default function Home() {
                   key={service.id}
                   className="col-md-4"
                   data-testid={`card-service-${service.id}`}
+                  data-aos="fade-up"
+                  data-aos-delay={index * 200}
                 >
-                  <div className="card h-100 shadow-sm border-0">
+                  <div className="card h-100 shadow-sm border-0 service-card hover-lift">
                     <div className="card-body p-4 text-center">
-                      <div className="bg-primary rounded-3 d-flex align-items-center justify-content-center mx-auto mb-4" style={{ width: '4rem', height: '4rem' }}>
-                        {IconComponent ? (
-                          <IconComponent className="text-white" size={24} />
-                        ) : (
-                          <div className="bg-white rounded" style={{ width: '2rem', height: '2rem' }}></div>
-                        )}
+                      <div className="service-icon-wrapper mb-4">
+                        <div className="service-icon-bg">
+                          {IconComponent ? (
+                            <IconComponent className="text-white" size={28} />
+                          ) : (
+                            <div className="bg-white rounded" style={{ width: '2rem', height: '2rem' }}></div>
+                          )}
+                        </div>
                       </div>
                       <h3 className="h5 fw-semibold text-dark mb-3">
                         {service.title}
                       </h3>
-                      <p className="text-muted">
+                      <p className="text-muted mb-4">
                         {service.description}
                       </p>
+                      <Link href="/services">
+                        <button className="btn btn-outline-primary btn-sm">
+                          Learn More
+                          <ArrowRight className="ms-1" size={16} />
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -178,71 +258,103 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-5 bg-white">
+      {/* Testimonials Carousel */}
+      <TestimonialsCarousel testimonials={translatedTestimonials} />
+
+      {/* Case Studies Section */}
+      <CaseStudiesSection caseStudies={translatedCaseStudies} />
+
+      {/* Social Proof Badges */}
+      <SocialProofBadges />
+
+      {/* Brochure Lead Magnet Section */}
+      <section className="py-5 bg-primary text-white">
         <div className="container">
-          <div className="text-center mb-5">
-            <h2 className="display-5 fw-bold text-dark">{homeData.testimonials.title}</h2>
-            <p className="lead text-muted mt-3">
-              {homeData.testimonials.subtitle}
-            </p>
-          </div>
-          
-          <div className="row g-4">
-            {testimonials.map((testimonial) => (
-              <div 
-                key={testimonial.id}
-                className="col-md-4"
-                data-testid={`card-testimonial-${testimonial.id}`}
-              >
-                <div className="card h-100 shadow-sm border-0">
-                  <div className="card-body p-4">
-                    <div className="d-flex align-items-center mb-4">
-                      <div className="position-relative me-3">
-                        <img
-                          src={testimonial.avatar}
-                          alt={testimonial.name}
-                          className="rounded-circle"
-                          width="48"
-                          height="48"
-                          loading="lazy"
-                          style={{ objectFit: 'cover' }}
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.style.display = 'none';
-                            const fallback = target.nextElementSibling as HTMLElement;
-                            if (fallback) fallback.style.display = 'flex';
-                          }}
+          <div className="row align-items-center">
+            <div className="col-lg-6" data-aos="fade-right">
+              <h2 className="display-5 fw-bold mb-4">
+                Get Our Complete Service Guide
+              </h2>
+              <p className="lead mb-4">
+                Download our comprehensive brochure to learn about our development process, 
+                pricing models, and how we can help transform your business.
+              </p>
+              <div className="d-flex align-items-center gap-3 mb-4">
+                <div className="d-flex text-warning">
+                  <Star className="fill-current" size={20} />
+                  <Star className="fill-current" size={20} />
+                  <Star className="fill-current" size={20} />
+                  <Star className="fill-current" size={20} />
+                  <Star className="fill-current" size={20} />
+                </div>
+                <span className="small">Trusted by 50+ companies</span>
+              </div>
+            </div>
+            
+            <div className="col-lg-6" data-aos="fade-left">
+              <div className="card border-0 shadow-lg">
+                <div className="card-body p-4">
+                  {!isSubmitted ? (
+                    <form onSubmit={handleBrochureDownload}>
+                      <h4 className="fw-bold text-dark mb-3">Download Free Brochure</h4>
+                      <div className="mb-3">
+                        <label htmlFor="brochure-email" className="form-label text-dark">
+                          Email Address
+                        </label>
+                        <input
+                          type="email"
+                          className="form-control"
+                          id="brochure-email"
+                          placeholder="Enter your email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
                         />
-                        <div 
-                          className="rounded-circle d-none align-items-center justify-content-center text-white fw-bold"
-                          style={{ 
-                            width: '48px', 
-                            height: '48px', 
-                            background: 'var(--dc-gradient-primary)',
-                            fontSize: '18px'
-                          }}
-                        >
-                          {testimonial.name.split(' ').map(n => n[0]).join('')}
-                        </div>
                       </div>
-                      <div>
-                        <h4 className="fw-semibold text-dark mb-1">{testimonial.name}</h4>
-                        <p className="small text-muted mb-0">
-                          {testimonial.role}, {testimonial.company}
-                        </p>
+                      <button
+                        type="submit"
+                        className="btn btn-primary w-100"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                            Processing...
+                          </>
+                        ) : (
+                          <>
+                            <Download className="me-2" size={20} />
+                            Download Brochure
+                          </>
+                        )}
+                      </button>
+                      <p className="small text-muted mt-3 mb-0">
+                        We respect your privacy. Unsubscribe at any time.
+                      </p>
+                    </form>
+                  ) : (
+                    <div className="text-center">
+                      <div className="text-success mb-3">
+                        <Check size={48} />
                       </div>
+                      <h4 className="fw-bold text-dark mb-3">Check Your Email!</h4>
+                      <p className="text-muted mb-3">
+                        We've sent the brochure to <strong>{email}</strong>
+                      </p>
+                      <button
+                        className="btn btn-outline-primary"
+                        onClick={() => {
+                          setIsSubmitted(false);
+                          setEmail('');
+                        }}
+                      >
+                        Download Another
+                      </button>
                     </div>
-                    <p className="text-muted mb-3">"{testimonial.content}"</p>
-                    <div className="d-flex text-warning">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} size={20} className="fill-current" />
-                      ))}
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>

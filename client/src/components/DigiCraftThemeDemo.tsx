@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from "../assets/logo.jpeg";
 
 export default function DigiCraftThemeDemo() {
   return (
@@ -15,12 +16,12 @@ export default function DigiCraftThemeDemo() {
         <div className="col-12">
           <h2 className="h3 mb-4">DigiCraft Logo Sizes</h2>
           <div className="d-flex align-items-center gap-4 mb-4">
-            <img src="/logo.svg" alt="DigiCraft Logo Small" className="dc-logo-sm" />
-            <img src="/logo.svg" alt="DigiCraft Logo" className="dc-logo" />
-            <img src="/logo.svg" alt="DigiCraft Logo Large" className="dc-logo-lg" />
-            <img src="/logo.svg" alt="DigiCraft Logo XL" className="dc-logo-xl" />
+            <img src={logo} alt="DigiCraft Logo Small" className="img-fluid" style={{ width: "24px", height: "auto" }} />
+            <img src={logo} alt="DigiCraft Logo" className="img-fluid" style={{ width: "32px", height: "auto" }} />
+            <img src={logo} alt="DigiCraft Logo Large" className="img-fluid" style={{ width: "48px", height: "auto" }} />
+            <img src={logo} alt="DigiCraft Logo XL" className="img-fluid" style={{ width: "64px", height: "auto" }} />
           </div>
-          <p className="text-muted">SVG logo scales perfectly at any size with hover effects</p>
+          <p className="text-muted">JPEG logo scales responsively at different sizes</p>
         </div>
       </div>
 
