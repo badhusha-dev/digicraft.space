@@ -1,31 +1,31 @@
-name: Deploy React App to EC2
+name: Deploy Static React App to EC2
 
 on:
   push:
     branches:
-      - main
+      - main   # change if using another branch
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 18
+          cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
-      - name: Build project
+      - name: Build React App
         run: npm run build
 
-      # ✅ Add SSH key from GitHub Secret
-      - name: Setup SSH
+      - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
@@ -35,13 +35,16 @@ jobs:
       - name: Deploy to EC2
         run: |
           echo "🚀 Deploying to EC2 server..."
-          ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
             sudo mkdir -p /var/www/digicraft-space &&
-            sudo chown -R $USER:$USER /var/www/digicraft-space
+            sudo chown -R ${{ secrets.EC2_USER }}:${{ secrets.EC2_USER }} /var/www/digicraft-space
           "
-          rsync -avz -e "ssh -i ~/.ssh/id_rsa" build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/digicraft-space/
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
+            build/ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/var/www/digicraft-space/
 
-      - name: Restart Apache
+      - name: Restart Nginx
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-            "sudo systemctl restart apache2 && echo '✅ Apache restarted successfully'"
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "
+            sudo systemctl restart nginx
+          "
